@@ -1,0 +1,24 @@
+.navbar {
+    background-color: #001f80; /* Dark blue */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+  .nav-links, .auth-links {
+    display: flex;
+    gap: 15px;
+  }
+  .nav-item {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  .nav-item:hover {
+    background-color: #ffc107; /* Yellow */
+    color: #001f80; /* Dark blue */
+    border-radius: 5px;
+  }
+  
