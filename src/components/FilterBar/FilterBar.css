@@ -1,0 +1,39 @@
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-bar button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background: #001f80;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .filter-bar button:not(:first-child) {
+    background: white;
+    color: #001f80;
+    border: 1px solid #001f80;
+  }
+  
+  .filter-bar input {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .filter-bar select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: white;
+  }
+  

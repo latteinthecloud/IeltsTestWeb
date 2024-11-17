@@ -1,0 +1,47 @@
+.test-groups {
+  margin-top: 20px;
+}
+
+.test-group {
+  margin-bottom: 30px;
+}
+
+.test-group h3 {
+  font-size: 18px;
+  color: #001f80;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.months {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #001f80;
+  cursor: pointer;
+  background: white;
+}
+
+.month:hover {
+  border-color: #001f80;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.month span {
+  font-size: 12px;
+  color: #6c6c6c;
+  margin-top: 5px;
+}
