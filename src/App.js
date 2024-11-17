@@ -88,14 +88,33 @@ const RoutesWrapper = () => {
 
       {/* Protected Routes for admin */}
       {user?.role === "admin" && (
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <AdminPage />
-            </ProtectedRoute>
-          }
-        />
+        <>
+         <Route
+            path="/admin/statistics"
+            element={
+              <ProtectedRoute>
+                <AdminStatistics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/test"
+            element={
+              <ProtectedRoute>
+                <AdminTest />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/user"
+            element={
+              <ProtectedRoute>
+                <AdminUser />
+              </ProtectedRoute>
+            }
+          />
+        </>
+        
         
       )}
       <Route path="*" element={<Navigate to="/login" />} />
