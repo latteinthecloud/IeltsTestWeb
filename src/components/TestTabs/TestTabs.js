@@ -16,13 +16,13 @@ const TestTabs = () => {
         className={activeTab === 'academic' ? 'active' : ''}
         onClick={() => setActiveTab('academic')}
       >
-        Academic Test
+       <i className="fas fa-user-graduate"></i> Academic Test
       </button>
       <button
         className={activeTab === 'general' ? 'active' : ''}
         onClick={() => setActiveTab('general')}
       >
-        General Training Test
+        <i className="fas fa-users"></i> General Training Test
       </button>
     </div>
   );

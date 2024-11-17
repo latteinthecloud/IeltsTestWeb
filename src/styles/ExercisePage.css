@@ -1,0 +1,82 @@
+.exercise-page {
+  padding: 20px;
+}
+
+.tabs {
+  display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+  font-size: 16px;
+  padding: 10px 15px;
+  background: none;
+  border: none;
+  color: #6c6c6c;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+.tabs button:hover {
+  color: #001f80;
+}
+
+.tabs button.active {
+  color: #001f80;
+  border-bottom: 2px solid #001f80;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.skills {
+  display: flex;
+  gap: 15px;
+}
+
+.skills button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: #f9f9f9;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.skills button.active {
+  background: #001f80;
+  color: #fff;
+  border-color: #001f80;
+}
+
+.create-test {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  background: #f9f9f9;
+  color: #555;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.create-test:hover {
+  background: #001f80;
+  color: #fff;
+  border-color: #001f80;
+}

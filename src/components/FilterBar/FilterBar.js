@@ -18,26 +18,15 @@ const FilterBar = () => {
           className={activeFilter === "listening" ? "active" : ""}
           onClick={() => setActiveFilter("listening")}
         >
-          <i className="icon-listening"></i> Listening
+          <i className="fas fa-headphones-alt"></i> Listening
         </button>
         <button
           className={activeFilter === "reading" ? "active" : ""}
           onClick={() => setActiveFilter("reading")}
         >
-          <i className="icon-reading"></i> Reading
+          <i className="fas fa-book"></i> Reading
         </button>
-        <button
-          className={activeFilter === "writing" ? "active" : ""}
-          onClick={() => setActiveFilter("writing")}
-        >
-          <i className="icon-writing"></i> Writing
-        </button>
-        <button
-          className={activeFilter === "speaking" ? "active" : ""}
-          onClick={() => setActiveFilter("speaking")}
-        >
-          <i className="icon-speaking"></i> Speaking
-        </button>
+       
       </div>
 
       {/* Search Box and Sort Menu */}
