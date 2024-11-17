@@ -1,10 +1,10 @@
 import React from "react";
+import AdminUserTab from "../../components/AdminUserTab/AdminUserTab";
 
 const AdminUser = () => {
   return (
     <div>
-      <h2>User Management</h2>
-      <p>User management content goes here...</p>
+      <AdminUserTab />
     </div>
   );
 };

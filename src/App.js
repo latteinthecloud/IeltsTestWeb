@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useAuth, AuthProvider } from "./context/AuthContext"; 
+import { useAuth, AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
@@ -12,10 +12,13 @@ import LoginPage from "./pages/LoginPage";
 import CreateListeningTestPage from "./pages/CreateListeningTestPage";
 import CreateReadingTestPage from "./pages/user/CreateReadingTestPage";
 import AdminPage from "./pages/admin/AdminPage";
+import AdminStatistics from "./pages/admin/AdminStatistics";
+import AdminTest from "./pages/admin/AdminTest";
+import AdminUser from "./pages/admin/AdminUser";
 
 const App = () => {
   return (
-    <AuthProvider> {/* AuthProvider wraps the entire app */}
+    <AuthProvider>
       <Router>
         <div className="app">
           {/* Common Header and Navbar */}
@@ -28,9 +31,6 @@ const App = () => {
   );
 };
 
-/**
- * Separate the Routes logic to ensure `useAuth` is used only after AuthProvider is initialized.
- */
 const RoutesWrapper = () => {
   const { user } = useAuth(); // Access the logged-in user's data
 
@@ -88,37 +88,22 @@ const RoutesWrapper = () => {
 
       {/* Protected Routes for admin */}
       {user?.role === "admin" && (
-        <>
-         <Route
-            path="/admin/statistics"
-            element={
-              <ProtectedRoute>
-                <AdminStatistics />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/test"
-            element={
-              <ProtectedRoute>
-                <AdminTest />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/user"
-            element={
-              <ProtectedRoute>
-                <AdminUser />
-              </ProtectedRoute>
-            }
-          />
-        </>
-        
-        
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="statistics" element={<AdminStatistics />} />
+          <Route path="test" element={<AdminTest />} />
+          <Route path="user" element={<AdminUser />} />
+        </Route>
       )}
-      <Route path="*" element={<Navigate to="/login" />} />
 
+      {/* Fallback for unmatched routes */}
+      <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} />
     </Routes>
   );
 };

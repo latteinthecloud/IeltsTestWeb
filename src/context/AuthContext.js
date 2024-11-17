@@ -4,8 +4,8 @@ const AuthContext = createContext();
 
 // Predefined users
 const USERS = [
-  { username: "admin@uit.vn", password: "admin", role: "admin" },
-  { username: "user@uit.vn", password: "user", role: "user" },
+  { username: "admin@admin", password: "admin", role: "admin" },
+  { username: "user@user", password: "user", role: "user" },
 ];
 
 export const AuthProvider = ({ children }) => {

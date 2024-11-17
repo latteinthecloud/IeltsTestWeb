@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./TestTab.css";
+import "./AdminTestTabs.css";
+import Pagination from "../Pagination/Pagination"
 
 const TestTab = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,16 +12,13 @@ const TestTab = () => {
     // Add more test data here...
   ];
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
   const itemsPerPage = 10;
 
   const filteredData = testData.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -75,17 +73,8 @@ const TestTab = () => {
         </tbody>
       </table>
 
-      <div className="pagination">
-        {[1, 2, 3, 4].map((page) => (
-          <button
-            key={page}
-            className={`pagination-btn ${currentPage === page ? "active" : ""}`}
-            onClick={() => handlePageChange(page)}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
+      <Pagination />
+
     </div>
   );
 };

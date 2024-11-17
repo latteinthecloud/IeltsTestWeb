@@ -1,0 +1,104 @@
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+
+.tab.active {
+    background: #6c5ce7;
+    color: white;
+}
+
+.charts-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.chart-section {
+    flex: 1;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.chart-section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.chart-section p {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.average-hour-chart {
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.average-hour-chart h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.bar-chart {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.line-chart {
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #666;
+}
+
+.legend span {
+    margin: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .charts-container {
+        flex-direction: column;
+    }
+
+    .chart-section {
+        margin-bottom: 20px;
+    }
+}

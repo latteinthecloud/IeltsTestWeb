@@ -15,15 +15,20 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-links">
-        <Link to="/" className="nav-item">
-          IELTS Exam Library
-        </Link>
-        <Link to="/exercise" className="nav-item">
-          Exercise
-        </Link>
-        <Link to="/statistic" className="nav-item">
-          Statistic
-        </Link>
+        {/* Conditionally render links only if the user is not an admin */}
+        {user?.role !== "admin" && (
+          <>
+            <Link to="/" className="nav-item">
+              IELTS Exam Library
+            </Link>
+            <Link to="/exercise" className="nav-item">
+              Exercise
+            </Link>
+            <Link to="/statistic" className="nav-item">
+              Statistic
+            </Link>
+          </>
+        )}
       </div>
       <div className="auth-links">
         {isAuthenticated ? (

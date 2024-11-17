@@ -20,7 +20,7 @@ const Login = () => {
     if (success) {
       navigate("/"); // Redirect to home on successful login
     } else {
-      setError("Invalid email or password"); // Show error message
+      setError(" user@user pass: user or admin@admin pass: admin"); // Show error message
     }
   };
 

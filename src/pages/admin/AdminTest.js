@@ -1,11 +1,10 @@
 import React from "react";
-import TestTab from "./TestTab";
+import AdminTestTabs from "../../components/AdminTestTabs/AdminTestTabs";
 
 const AdminTest = () => {
   return (
     <div>
-      <h2>Test Management</h2>
-      <TestTab />
+      <AdminTestTabs />
     </div>
   );
 };

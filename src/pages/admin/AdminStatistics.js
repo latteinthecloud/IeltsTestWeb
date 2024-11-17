@@ -1,10 +1,10 @@
 import React from "react";
+import AdminStatisticsTab from "../../components/AdminStatisticsTab/AdminStatisticsTab";
 
 const AdminStatistics = () => {
   return (
     <div>
-      <h2>Statistics</h2>
-      <p>Statistics content goes here...</p>
+      <AdminStatisticsTab />
     </div>
   );
 };
