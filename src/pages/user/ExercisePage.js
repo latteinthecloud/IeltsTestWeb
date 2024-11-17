@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/ExercisePage.css";
-import TestCard from "../components/TestCard/TestCard";
-import Pagination from "../components/Pagination/Pagination";
+import "../../styles/ExercisePage.css";
+import TestCard from "../../components/TestCard/TestCard";
+import Pagination from "../../components/Pagination/Pagination";
 
 const testData = [
   {

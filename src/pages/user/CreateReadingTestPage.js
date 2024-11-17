@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/CreateReadingTestPage.css"
+import "../../styles/CreateReadingTestPage.css"
 
 const sections = [
   {

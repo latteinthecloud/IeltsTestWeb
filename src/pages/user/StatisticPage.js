@@ -1,8 +1,8 @@
 import React from "react";
-import StatisticHeader from "../components/StatisticHeader/StatisticHeader";
-import OverviewCards from "../components/OverviewCards/OverviewCards";
-import Charts from "../components/Charts/Charts";
-import "../styles/StatisticPage.css";
+import StatisticHeader from "../../components/StatisticHeader/StatisticHeader";
+import OverviewCards from "../../components/OverviewCards/OverviewCards";
+import Charts from "../../components/Charts/Charts";
+import "../../styles/StatisticPage.css";
 
 const StatisticPage = () => {
   return (
