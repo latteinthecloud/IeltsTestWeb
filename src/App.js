@@ -7,6 +7,8 @@ import ExercisePage from "./pages/ExercisePage";
 import StatisticPage from "./pages/StatisticPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import CreateListeningTestPage from "./pages/CreateListeningTestPage";
+import CreateReadingTestPage from "./pages/CreateReadingTestPage";
 
 const App = () => {
   return (
@@ -23,6 +25,9 @@ const App = () => {
           <Route path="/statistic" element={<StatisticPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/exercise/create-listening-test" element={<CreateListeningTestPage />} />
+          <Route path="/exercise/create-reading-test" element={<CreateReadingTestPage />} />
+
         </Routes>
       </div>
     </Router>

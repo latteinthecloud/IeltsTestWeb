@@ -1,0 +1,98 @@
+.create-reading-test-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.create-reading-test-page h1 {
+  font-size: 36px;
+  color: #001f80;
+  margin-bottom: 30px;
+}
+
+.section {
+  margin-bottom: 40px;
+  text-align: left; /* Align sections to the left for a clean structure */
+}
+
+.section h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+  padding-left: 10px;
+}
+
+.tasks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four columns for task buttons */
+  gap: 15px;
+  justify-items: center;
+}
+
+.task-button {
+  padding: 15px 20px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.task-button:hover {
+  background: #e8f5e9; /* Light green background on hover */
+  color: #001f80;
+  border-color: #001f80;
+}
+
+.task-button.active {
+  background: #c8e6c9; /* Active task button */
+  border-color: #4caf50;
+}
+
+.can-find {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #001f80;
+  margin-top: 5px;
+}
+
+.can-find i {
+  color: #4caf50; /* Green check icon */
+}
+
+.bottom-create {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.create-button {
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 20px;
+  background: #f0c040; /* Gold color for the button */
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.create-button:hover {
+  background: #d9a630; /* Darker gold on hover */
+}
+
+@media (max-width: 768px) {
+  .tasks {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .tasks {
+    grid-template-columns: 1fr; /* Single column for mobile */
+  }
+}

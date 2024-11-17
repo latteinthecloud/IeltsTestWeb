@@ -1,0 +1,60 @@
+.create-test-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .create-test-page h1 {
+    font-size: 36px;
+    color: #001f80;
+    margin-bottom: 20px;
+  }
+  
+  .create-test-page h2 {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .test-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .test-option {
+    padding: 15px 25px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .test-option:hover {
+    background: #001f80;
+    color: white;
+    border-color: #001f80;
+  }
+  
+  .bottom-create {
+    margin-top: 50px;
+  }
+  
+  .create-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 20px;
+    background: #001f80;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .create-button:hover {
+    background: #0033cc;
+  }
+  
