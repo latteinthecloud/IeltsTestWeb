@@ -1,0 +1,18 @@
+.statistic-page {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background */
+    box-sizing: border-box;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #001f80;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
