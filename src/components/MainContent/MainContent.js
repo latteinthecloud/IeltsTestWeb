@@ -2,7 +2,6 @@ import React from 'react';
 import TestTabs from '../TestTabs/TestTabs';
 import FilterBar from '../FilterBar/FilterBar';
 import TestGroups from '../TestGroups/TestGroups';
-import Pagination from '../Pagination/Pagination';
 import './MainContent.css';
 
 const MainContent = () => {
@@ -12,7 +11,6 @@ const MainContent = () => {
       <TestTabs />
       <FilterBar />
       <TestGroups />
-      <Pagination />
     </div>
   );
 };

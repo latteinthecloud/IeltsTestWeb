@@ -26,16 +26,7 @@ const FilterBar = () => {
         >
           <i className="fas fa-book"></i> Reading
         </button>
-       
-      </div>
 
-      {/* Search Box and Sort Menu */}
-      <div className="search-sort">
-        <input type="text" placeholder="Search..." />
-        <select>
-          <option value="newest">Newest</option>
-          <option value="oldest">Oldest</option>
-        </select>
       </div>
     </div>
   );

@@ -15,12 +15,15 @@
 
 .test-layout {
   display: flex;
-  gap: 30px; /* Space between left and right sections */
-  align-items: flex-start; /* Align items at the top */
+  gap: 30px;
+  /* Space between left and right sections */
+  align-items: flex-start;
+  /* Align items at the top */
 }
 
 .cover {
-  flex: 0 0 150px; /* Fixed width for the cover */
+  flex: 0 0 150px;
+  /* Fixed width for the cover */
 }
 
 .cover-placeholder {
@@ -38,8 +41,10 @@
 
 .months {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns for the months */
-  gap: 15px; /* Space between grid items */
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 columns for the months */
+  gap: 15px;
+  /* Space between grid items */
   flex: 1;
 }
 
@@ -76,4 +81,36 @@
 .tests-taken i {
   color: #ffc107;
   margin-right: 5px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
 }

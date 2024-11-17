@@ -1,74 +1,35 @@
 .filter-bar {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 10px 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .filter-buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-  }
-  
-  .filter-buttons button {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 10px 15px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    background: white;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .filter-buttons button.active {
-    background: #001f80;
-    color: white;
-    border-color: #001f80;
-  }
-  
-  .search-sort {
-    display: flex;
-    justify-content: space-between; /* Aligns search box and dropdown */
-    align-items: center; /* Centers vertically */
-    gap: 15px;
-  }
-  
-  .search-sort input {
-    flex: 1; /* Makes search box take available space */
-    max-width: 600px; /* Sets a reasonable max width */
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-  }
-  
-  .search-sort select {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    background: white;
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  @media (max-width: 768px) {
-    .search-sort {
-      flex-direction: column; /* Stacks search box and filter dropdown */
-      align-items: stretch;
-      gap: 10px;
-    }
-  
-    .search-sort input,
-    .search-sort select {
-      width: 100%; /* Full width for smaller screens */
-      max-width: none;
-    }
-  }
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.filter-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.filter-buttons button.active {
+  background: #001f80;
+  color: white;
+  border-color: #001f80;
+}
