@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth, AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -9,14 +9,32 @@ import ExercisePage from "./pages/user/ExercisePage";
 import StatisticPage from "./pages/user/StatisticPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
-import CreateListeningTestPage from "./pages/CreateListeningTestPage";
+import FilterBar from "./pages/user/AListening/components/FilterBar/FilterBar";
+import CreateListeningTestPage from "./pages/user/CreateListeningTestPage";
 import CreateReadingTestPage from "./pages/user/CreateReadingTestPage";
 import AdminPage from "./pages/admin/AdminPage";
 import AdminStatistics from "./pages/admin/AdminStatistics";
 import AdminTest from "./pages/admin/AdminTest";
 import AdminUser from "./pages/admin/AdminUser";
+import AListening from "./pages/user/AListening/AListening"
+import ForgotPassword from "./pages/ForgotPassword";
+import accountApi from "./api/accountApi";
+
 
 const App = () => {
+  useEffect(() => {
+    const fetchAccount = async () => {
+      try {
+        const accountList = await accountApi.getAll();
+        console.log(accountList);
+      } catch (error) {
+        console.error("Error fetching account data:", error);
+      }
+    };
+    fetchAccount();
+  }, []);
+  
+
   return (
     <AuthProvider>
       <Router>
@@ -39,6 +57,7 @@ const RoutesWrapper = () => {
       {/* Public Routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      <Route path="/forgot" element={<ForgotPassword />} />
 
       {/* Protected Routes for user */}
       {user?.role === "user" && (
@@ -51,6 +70,15 @@ const RoutesWrapper = () => {
               </ProtectedRoute>
             }
           />
+           <Route
+            path="/listening"
+            element={
+              <ProtectedRoute>
+                <AListening/>
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/exercise"
             element={

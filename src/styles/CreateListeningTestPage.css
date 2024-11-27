@@ -5,7 +5,7 @@
   
   .create-test-page h1 {
     font-size: 36px;
-    color: #001f80;
+    color: #DCAC32;
     margin-bottom: 20px;
   }
   
@@ -34,9 +34,9 @@
   }
   
   .test-option:hover {
-    background: #001f80;
+    background: #468DBC;
     color: white;
-    border-color: #001f80;
+    border-color: #468DBC;
   }
   
   .bottom-create {
@@ -48,13 +48,13 @@
     font-size: 18px;
     border: none;
     border-radius: 20px;
-    background: #001f80;
+    background: #DCAC32;
     color: white;
     cursor: pointer;
     transition: all 0.3s;
   }
   
   .create-button:hover {
-    background: #0033cc;
+    background: #DCAC32;
   }
   

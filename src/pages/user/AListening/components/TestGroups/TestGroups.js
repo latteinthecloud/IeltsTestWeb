@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./TestGroups.css";
-import Pagination from "../Pagination/Pagination";
+import Pagination from "../../../../../components/Pagination/Pagination";
 
 const testData = [
   {
@@ -160,7 +160,7 @@ const TestGroups = () => {
 
       {currentTestData.map((group, index) => (
         <div key={index} className="test-group">
-          <h3>IELTS Mock Test {group.year}</h3>
+          <h3>IELTS Listening Mock Test {group.year}</h3>
           <div className="test-layout">
             <div className="cover">
               <div className="cover-placeholder">

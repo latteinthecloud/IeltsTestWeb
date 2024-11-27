@@ -1,41 +1,69 @@
-import React from "react";
-import "../../styles/CreateReadingTestPage.css"
+import React, { useState } from "react";
+import "../../styles/CreateReadingTestPage.css";
 
 const sections = [
   {
     title: "Section 1",
-    tasks: ["Form Completion", "Note Completion", "Table Completion", "Form Completion"],
+    tasks: ["Completion", "Multiple Choice", "Matching", "True/False", "Diagram"],
   },
   {
     title: "Section 2",
-    tasks: ["Sentence Completion", "Multiple Choice", "Map/Plan/Diagram Labeling", "Matching"],
+    tasks: ["Completion", "Multiple Choice", "Matching", "True/False", "Diagram"],
   },
   {
     title: "Section 3",
-    tasks: ["Classification", "Multiple Choice", "Map/Plan/Diagram Labeling", "Flow Chart Completion"],
+    tasks: ["Completion", "Multiple Choice", "Matching", "True/False", "Diagram"],
   },
   {
     title: "Section 4",
-    tasks: ["Note Completion", "Sentence Completion", "Summary Completion", "Table/Chart Completion"],
+    tasks: ["Completion", "Multiple Choice", "Matching", "True/False", "Diagram"],
   },
 ];
 
 const CreateReadingTestPage = () => {
+  const [activeType, setActiveType] = useState({}); // Tracks active task per section
+
+  // Function to handle task activation
+  const handleTaskClick = (sectionIndex, task) => {
+    setActiveType((prevState) => ({
+      ...prevState,
+      [sectionIndex]: task,
+    }));
+  };
+
   return (
     <div className="create-reading-test-page">
-      <h1>Name</h1>
-      {sections.map((section, index) => (
-        <div key={index} className="section">
+      {/* Input field for Name */}
+      <div className="input-name">
+        <input
+          type="text"
+          id="testName"
+          className="name-input"
+          placeholder="Enter reading test name"
+        />
+      </div>
+
+      {/* Sections */}
+      {sections.map((section, sectionIndex) => (
+        <div key={sectionIndex} className="section">
           <h2>{section.title}:</h2>
           <div className="tasks">
-            {section.tasks.map((task, idx) => (
-              <button key={idx} className="task-button">
+            {section.tasks.map((task, taskIndex) => (
+              <button
+                key={taskIndex}
+                className={`task-button ${
+                  activeType[sectionIndex] === task ? "active" : ""
+                }`}
+                onClick={() => handleTaskClick(sectionIndex, task)}
+              >
                 {task}
               </button>
             ))}
           </div>
         </div>
       ))}
+
+      {/* Create button */}
       <div className="bottom-create">
         <button className="create-button">+ Create</button>
       </div>

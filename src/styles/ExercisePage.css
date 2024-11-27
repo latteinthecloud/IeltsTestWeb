@@ -25,10 +25,17 @@
 }
 
 .tabs button.active {
-  color: #001f80;
-  border-bottom: 2px solid #001f80;
+  color: white; /* White text for active tab */
+  border-bottom: 2px solid transparent; /* Prevent shifting */
 }
 
+.tabs button.active.listening {
+  background-color: #468DBC; /* Listening active background */
+}
+
+.tabs button.active.reading {
+  background-color: #125D27; /* Reading active background */
+}
 .filters {
   display: flex;
   justify-content: space-between;
@@ -55,10 +62,16 @@
   transition: all 0.3s;
 }
 
-.skills button.active {
-  background: #001f80;
+.skills button.active.listening {
+  background: #468DBC; /* Listening active background */
   color: #fff;
-  border-color: #001f80;
+  border-color: #468DBC;
+}
+
+.skills button.active.reading {
+  background: #125D27; /* Listening active background */
+  color: #fff;
+  border-color: #125D27;
 }
 
 .create-test {
@@ -76,7 +89,7 @@
 }
 
 .create-test:hover {
-  background: #001f80;
+  background: #DCAC32;
   color: #fff;
-  border-color: #001f80;
+  border-color: #DCAC32;
 }

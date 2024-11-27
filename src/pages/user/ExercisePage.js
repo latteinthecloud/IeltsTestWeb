@@ -41,41 +41,49 @@ const ExercisePage = () => {
   const handleCreateTest = () => {
     if (activeSkill === "listening") {
       navigate("/exercise/create-listening-test");
-    } else if (activeSkill === 'reading') { 
-      navigate("/exercise/create-reading-test")   
-     }
+    } else if (activeSkill === "reading") {
+      navigate("/exercise/create-reading-test");
+    }
   };
 
   return (
     <div className="exercise-page">
       <div className="filters">
+        {/* Tabs for Skills */}
         <div className="skills">
           <button
-            className={activeSkill === "listening" ? "active" : ""}
+            className={`skills-button ${
+              activeSkill === "listening" ? "active listening" : ""
+            }`}
             onClick={() => setActiveSkill("listening")}
           >
             <i className="fas fa-headphones-alt"></i> Listening
           </button>
           <button
-            className={activeSkill === "reading" ? "active" : ""}
+            className={`skills-button ${
+              activeSkill === "reading" ? "active reading" : ""
+            }`}
             onClick={() => setActiveSkill("reading")}
           >
             <i className="fas fa-book"></i> Reading
           </button>
         </div>
+
+        {/* Create Test Button */}
         <button className="create-test" onClick={handleCreateTest}>
           <i className="fas fa-plus"></i> Create Test
         </button>
       </div>
-              {/* Test Cards */}
-              <div className="test-cards">
-          {testData.map((test) => (
-            <TestCard key={test.id} test={test} />
-          ))}
-        </div>
-  
-        {/* Pagination */}
-        <Pagination />
+
+      {/* Test Cards */}
+      <div className="test-cards">
+        {testData.map((test) => (
+          <TestCard key={test.id} test={test} />
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <Pagination />
     </div>
   );
 };

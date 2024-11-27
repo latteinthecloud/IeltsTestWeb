@@ -3,7 +3,7 @@ import "./FilterBar.css";
 import { useNavigate } from "react-router-dom";
 
 const FilterBar = () => {
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeFilter, setActiveFilter] = useState("listening");
   const navigate = useNavigate(); // Hook để điều hướng
 
   const handleFilterClick = (filter) => {

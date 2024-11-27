@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext"; // Import AuthContext for login functionality
 import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
+import authenApi from "../api/authenApi";
+import accountApi from "../api/accountApi";
+
 
 const Login = () => {
   const { login } = useAuth(); // Get login function from AuthContext
@@ -11,18 +14,54 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault(); // Prevent form submission
-
-    // Attempt login with provided email and password
-    const success = login(email, password);
-
-    if (success) {
-      navigate("/"); // Redirect to home on successful login
-    } else {
-      setError(" user@user pass: user or admin@admin pass: admin"); // Show error message
+  const handleLogin = async () => {
+  
+    // Step 1: Clear previous error message
+    setError(null);
+  
+    // Step 2: Check if email or password is missing
+    if (!email || !password) {
+      setError("Email/Password is required!"); // Show error message
+      return; // Stop the function execution if required fields are missing
+    }
+  
+    try {
+      // Step 3: Check if the account exists
+      const accountList = await accountApi.getAll(); // Get all accounts or use another method to get the account
+      const userAccount = accountList.find(account => account.email === email); // Find the account by email
+  
+      if (!userAccount) {
+        // Step 4: If the account does not exist
+        setError("Tài khoản không tồn tại, vui lòng đăng ký.");
+        return;
+      }
+  
+      // Step 5: If account exists, check if password matches
+      if (userAccount.password !== password) {
+        // Incorrect password
+        setError("Sai email/mật khẩu.");
+        return;
+      }
+  
+      // Step 6: Call the login API (if needed) and navigate to home page
+      const loginResponse = await authenApi.login(email, password); // Assuming you have a login API
+  
+      if (loginResponse && loginResponse.success) {
+        // Navigate to the home page after successful login
+        navigate("/");
+      } else {
+        // Handle any other errors returned by the login API
+        setError("An error occurred. Please try again.");
+      }
+  
+    } catch (err) {
+      // Step 7: Catch network or other errors
+      console.error(err);
+      setError("An error occurred. Please try again later.");
     }
   };
+  
+  
 
   return (
     <div className="auth-container">
@@ -54,14 +93,16 @@ const Login = () => {
             <i className="icon-eye"></i>
           </div>
         </div>
-        <button type="submit" className="auth-button">
-          Login
+        <button 
+        className="auth-button"
+        onClick={()=>handleLogin()}
+        >Login
         </button>
         <div className="options">
           <label>
             <input type="checkbox" /> Remember Password
           </label>
-          <a href="/forgot-password">Forgot Password?</a>
+          <a href="/forgot">Forgot Password?</a>
         </div>
         <div className="divider">
           <span>OR</span>

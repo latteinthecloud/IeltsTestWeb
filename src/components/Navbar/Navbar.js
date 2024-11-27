@@ -27,6 +27,9 @@ const Navbar = () => {
             <Link to="/statistic" className="nav-item">
               Statistic
             </Link>
+            <Link to="/statistic" className="nav-item">
+              Profile
+            </Link>
           </>
         )}
       </div>

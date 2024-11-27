@@ -3,11 +3,7 @@
   text-align: center;
 }
 
-.create-reading-test-page h1 {
-  font-size: 36px;
-  color: #001f80;
-  margin-bottom: 30px;
-}
+
 
 .section {
   margin-bottom: 40px;
@@ -41,17 +37,18 @@
 }
 
 .task-button:hover {
-  background: #e8f5e9; /* Light green background on hover */
-  color: #001f80;
-  border-color: #001f80;
+  background: #125D27; /* Light green background on hover */
+  color: white;
+  border-color: #125D27;
 }
 
 .task-button.active {
-  background: #c8e6c9; /* Active task button */
-  border-color: #4caf50;
+  background: #125D27; /* Light green background on hover */
+  color: white;
+  border-color: #125D27;
 }
 
-.can-find {
+/* .can-find {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,7 +60,7 @@
 
 .can-find i {
   color: #4caf50; /* Green check icon */
-}
+/* } */ 
 
 .bottom-create {
   margin-top: 30px;
@@ -96,3 +93,26 @@
     grid-template-columns: 1fr; /* Single column for mobile */
   }
 }
+
+.input-name {
+  margin-bottom: 10px;
+}
+
+.input-name label {
+  font-family: 'Arial', sans-serif; /* Replace with a semi-bold font family if you have one */
+  font-weight: 600; /* Semi-bold */
+  font-size: 40px;
+  margin-right: 20px; /* Space between label and input */
+  display: inline-block;
+}
+
+.name-input {
+  padding: 5px;
+  font-family: 'Arial', sans-serif; /* Ensure input font matches */
+  font-size: 40px;
+  border: none;
+  border-radius: 5px;
+  width: 100%; /* Optional: Ensure full width on larger screens */
+  max-width: 500px; /* Optional: Limit width for better readability */
+}
+
