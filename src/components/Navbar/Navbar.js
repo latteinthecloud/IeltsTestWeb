@@ -36,7 +36,11 @@ const Navbar = () => {
       <div className="auth-links">
         {isAuthenticated ? (
           <>
-            <span className="welcome-message">Welcome, {user?.role}!</span>
+            <img 
+          src="https://www.wikihow.tech/skins/owl/images/wikihow_logo_tech_4.png" 
+          alt="User Avatar" 
+          className="avatar" 
+      />
             <button className="nav-item logout-button" onClick={handleLogout}>
               Logout
             </button>

@@ -44,3 +44,9 @@
 .logout-button:hover {
   text-decoration: underline;
 }
+.avatar {
+  width: 30px; /* Kích thước hình ảnh */
+  height: 30px; /* Kích thước hình ảnh */
+  border-radius: 50%; /* Làm cho hình ảnh thành hình tròn */
+  margin-right: 10px; /* Khoảng cách giữa avatar và text */
+}

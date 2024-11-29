@@ -19,22 +19,12 @@ import AdminUser from "./pages/admin/AdminUser";
 import AListening from "./pages/user/AListening/AListening"
 import ForgotPassword from "./pages/ForgotPassword";
 import accountApi from "./api/accountApi";
+import Verification from "./pages/Verification";
+import _FVerification from "./pages/_FVerification"
+import _FEnterPassword from "./pages/_FEnterPassword"
 
 
-const App = () => {
-  useEffect(() => {
-    const fetchAccount = async () => {
-      try {
-        const accountList = await accountApi.getAll();
-        console.log(accountList);
-      } catch (error) {
-        console.error("Error fetching account data:", error);
-      }
-    };
-    fetchAccount();
-  }, []);
-  
-
+const App = () => {  
   return (
     <AuthProvider>
       <Router>
@@ -58,9 +48,13 @@ const RoutesWrapper = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/forgot" element={<ForgotPassword />} />
+      <Route path="/signup/verify" element={<Verification/>} />
+      <Route path="/verify" element={<_FVerification/>} />
+      <Route path="/enterPassword" element={<_FEnterPassword/>} />
+
 
       {/* Protected Routes for user */}
-      {user?.role === "user" && (
+      {user?.role === "learner" && (
         <>
           <Route
             path="/"

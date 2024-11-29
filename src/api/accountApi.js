@@ -11,9 +11,10 @@ const accountApi ={
 
     },
 
-    create(data){
+    create(email, password, roleID=2){
         const url= '/Account';
-        return axiosClient.post(url,data)
+        const body={email, password, roleID};
+        return axiosClient.post(url,body);
 
     },
     update(id,data){

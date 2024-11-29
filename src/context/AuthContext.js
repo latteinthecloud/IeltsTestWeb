@@ -1,13 +1,8 @@
+import { jwtDecode } from "jwt-decode";
 import React, { createContext, useState, useContext } from "react";
+import authenApi from "../api/authenApi";
 
 const AuthContext = createContext();
-
-// Predefined users
-const USERS = [
-  { username: "admin@admin", password: "admin", role: "admin" },
-  { username: "user@user", password: "user", role: "user" },
-];
-
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Tracks if the user is logged in
   const [user, setUser] = useState(null); // Stores the current user data
@@ -18,12 +13,14 @@ export const AuthProvider = ({ children }) => {
    * @param {string} password - The password entered.
    * @returns {boolean} - Whether login was successful.
    */
-  const login = (username, password) => {
+  const login = async (email, password) => {
     // Validate the provided credentials against predefined USERS
-    const foundUser = USERS.find(
-      (u) => u.username === username && u.password === password
-    );
+   const loginResponse= await authenApi.login(email, password);
+   const decoded = jwtDecode(loginResponse);
+   console.log(decoded);
 
+   const foundUser= {email:decoded.sub, role: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]}
+    console.log(foundUser)
     if (foundUser) {
       setIsAuthenticated(true);
       setUser(foundUser); // Save authenticated user data

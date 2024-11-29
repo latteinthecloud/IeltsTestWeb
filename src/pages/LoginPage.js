@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext"; // Import AuthContext for login functionality
 import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
-import authenApi from "../api/authenApi";
 import accountApi from "../api/accountApi";
+
 
 
 const Login = () => {
@@ -13,45 +13,65 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("email");
+    const savedPassword = localStorage.getItem("password");
+    if (savedEmail && savedPassword) {
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberMe(true); // Automatically check the 'Remember Me' box
+    }
+  }, []);
   const handleLogin = async () => {
-  
+
     // Step 1: Clear previous error message
     setError(null);
   
-    // Step 2: Check if email or password is missing
-    if (!email || !password) {
-      setError("Email/Password is required!"); // Show error message
-      return; // Stop the function execution if required fields are missing
+     // Step 2: Check if email or password is missing
+     if (!email) {
+      console.log("Email is required!"); // Log specific error for email
+      setError("Email is required!"); // Show error message for email
+      return; // Stop execution if email is missing
+    }
+
+    if (!password) {
+      console.log("Password is required!"); // Log specific error for password
+      setError("Password is required!"); // Show error message for password
+      return; // Stop execution if password is missing
     }
   
     try {
-      // Step 3: Check if the account exists
-      const accountList = await accountApi.getAll(); // Get all accounts or use another method to get the account
+
+      // Step 3: Get the list of accounts from the API
+      const accountList = await accountApi.getAll(); // Assuming accountApi.getAll() fetches all accounts
       const userAccount = accountList.find(account => account.email === email); // Find the account by email
-  
+
       if (!userAccount) {
         // Step 4: If the account does not exist
-        setError("Tài khoản không tồn tại, vui lòng đăng ký.");
+        setError("Account doesn't exist, please sign up!.");
         return;
       }
   
-      // Step 5: If account exists, check if password matches
-      if (userAccount.password !== password) {
-        // Incorrect password
-        setError("Sai email/mật khẩu.");
-        return;
-      }
+      // Step 5: Call the login API (if needed) and navigate to home page
+      const loginResponse = await login(email, password); // Assuming you have a login API
+      console.log(loginResponse)
   
-      // Step 6: Call the login API (if needed) and navigate to home page
-      const loginResponse = await authenApi.login(email, password); // Assuming you have a login API
-  
-      if (loginResponse && loginResponse.success) {
+      if (loginResponse) {
         // Navigate to the home page after successful login
+            // If login is successful, check "Remember Me" option
+            if (rememberMe) {
+              localStorage.setItem("email", email);
+              localStorage.setItem("password", password);
+            } else {
+              localStorage.removeItem("email");
+              localStorage.removeItem("password");
+            }
         navigate("/");
       } else {
         // Handle any other errors returned by the login API
-        setError("An error occurred. Please try again.");
+        setError("Wrong password, please try again!");
       }
   
     } catch (err) {
@@ -67,7 +87,7 @@ const Login = () => {
     <div className="auth-container">
       <h2>Login</h2>
       {error && <p className="error">{error}</p>} {/* Display error message */}
-      <form className="auth-form" onSubmit={handleLogin}>
+      <div className="auth-form">
         <div className="form-group">
           <label>Email:</label>
           <div className="input-wrapper">
@@ -100,7 +120,11 @@ const Login = () => {
         </button>
         <div className="options">
           <label>
-            <input type="checkbox" /> Remember Password
+            <input 
+            type="checkbox" 
+            checked={rememberMe}
+            onChange={() => setRememberMe(!rememberMe)}
+            /> Remember Password
           </label>
           <a href="/forgot">Forgot Password?</a>
         </div>
@@ -110,7 +134,7 @@ const Login = () => {
         <p>
           Don’t have an account? <a href="/signup">Sign Up</a>
         </p>
-      </form>
+      </div>
     </div>
   );
 };
