@@ -4,49 +4,48 @@ import { useNavigate } from "react-router-dom";
 
 const FilterBar = () => {
   const [activeFilter, setActiveFilter] = useState("all");
-  const navigate = useNavigate(); // Hook để điều hướng
+  const navigate = useNavigate(); // Hook to handle navigation
 
   const handleFilterClick = (filter) => {
-    setActiveFilter(filter); // Cập nhật trạng thái
+    setActiveFilter(filter); // Update the active filter state
     if (filter === "listening") {
-      navigate("/listening"); // Điều hướng đến trang "Listening"
+      navigate("/listening"); // Navigate to "Listening" page
     } else if (filter === "reading") {
-      navigate("/reading"); // Điều hướng đến trang "Reading"
+      navigate("/reading"); // Navigate to "Reading" page
     } else {
-      navigate("/"); // Điều hướng về trang chính (All Skills)
+      navigate("/"); // Navigate to the main "All Skills" page
     }
   };
 
   return (
     <div className="filter-bar">
-  <div className="filter-buttons">
-    <button
-      className={`filter-button ${
-        activeFilter === "all" ? "active all-active" : "all-active"
-      }`}
-      onClick={() => handleFilterClick("all")}
-    >
-      <i className="icon-all-skills"></i> All Skills
-    </button>
-    <button
-      className={`filter-button ${
-        activeFilter === "listening" ? "active listening-active" : "listening-active"
-      }`}
-      onClick={() => handleFilterClick("listening")}
-    >
-      <i className="fas fa-headphones-alt"></i> Listening
-    </button>
-    <button
-      className={`filter-button ${
-        activeFilter === "reading" ? "active reading-active" : "reading-active"
-      }`}
-      onClick={() => handleFilterClick("reading")}
-    >
-      <i className="fas fa-book"></i> Reading
-    </button>
-  </div>
-</div>
-
+      <div className="filter-buttons">
+        <button
+          className={`filter-button ${
+            activeFilter === "all" ? "active all-active" : "all-active"
+          }`}
+          onClick={() => handleFilterClick("all")}
+        >
+          <i className="fa-solid fa-border-all"></i> All Skills
+        </button>
+        <button
+          className={`filter-button ${
+            activeFilter === "listening" ? "active listening-active" : "listening-active"
+          }`}
+          onClick={() => handleFilterClick("listening")}
+        >
+          <i className="fas fa-headphones-alt"></i> Listening
+        </button>
+        <button
+          className={`filter-button ${
+            activeFilter === "reading" ? "active reading-active" : "reading-active"
+          }`}
+          onClick={() => handleFilterClick("reading")}
+        >
+          <i className="fas fa-book"></i> Reading
+        </button>
+      </div>
+    </div>
   );
 };
 
