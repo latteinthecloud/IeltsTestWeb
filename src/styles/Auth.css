@@ -34,6 +34,7 @@
   
   .input-wrapper {
     position: relative;
+ 
   }
   
   .input-wrapper input {
@@ -42,15 +43,21 @@
     border: 1px solid #ddd;
     border-radius: 20px;
     font-size: 14px;
+
   }
+
+  .input[type="password"] {
+    -webkit-appearance: none; /* Ẩn mắt nếu thuộc tính này được sử dụng */
+    appearance: none;
+}
+
   
-  .input-wrapper .icon-eye {
+  .input-wrapper i {
     position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #999;
+    right: 10px; /* Đặt icon ở bên phải của ô input */
+    top: 50%; /* Đặt icon ở giữa theo chiều dọc */
+    transform: translateY(-50%); /* Căn giữa icon theo chiều dọc */
+    cursor: pointer; /* Thêm con trỏ chuột khi hover vào icon */
   }
   
   .auth-button {
@@ -80,6 +87,7 @@
     text-decoration: none;
   }
   
+  
   .divider {
     display: flex;
     align-items: center;
@@ -91,7 +99,7 @@
     font-size: 12px;
     color: #999;
   }
-  
+
   .divider:before,
   .divider:after {
     content: "";
@@ -99,7 +107,7 @@
     height: 1px;
     background: #ddd;
   }
-  
+   
   p {
     font-size: 14px;
   }

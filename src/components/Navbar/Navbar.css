@@ -19,34 +19,62 @@
 }
 
 .nav-item {
-  color: white;
   text-decoration: none;
+  color: white;
+  padding: 5px 15px;
   font-size: 16px;
+  transition: all 0.3s ease;
 }
 
 .nav-item:hover {
-  text-decoration: underline;
+  background-color: #0056b3;
+  border-radius: 5px;
 }
 
-.welcome-message {
+.avatar-container {
+  display: flex; /* Align items horizontally */
+  align-items: center; /* Vertically center the avatar and email */
+  cursor: pointer;
+  margin-right: 5px;
+  position: relative; /* Ensure dropdown is positioned relative to this container */
+  width: max-content; /* Ensure the container is only as wide as the content */
+}
+
+.avatar-container img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; /* Make the image circular */
+  margin-right: 10px; /* Space between avatar and email */
+}
+
+.username {
   font-size: 14px;
-  color: #f0c040;
+  color: white;
+  margin-left: 10px; /* Optional: add some space between the avatar and email */
 }
 
-.logout-button {
+.dropdown-menu {
+  position: absolute;
+  top: 40px; /* Adjust this value as needed */
+  left: 0;
+  width: 100%; /* Make the dropdown width equal to the avatar container's width */
+  background-color: #ffffff;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Ensure dropdown is above other elements */
+}
+
+/* Optional: Hover effect for the logout button in the dropdown */
+.dropdown-menu button {
   background: none;
   border: none;
-  color: white;
-  font-size: 16px;
+  color: #333;
+  font-size: 14px;
   cursor: pointer;
 }
 
-.logout-button:hover {
+.dropdown-menu button:hover {
   text-decoration: underline;
-}
-.avatar {
-  width: 30px; /* Kích thước hình ảnh */
-  height: 30px; /* Kích thước hình ảnh */
-  border-radius: 50%; /* Làm cho hình ảnh thành hình tròn */
-  margin-right: 10px; /* Khoảng cách giữa avatar và text */
 }

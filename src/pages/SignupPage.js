@@ -11,6 +11,18 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility
+  };
+  const togglePasswordVisibility1 = () => {
+    setShowPassword1(!showPassword1); // Toggle password visibility
+  };
+
+
 
   // Regex to validate email format
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -57,7 +69,7 @@ const Register = () => {
   };
   return (
     <div className="auth-container">
-      <h2>Enter Password</h2>
+      <h2>Sign Up</h2>
       <form className="auth-form" onSubmit={handleSubmit}>
         {/* Display error message if any */}
         {error && <div className="error-message">{error}</div>}
@@ -81,12 +93,20 @@ const Register = () => {
           <label>Password:</label>
           <div className="input-wrapper">
             <input
-              type="password"
+               type={showPassword ? "text" : "password"} // Toggle between password and text
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+
+              <i
+                       className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
+                       onClick={togglePasswordVisibility} // On click, toggle password visibility
+                       role="button"
+                       aria-label={showPassword ? "Hide password" : "Show password"}
+             >
+             </i>
           </div>
         </div>
 
@@ -95,12 +115,20 @@ const Register = () => {
           <label>Confirm Password:</label>
           <div className="input-wrapper">
             <input
-              type="password"
+              type={showPassword1 ? "text" : "password"} // Toggle between password and text
               placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
+
+            <i
+              className={showPassword1 ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
+              onClick={togglePasswordVisibility1} // On click, toggle password visibility
+              role="button"
+              aria-label={showPassword1 ? "Hide password" : "Show password"}
+             >
+             </i>
           </div>
         </div>
 
@@ -108,7 +136,7 @@ const Register = () => {
         type="submit" 
         className="auth-button" 
         disabled={loading} >
-          Verify
+          Sign Up
         </button>
       </form>
     </div>

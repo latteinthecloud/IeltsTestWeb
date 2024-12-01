@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth, AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -9,19 +8,16 @@ import ExercisePage from "./pages/user/ExercisePage";
 import StatisticPage from "./pages/user/StatisticPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
-import FilterBar from "./pages/user/AListening/components/FilterBar/FilterBar";
 import CreateListeningTestPage from "./pages/user/CreateListeningTestPage";
 import CreateReadingTestPage from "./pages/user/CreateReadingTestPage";
 import AdminPage from "./pages/admin/AdminPage";
 import AdminStatistics from "./pages/admin/AdminStatistics";
 import AdminTest from "./pages/admin/AdminTest";
 import AdminUser from "./pages/admin/AdminUser";
-import AListening from "./pages/user/AListening/AListening"
 import ForgotPassword from "./pages/ForgotPassword";
-import accountApi from "./api/accountApi";
 import Verification from "./pages/Verification";
-import _FVerification from "./pages/_FVerification"
-import _FEnterPassword from "./pages/_FEnterPassword"
+import FEnterPassword from "./pages/FEnterPassword"
+import FVerification from "./pages/FVerification"
 
 
 const App = () => {  
@@ -49,8 +45,8 @@ const RoutesWrapper = () => {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/signup/verify" element={<Verification/>} />
-      <Route path="/verify" element={<_FVerification/>} />
-      <Route path="/enterPassword" element={<_FEnterPassword/>} />
+      <Route path="/verify" element={<FEnterPassword/>} />
+      <Route path="/enterPassword" element={<FVerification/>} />
 
 
       {/* Protected Routes for user */}
@@ -61,14 +57,6 @@ const RoutesWrapper = () => {
             element={
               <ProtectedRoute>
                 <MainContent />
-              </ProtectedRoute>
-            }
-          />
-           <Route
-            path="/listening"
-            element={
-              <ProtectedRoute>
-                <AListening/>
               </ProtectedRoute>
             }
           />

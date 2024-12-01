@@ -10,7 +10,7 @@ const TestTabs = () => {
         className={activeTab === 'all' ? 'active' : ''}
         onClick={() => setActiveTab('all')}
       >
-        All Test
+       <i className="fas fa-check-double"></i> All Test
       </button>
       <button
         className={activeTab === 'academic' ? 'active' : ''}

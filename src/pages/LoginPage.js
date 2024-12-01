@@ -9,6 +9,7 @@ import accountApi from "../api/accountApi";
 const Login = () => {
   const { login } = useAuth(); // Get login function from AuthContext
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +25,11 @@ const Login = () => {
       setRememberMe(true); // Automatically check the 'Remember Me' box
     }
   }, []);
+  
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility
+  };
+
   const handleLogin = async () => {
 
     // Step 1: Clear previous error message
@@ -81,7 +87,6 @@ const Login = () => {
     }
   };
   
-  
 
   return (
     <div className="auth-container">
@@ -101,18 +106,25 @@ const Login = () => {
           </div>
         </div>
         <div className="form-group">
-          <label>Password:</label>
-          <div className="input-wrapper">
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Update password state
-              required
-            />
-            <i className="icon-eye"></i>
-          </div>
-        </div>
+  <label>Password:</label>
+  <div className="input-wrapper">
+    <input
+      type={showPassword ? "text" : "password"} // Toggle between password and text
+      placeholder="Enter your password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+    {/* Eye icon positioned outside the input */}
+    <i
+      className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
+      onClick={togglePasswordVisibility} // On click, toggle password visibility
+      role="button"
+      aria-label={showPassword ? "Hide password" : "Show password"}
+    />
+  </div>
+</div>
+
         <button 
         className="auth-button"
         onClick={()=>handleLogin()}

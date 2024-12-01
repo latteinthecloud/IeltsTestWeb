@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./TestGroups.css";
-import Pagination from "../../../../../components/Pagination/Pagination";
+import "../TestGroups/TestGroups.css";
+import Pagination from "../Pagination/Pagination";
 
 const testData = [
   {
@@ -109,7 +109,7 @@ const testData = [
 
 const itemsPerPage = 3;
 
-const TestGroups = () => {
+const TestGroupsLis = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchYear, setSearchYear] = useState("");
   const [sortOrder, setSortOrder] = useState("newest");
@@ -140,14 +140,18 @@ const TestGroups = () => {
 
   return (
     <div className="test-groups">
-      <div className="controls">
+      <div className="control">
+      <div className="search-container">
+      <i className="fas fa-magnifying-glass search-icon"></i>
         <input
           type="text"
-          placeholder="Search by year..."
+          placeholder="Search by year... "
           value={searchYear}
           onChange={handleSearch}
-          className="search-input"
+          className="search-input-user"
         />
+      </div>
+
         <select
           value={sortOrder}
           onChange={handleSortChange}
@@ -157,7 +161,7 @@ const TestGroups = () => {
           <option value="oldest">Oldest</option>
         </select>
       </div>
-
+  
       {currentTestData.map((group, index) => (
         <div key={index} className="test-group">
           <h3>IELTS Listening Mock Test {group.year}</h3>
@@ -181,7 +185,7 @@ const TestGroups = () => {
           </div>
         </div>
       ))}
-
+  
       <Pagination
         itemsPerPage={itemsPerPage}
         totalItems={sortedData.length}
@@ -190,6 +194,7 @@ const TestGroups = () => {
       />
     </div>
   );
+  
 };
 
-export default TestGroups;
+export default TestGroupsLis;

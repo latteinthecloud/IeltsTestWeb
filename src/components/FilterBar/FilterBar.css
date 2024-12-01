@@ -1,4 +1,10 @@
 /* Các thuộc tính chung cho các nút filter */
+.filter-buttons{
+  display: flex;
+  justify-content: start; /* Distribute buttons evenly with space around */
+  align-items: center; /* Center items vertically */
+ 
+}
 .filter-buttons .filter-button {
   display: flex;
   align-items: center;
@@ -11,6 +17,7 @@
   color: black; /* Màu chữ mặc định */
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  margin-right: 10px;
 }
 
 /* Hover Styles cho tất cả các nút */
@@ -20,17 +27,16 @@
 
 /* Hover cho từng nút */
 .filter-buttons .all-active:hover {
-  background-image: linear-gradient(rgb(41, 69, 99) 0%, rgb(29, 49, 70) 100%);
-  /* border-color: #001f80; */
+  background: linear-gradient(rgb(41, 69, 99) 0%, rgb(29, 49, 70) 100%);
 }
 
 .filter-buttons .listening-active:hover {
-  background-image: linear-gradient(180deg, #000, #468DBC); /* Gradient từ đen sang xanh dương */
+  background: linear-gradient(180deg, #33B2C7 0%, #268695 100%);
   border-color: #468DBC;
 }
 
 .filter-buttons .reading-active:hover {
-  background-image: linear-gradient(180deg, #000, #125D27); /* Gradient từ đen sang xanh lá */
+  background: linear-gradient(180deg, #337845 0%, #265A35 100%);
   border-color: #125D27;
 }
 
@@ -42,13 +48,15 @@
 
 /* Active State cho từng nút */
 .filter-buttons .filter-button.active.all-active {
-  background-image: linear-gradient(rgb(41, 69, 99) 0%, rgb(29, 49, 70) 100%)
+  background: linear-gradient(45deg, rgb(41, 69, 99), rgb(29, 49, 70));
 }
 
 .filter-buttons .filter-button.active.listening-active {
-  background-image: linear-gradient(180deg, #000, #468DBC); /* Gradient từ đen sang xanh dương */
+  background: linear-gradient(180deg, #33B2C7 0%, #268695 100%);
+  border-color: transparent;
 }
 
 .filter-buttons .filter-button.active.reading-active {
-  background-image: linear-gradient(180deg, #000, #125D27); /* Gradient từ đen sang xanh lá */
+  background: linear-gradient(180deg, #337845 0%, #265A35 100%);
+  border-color: transparent;
 }

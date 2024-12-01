@@ -11,6 +11,16 @@ const EnterPassword = () => {
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState(""); // To store error messages
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const togglePasswordVisibility1 = () => {
+    setShowPassword1(!showPassword1); // Toggle password visibility
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility
+  };
+
   // Retrieve the email from the location state
   const email = location.state?.email;
 
@@ -43,12 +53,18 @@ const EnterPassword = () => {
           <label>New Password:</label>
           <div className="input-wrapper">
             <input
-              type="password"
-              placeholder="Enter new password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+                 type={showPassword ? "text" : "password"} // Toggle between password and text
+                 placeholder="Enter your password"
+                 value={password}
+                 onChange={(e) => setPassword(e.target.value)}
+                 required
             />
+             <i
+              className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
+              onClick={togglePasswordVisibility} // On click, toggle password visibility
+              role="button"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+    />
           </div>
         </div>
 
@@ -56,12 +72,19 @@ const EnterPassword = () => {
           <label>Confirm Password:</label>
           <div className="input-wrapper">
             <input
-              type="password"
-              placeholder="Confirm new password"
+              type={showPassword1 ? "text" : "password"} // Toggle between password and text
+              placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
+             <i
+             
+              className={showPassword1 ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
+              onClick={togglePasswordVisibility1} // On click, toggle password visibility
+              role="button"
+              aria-label={showPassword1 ? "Hide password" : "Show password"}
+    />
           </div>
         </div>
 

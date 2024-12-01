@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react"; 
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Navbar.css";
@@ -6,11 +6,50 @@ import "./Navbar.css";
 const Navbar = () => {
   const { isAuthenticated, logout, user } = useAuth(); // Access auth state and functions
   const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false); // Track dropdown state
+  const dropdownRef = useRef(null); // Ref for dropdown menu
+  const avatarContainerRef = useRef(null); // Ref for avatar container
 
+  // Logout function
   const handleLogout = () => {
     logout(); // Log the user out
     navigate("/login"); // Redirect to login page
   };
+
+  // Toggle dropdown visibility on avatar container click
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen); // Toggle dropdown state on click
+  };
+
+  // Show dropdown when hover over the avatar container
+  const showDropdown = () => {
+    setDropdownOpen(true);
+  };
+
+  // Hide dropdown when mouse leaves the dropdown menu
+  const hideDropdown = () => {
+    if (!dropdownRef.current.contains(document.activeElement)) {
+      setDropdownOpen(false);
+    }
+  };
+
+  // Handle clicks outside the dropdown to close it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close dropdown if clicked outside avatar container or dropdown menu
+      if (
+        dropdownRef.current && !dropdownRef.current.contains(event.target) &&
+        avatarContainerRef.current && !avatarContainerRef.current.contains(event.target)
+      ) {
+        setDropdownOpen(false); // Close dropdown if clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside); // Listen for clicks outside
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // Cleanup on unmount
+    };
+  }, []);
 
   return (
     <nav className="navbar">
@@ -27,33 +66,47 @@ const Navbar = () => {
             <Link to="/statistic" className="nav-item">
               Statistic
             </Link>
-            <Link to="/statistic" className="nav-item">
-              Profile
-            </Link>
           </>
         )}
       </div>
       <div className="auth-links">
         {isAuthenticated ? (
           <>
-            <img 
-          src="https://www.wikihow.tech/skins/owl/images/wikihow_logo_tech_4.png" 
-          alt="User Avatar" 
-          className="avatar" 
-      />
-            <button className="nav-item logout-button" onClick={handleLogout}>
-              Logout
-            </button>
+            <div 
+              ref={avatarContainerRef} 
+              className="avatar-container"
+              onClick={toggleDropdown} // Toggle dropdown on click
+              onMouseEnter={showDropdown} // Show dropdown on hover
+            >
+              <img 
+                src="https://www.wikihow.tech/skins/owl/images/wikihow_logo_tech_4.png" 
+                alt="User Avatar" 
+                className="avatar" 
+              />
+              <span className="username">{user?.email}</span> {/* Display user's email */}
+              {/* Dropdown menu */}
+              {dropdownOpen && (
+                <div 
+                  ref={dropdownRef} 
+                  className="dropdown-menu"
+                  onMouseLeave={hideDropdown} // Hide dropdown on mouse leave from menu
+                >
+                  <button onClick={handleLogout} className="logout-button">
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <>
-            <Link to="/signup" className="nav-item">
-              Sign up
-            </Link>
-            <Link to="/login" className="nav-item">
-              Login
-            </Link>
-          </>
+          <Link to="/signup" className="nav-item">
+            Sign up
+          </Link>
+          <Link to="/login" className="nav-item">
+            Login
+          </Link>
+        </>
         )}
       </div>
     </nav>
