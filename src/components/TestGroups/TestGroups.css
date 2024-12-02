@@ -31,8 +31,8 @@
 }
 
 .cover-placeholder {
-  width: 300px;
-  height: 300px;
+  width: 150px;
+  height: 150px;
   border: 1px solid #ddd;
   border-radius: 10px;
   display: flex;
@@ -126,3 +126,21 @@
   color: #333; /* Màu của icon */
   pointer-events: none; /* Giúp không ảnh hưởng đến việc gõ trong input */
 }
+
+.test-group-item {
+  display: flex;
+  align-items: center; /* Align items vertically at the center */
+  gap: 30px; /* Add space between each item */
+  padding-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add soft shadow */
+  border-radius: 10px; /* Optional: rounded corners */
+  background-color: #fff; /* Optional: background color for the item */
+}
+
+.test-group-list{
+  
+  display: flex; /* Display items using Flexbox */
+  flex-direction: column; /* Align items vertically (in a column) */
+  gap: 30px; /* Add 30px space between each item */
+}
+

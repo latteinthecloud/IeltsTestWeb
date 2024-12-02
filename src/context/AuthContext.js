@@ -1,57 +1,67 @@
 import { jwtDecode } from "jwt-decode";
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import authenApi from "../api/authenApi";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Tracks if the user is logged in
-  const [user, setUser] = useState(null); // Stores the current user data
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // New loading state
 
-  /**
-   * Logs in a user by validating credentials.
-   * @param {string} email - The email entered.
-   * @param {string} password - The password entered.
-   * @returns {boolean} - Whether login was successful.
-   */
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        if (decoded.exp * 1000 < Date.now()) {
+          console.log("Token expired");
+          logout();
+        } else {
+          setIsAuthenticated(true);
+          setUser({
+            email: decoded.sub,
+            role: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+          });
+        }
+      } catch (error) {
+        console.error("Invalid token:", error);
+        logout();
+      }
+    }
+    setLoading(false); // Set loading to false once initialization is complete
+  }, []);
+
   const login = async (email, password) => {
     try {
       const loginResponse = await authenApi.login(email, password);
-      const decoded = jwtDecode(loginResponse); // Decode the JWT token
-      console.log(decoded);
-
+      const decoded = jwtDecode(loginResponse);
       const foundUser = {
-        email: decoded.sub, // Store the email from the JWT token
-        role: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"], // Store role
+        email: decoded.sub,
+        role: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
       };
-      console.log(foundUser);
-      if (foundUser) {
-        setIsAuthenticated(true);
-        setUser(foundUser); // Save authenticated user data
-        return true;
-      } else {
-        setIsAuthenticated(false);
-        setUser(null);
-        return false; // Return false if authentication fails
-      }
+
+      setIsAuthenticated(true);
+      setUser(foundUser);
+      localStorage.setItem("authToken", loginResponse);
+
+      return { success: true };
     } catch (error) {
       setIsAuthenticated(false);
       setUser(null);
-      console.error(error);
-      return false;
+      localStorage.removeItem("authToken");
+      return { success: false, message: error.message };
     }
   };
 
-  /**
-   * Logs out the current user.
-   */
   const logout = () => {
     setIsAuthenticated(false);
-    setUser(null); // Clear user data on logout
+    setUser(null);
+    localStorage.removeItem("authToken");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

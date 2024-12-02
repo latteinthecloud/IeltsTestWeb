@@ -1,157 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../TestGroups/TestGroups.css";
 import Pagination from "../Pagination/Pagination";
 import Cover from '../../assets/Cover.png';
-
-const testData = [
-  {
-    year: 2019,
-    months: [
-      { name: "January", testsTaken: 323 },
-      { name: "February", testsTaken: 1235875 },
-      { name: "March", testsTaken: 42 },
-      { name: "April", testsTaken: 124 },
-      { name: "May", testsTaken: 421 },
-      { name: "June", testsTaken: 1235875 },
-      { name: "July", testsTaken: 2312 },
-      { name: "August", testsTaken: 1235875 },
-      { name: "September", testsTaken: 4241 },
-      { name: "October", testsTaken: 1231 },
-      { name: "February", testsTaken: 42124 },
-      { name: "March", testsTaken: 4124 },
-    ],
-  },
-  {
-    year: 2020,
-    months: [
-      { name: "January", testsTaken: 757 },
-      { name: "February", testsTaken: 656 },
-      { name: "March", testsTaken: 1235875 },
-      { name: "April", testsTaken: 5335 },
-      { name: "May", testsTaken: 1235875 },
-      { name: "June", testsTaken: 242 },
-      { name: "July", testsTaken: 124 },
-      { name: "August", testsTaken: 33 },
-      { name: "September", testsTaken: 877 },
-      { name: "October", testsTaken: 7676 },
-      { name: "February", testsTaken: 6565 },
-      { name: "March", testsTaken: 223424 },
-    ],
-  },
-  {
-    year: 2021,
-    months: [
-      { name: "January", testsTaken: 1235875 },
-      { name: "February", testsTaken: 2434252 },
-      { name: "March", testsTaken: 1235875 },
-      { name: "April", testsTaken: 1235875 },
-      { name: "May", testsTaken: 234234 },
-      { name: "June", testsTaken: 24342 },
-      { name: "July", testsTaken: 42343 },
-      { name: "August", testsTaken: 1235875 },
-      { name: "September", testsTaken: 1235875 },
-      { name: "October", testsTaken: 423 },
-      { name: "February", testsTaken: 63 },
-      { name: "March", testsTaken: 8786 },
-    ],
-  },
-  {
-    year: 2022,
-    months: [
-      { name: "January", testsTaken: 5325235 },
-      { name: "February", testsTaken: 234243 },
-      { name: "March", testsTaken: 1235875 },
-      { name: "April", testsTaken: 23423 },
-      { name: "May", testsTaken: 234342 },
-      { name: "June", testsTaken: 1235875 },
-      { name: "July", testsTaken: 535 },
-      { name: "August", testsTaken: 4545223 },
-      { name: "September", testsTaken: 243234 },
-      { name: "October", testsTaken: 5235235 },
-      { name: "February", testsTaken: 234243 },
-      { name: "March", testsTaken: 535252 },
-    ],
-  },
-  {
-    year: 2023,
-    months: [
-      { name: "January", testsTaken: 2345 },
-      { name: "February", testsTaken: 333232 },
-      { name: "March", testsTaken: 1235875 },
-      { name: "April", testsTaken: 1235875 },
-      { name: "May", testsTaken: 1412 },
-      { name: "June", testsTaken: 124 },
-      { name: "July", testsTaken: 1235875 },
-      { name: "August", testsTaken: 121 },
-      { name: "September", testsTaken: 1235875 },
-      { name: "October", testsTaken: 1235875 },
-      { name: "February", testsTaken: 312 },
-      { name: "March", testsTaken: 4242 },
-    ],
-  },
-  {
-    year: 2024,
-    months: [
-      { name: "January", testsTaken: 223 },
-      { name: "February", testsTaken: 444 },
-      { name: "March", testsTaken: 1235875 },
-      { name: "April", testsTaken: 1235875 },
-      { name: "May", testsTaken: 12312 },
-      { name: "June", testsTaken: 1235875 },
-      { name: "July", testsTaken: 1312 },
-      { name: "August", testsTaken: 1235875 },
-      { name: "September", testsTaken: 4242 },
-      { name: "October", testsTaken: 123 },
-      { name: "February", testsTaken: 12 },
-      { name: "March", testsTaken: 2222 },
-    ],
-  },
-];
+import testApi from "../../api/testApi";
 
 const itemsPerPage = 3;
 
 const TestGroups = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchYear, setSearchYear] = useState("");
-  const [sortOrder, setSortOrder] = useState("newest");
+  const [searchTerm, setSearchTerm] = useState(""); // Store the search term (name or year)
+  const [sortOrder, setSortOrder] = useState("newest"); // Store sort order
+  const [testData, setTestData] = useState([]); // Store all test data
+  const [filteredData, setFilteredData] = useState([]); // Store filtered data (based on search)
 
-  const filteredData = testData.filter((group) =>
-    group.year.toString().includes(searchYear)
-  );
+  useEffect(() => {
+    // Fetch all test data once on mount for sorting purposes
+    const fetchData = async () => {
+      try {
+        const response = await testApi.getAll();
+        if (Array.isArray(response)) {
+          setTestData(response);
+          setFilteredData(response); // Initially, filtered data matches all data
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching test data:", error);
+      }
+    };
 
-  const sortedData = filteredData.sort((a, b) =>
-    sortOrder === "newest" ? b.year - a.year : a.year - b.year
-  );
+    fetchData();
+  }, []);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentTestData = sortedData.slice(indexOfFirstItem, indexOfLastItem);
+  useEffect(() => {
+    const fetchFilteredData = async () => {
+      try {
+        const response = await testApi.find(searchTerm);
+        if (Array.isArray(response)) {
+          setFilteredData(response);
+        } else {
+          console.error("Invalid response format:", response);
+          setFilteredData([]);
+        }
+      } catch (error) {
+        console.error("Error fetching filtered test data:", error);
+      }
+    };
 
-  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+    if (searchTerm.trim()) {
+      fetchFilteredData();
+    } else {
+      // If no search term, reset filtered data to all testData
+      setFilteredData(testData);
+    }
+  }, [searchTerm]); // Only runs when searchTerm changes
 
-  const handleSearch = (e) => {
-    setSearchYear(e.target.value);
-    setCurrentPage(1);
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to the first page when search term changes
   };
 
   const handleSortChange = (e) => {
-    setSortOrder(e.target.value);
-    setCurrentPage(1);
+    const newSortOrder = e.target.value;
+    setSortOrder(newSortOrder);
+    setCurrentPage(1); // Reset to the first page when sort order changes
+
+    const sortedData = [...filteredData].sort((a, b) => {
+      if (newSortOrder === "newest") {
+        return b.yearEdition - a.yearEdition;
+      } else {
+        return a.yearEdition - b.yearEdition;
+      }
+    });
+
+    setFilteredData(sortedData);
   };
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="test-groups">
       <div className="control">
-      <div className="search-container">
-      <i className="fas fa-magnifying-glass search-icon"></i>
-        <input
-          type="text"
-          placeholder="Search by year... "
-          value={searchYear}
-          onChange={handleSearch}
-          className="search-input-user"
-        />
-      </div>
+        <div className="search-container">
+          <i className="fas fa-magnifying-glass search-icon"></i>
+          <input
+            type="text"
+            placeholder="Search by name"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="search-input-user"
+          />
+        </div>
 
         <select
           value={sortOrder}
@@ -162,40 +106,28 @@ const TestGroups = () => {
           <option value="oldest">Oldest</option>
         </select>
       </div>
-  
-      {currentTestData.map((group, index) => (
-        <div key={index} className="test-group">
-          <h3>IELTS Mock Test {group.year}</h3>
-          <div className="test-layout">
-            <div className="cover">
-              <div className="cover-placeholder">
-                 <img className="cover-placeholder" src={Cover} alt={`Cover for ${group.year}`} />
-              </div>
-            </div>
-            <div className="months">
-              {group.months.map((month, idx) => (
-                <div key={idx} className="month">
-                  <p className="month-name">{month.name}</p>
-                  <p className="tests-taken">
-                    <i className="icon-lightning"></i>{" "}
-                    {month.testsTaken.toLocaleString()} tests taken
-                  </p>
-                </div>
-              ))}
+
+      <div className="test-group-list">
+        {currentItems.map((test, index) => (
+          <div key={index} className="test-group-item">
+            <img src={Cover} alt="Cover" className="cover-placeholder" />
+            <div className="test-group-details">
+              <strong>Name:</strong> {test.name} <br />
+              <strong>Year Edition:</strong> {test.yearEdition} <br />
+              <strong>Completed Users:</strong> {test.userCompletedNum}
             </div>
           </div>
-        </div>
-      ))}
-  
+        ))}
+      </div>
+
       <Pagination
-        itemsPerPage={itemsPerPage}
-        totalItems={sortedData.length}
         currentPage={currentPage}
+        totalItems={filteredData.length}
+        itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
       />
     </div>
   );
-  
 };
 
 export default TestGroups;

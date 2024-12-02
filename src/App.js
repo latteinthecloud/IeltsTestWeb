@@ -36,7 +36,12 @@ const App = () => {
 };
 
 const RoutesWrapper = () => {
-  const { user } = useAuth(); // Access the logged-in user's data
+  const { user, loading } = useAuth(); // Access loading state
+
+  if (loading) {
+    // Show a loading spinner or placeholder
+    return <div>Loading...</div>;
+  }
 
   return (
     <Routes>
@@ -44,10 +49,9 @@ const RoutesWrapper = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/forgot" element={<ForgotPassword />} />
-      <Route path="/signup/verify" element={<Verification/>} />
-      <Route path="/verify" element={<FEnterPassword/>} />
-      <Route path="/enterPassword" element={<FVerification/>} />
-
+      <Route path="/signup/verify" element={<Verification />} />
+      <Route path="/verify" element={<FEnterPassword />} />
+      <Route path="/enterPassword" element={<FVerification />} />
 
       {/* Protected Routes for user */}
       {user?.role === "learner" && (
@@ -60,7 +64,6 @@ const RoutesWrapper = () => {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/exercise"
             element={
