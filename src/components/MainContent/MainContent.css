@@ -1,13 +1,182 @@
 .main-content {
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  .main-content h2 {
-    font-size: 18px;
-    color: #333;
-  }
-  .main-content p {
-    color: #666;
-    font-size: 14px;
-  }
-  
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.main-content h2 {
+  font-size: 18px;
+  color: #333;
+}
+
+.main-content p {
+  color: #666;
+  font-size: 14px;
+}
+
+
+/* test group css */
+
+.test-groups {
+  margin-top: 20px;
+  align-content: start;
+}
+
+.test-group {
+  margin-bottom: 40px;
+}
+
+.test-group h3 {
+  font-size: 20px;
+  color: #001f80;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.test-layout {
+  display: flex;
+  gap: 30px;
+  /* Space between left and right sections */
+  align-items: flex-start;
+  /* Align items at the top */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Thêm bóng đổ */
+
+}
+
+.cover {
+  flex: 0 0 150px;
+  /* Fixed width for the cover */
+}
+
+.cover-placeholder {
+  width: 150px;
+  height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9f9f9;
+  font-size: 14px;
+  color: #666;
+}
+
+.months {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 columns for the months */
+  gap: 15px;
+  /* Space between grid items */
+  flex: 1;
+}
+
+.month {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: left;
+  background: white;
+  transition: all 0.3s;
+}
+
+.month:hover {
+  border-color: #001f80;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.month-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #001f80;
+  margin-bottom: 5px;
+}
+
+.tests-taken {
+  font-size: 14px;
+  color: #6c6c6c;
+}
+
+.tests-taken i {
+  color: #ffc107;
+  margin-right: 5px;
+}
+
+.control {
+  display: flex;
+  justify-content: space-between;
+  /* Sắp xếp các phần tử cách đều */
+  align-items: center;
+  /* Căn giữa theo chiều dọc */
+  margin-bottom: 20px;
+  /* Khoảng cách phía dưới */
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+.search-input-user {
+  width: 98%;
+  /* Input chiếm hết chiều rộng */
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333;
+  padding-left: 10px;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* Đảm bảo thanh tìm kiếm chiếm toàn bộ chiều rộng */
+}
+
+.search-icon {
+  position: absolute;
+  right: 30px;
+  /* Đặt icon vào bên trái input */
+  font-size: 18px;
+  /* Kích thước của icon */
+  color: #333;
+  /* Màu của icon */
+  pointer-events: none;
+  /* Giúp không ảnh hưởng đến việc gõ trong input */
+}
+
+.test-group-item {
+  display: flex;
+  align-items: center;
+  /* Align items vertically at the center */
+  gap: 30px;
+  /* Add space between each item */
+  padding-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Add soft shadow */
+  border-radius: 10px;
+  /* Optional: rounded corners */
+  background-color: #fff;
+  /* Optional: background color for the item */
+}
+
+.test-group-list {
+
+  display: flex;
+  /* Display items using Flexbox */
+  flex-direction: column;
+  /* Align items vertically (in a column) */
+  gap: 30px;
+  /* Add 30px space between each item */
+}

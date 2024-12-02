@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './TestTabs.css';
 
-const TestTabs = () => {
-  const [activeTab, setActiveTab] = useState('all');
-
+const TestTabs = ({ activeTab, setActiveTab }) => {
   return (
     <div className="test-tabs">
       <button
         className={activeTab === 'all' ? 'active' : ''}
         onClick={() => setActiveTab('all')}
       >
-       <i className="fas fa-check-double"></i> All Test
+        <i className="fas fa-check-double"></i> All Test
       </button>
       <button
         className={activeTab === 'academic' ? 'active' : ''}
         onClick={() => setActiveTab('academic')}
       >
-       <i className="fas fa-user-graduate"></i> Academic Test
+        <i className="fas fa-user-graduate"></i> Academic Test
       </button>
       <button
         className={activeTab === 'general' ? 'active' : ''}
