@@ -18,6 +18,10 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Verification from "./pages/Verification";
 import FEnterPassword from "./pages/FEnterPassword"
 import FVerification from "./pages/FVerification"
+import AddTestPage from "./pages/admin/AdminTest";
+import AdminAddTest from "./pages/admin/AdminAdd";
+import AdminAddS from "./pages/admin/AdminAddS";
+import AdminAddR from "./pages/admin/AdminAddR";
 
 
 const App = () => {  
@@ -52,6 +56,10 @@ const RoutesWrapper = () => {
       <Route path="/signup/verify" element={<Verification />} />
       <Route path="/verify" element={<FEnterPassword />} />
       <Route path="/enterPassword" element={<FVerification />} />
+      <Route path="/admin-add-test" element={<AdminAddTest /> } />
+      <Route path="/admin-add-test/admin-add-section" element={<AdminAddS/> } />
+      <Route path="/admin-add-test/admin-add-sectionR" element={<AdminAddR/> } />
+
 
       {/* Protected Routes for user */}
       {user?.role === "learner" && (
@@ -112,6 +120,10 @@ const RoutesWrapper = () => {
           <Route path="statistics" element={<AdminStatistics />} />
           <Route path="test" element={<AdminTest />} />
           <Route path="user" element={<AdminUser />} />
+          <Route path="/admin-add-test" element={<AddTestPage /> } />
+          <Route path="/admin-add-test/admin-add-section" element={<AdminAddS/> } />
+          <Route path="/admin-add-test/admin-add-sectionR" element={<AdminAddR/> } />
+
         </Route>
       )}
 

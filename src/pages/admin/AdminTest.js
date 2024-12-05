@@ -1,12 +1,11 @@
 import React from "react";
-import AdminTestTabs from "../../components/AdminTestTabs/AdminTestTabs";
-
-const AdminTest = () => {
+import AdminTestTab from "../../components/AdminTestTabs/AdminTestTabs"
+const AddTestPage = () => {
   return (
     <div>
-      <AdminTestTabs />
+      <AdminTestTab />
     </div>
   );
 };
 
-export default AdminTest;
+export default AddTestPage;

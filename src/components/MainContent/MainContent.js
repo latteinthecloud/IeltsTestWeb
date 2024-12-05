@@ -72,12 +72,25 @@ const MainContent = () => {
     setSortOrder(newSortOrder);
 
     const sortedData = [...filteredData].sort((a, b) => {
+      // First, compare by yearEdition
       if (newSortOrder === "newest") {
-        return b.yearEdition - a.yearEdition;
+        if (b.yearEdition !== a.yearEdition) {
+          return b.yearEdition - a.yearEdition;
+        }
       } else {
-        return a.yearEdition - b.yearEdition;
+        if (a.yearEdition !== b.yearEdition) {
+          return a.yearEdition - b.yearEdition;
+        }
       }
+    
+      // If yearEdition is the same, compare by monthEdition
+      if (b.monthEdition !== a.monthEdition) {
+        return b.monthEdition - a.monthEdition;
+      }
+    
+      return 0; // If both yearEdition and monthEdition are the same, return 0 (no change)
     });
+    
 
     setFilteredData(sortedData);
   };
@@ -123,9 +136,11 @@ const MainContent = () => {
               <div className="test-group-details">
                 <strong>Name:</strong> {test.name} <br />
                 <strong>Year Edition:</strong> {test.yearEdition} <br />
+                <strong>Month Edition:</strong> {test.monthEdition} <br />
                 <strong>Completed Users:</strong> {test.userCompletedNum} <br />
-                <strong>Type:</strong> {test.testType} <br />
-                <strong>Skill:</strong> {test.testSkill}
+                <strong>Type:</strong> {test.testType.charAt(0).toUpperCase() + test.testType.slice(1)} <br />
+                <strong>Skill:</strong> {test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1)}
+
               </div>
             </div>
           ))}
