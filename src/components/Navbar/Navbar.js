@@ -91,6 +91,7 @@ const Navbar = () => {
                   className="dropdown-menu"
                   onMouseLeave={hideDropdown} // Hide dropdown on mouse leave from menu
                 >
+                   <Link to="/profile" className="dropdown-item">Profile</Link>
                   <button onClick={handleLogout} className="logout-button">
                     Logout
                   </button>

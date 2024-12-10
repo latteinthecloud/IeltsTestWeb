@@ -90,16 +90,25 @@ const MainContent = () => {
     
       return 0; // If both yearEdition and monthEdition are the same, return 0 (no change)
     });
-    
 
     setFilteredData(sortedData);
   };
-
+  
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   const onFilterChange = (filter) => {
     setActiveFilter(filter); // Update filter state
   };
+
+  // popup
+  const [openPopup, setOpenPopup] = useState({}); // Khởi tạo state với object rỗng
+  const handlePopupToggle = (testId) => {
+    setOpenPopup(prevState => ({
+      ...prevState,
+      [testId]: !prevState[testId] // Chuyển đổi trạng thái popup cho testId
+    }));
+  };
+  
 
   return (
     <div className="main-content">
@@ -130,17 +139,50 @@ const MainContent = () => {
         </div>
 
         <div className="test-group-list">
-          {filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((test, index) => (
-            <div key={index} className="test-group-item">
+          {filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((test) => (
+            <div key={test.testId} className="test-group-item"> {/* Use test.id as key */}
               <img src={Cover} alt="Cover" className="cover-placeholder" />
               <div className="test-group-details">
-                <strong>Name:</strong> {test.name} <br />
-                <strong>Year Edition:</strong> {test.yearEdition} <br />
-                <strong>Month Edition:</strong> {test.monthEdition} <br />
-                <strong>Completed Users:</strong> {test.userCompletedNum} <br />
-                <strong>Type:</strong> {test.testType.charAt(0).toUpperCase() + test.testType.slice(1)} <br />
-                <strong>Skill:</strong> {test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1)}
+                <strong>Name:</strong> {test.name || 'N/A'} <br />
+                <strong>Year Edition:</strong> {test.yearEdition || 'N/A'} <br />
+                <strong>Month Edition:</strong> {test.monthEdition || 'N/A'} <br />
+                <strong>Completed Users:</strong> {test.userCompletedNum || 0} <br />
+                <strong>Type:</strong> {test.testType ? test.testType.charAt(0).toUpperCase() + test.testType.slice(1) : 'N/A'} <br />
+                <strong>Skill:</strong> {test.testSkill ? test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1) : 'N/A'} <br />
 
+                {/* Nút Start */}
+                <button className="start-button" onClick={() => handlePopupToggle(test.id)}>
+                  <span className="icon">⚡</span> Start
+                </button>
+
+                {/* Popup */}
+                {openPopup[test.testId] && (
+                 
+                  <div className="popup-overlay">
+                    <div className="popup-content">
+                      <button onClick={() => handlePopupToggle(test.id)}>
+                        <i className="fas fa-x"></i>
+                      </button>
+                      <h2>Let's do the test</h2>
+                      <p>Practice mode is suitable for improving accuracy and time spent on each part.</p>
+                      <ol>
+                        <li>
+                          <strong>The test includes:</strong>
+                          <ul>
+                            <li>✅ Full parts (3 parts - 40 questions)</li>
+                            <li>✅ Part 1 (14 questions)</li>
+                            <li>✅ Part 2 (13 questions)</li>
+                            <li>✅ Part 3 (13 questions)</li>
+                          </ul>
+                        </li>
+                        <li>
+                          <strong>Time limit: 60 mins</strong>
+                        </li>
+                        <button>Start now</button>
+                      </ol>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ))}

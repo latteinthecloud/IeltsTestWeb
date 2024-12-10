@@ -117,7 +117,7 @@ const Login = () => {
     />
     {/* Eye icon positioned outside the input */}
     <i
-      className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
+      className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
       onClick={togglePasswordVisibility} // On click, toggle password visibility
       role="button"
       aria-label={showPassword ? "Hide password" : "Show password"}

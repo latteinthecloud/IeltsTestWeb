@@ -65,7 +65,7 @@ const AddTestPage = () => {
         });
       } else if (response.testSkill === "reading") {
         navigate("/admin-add-test/admin-add-sectionR", {
-          state: { testId },  // Pass testId to the reading section
+          state: { testId},  // Pass testId to the reading section
         });
       } else {
         throw new Error("Invalid testSkill value");

@@ -28,5 +28,20 @@ const accountApi ={
         return axiosClient.patch(url)
 
     },
+    
+    updateImage(id, file){
+        const url = `/Account/Image/${id}`;
+        const formData= new FormData();
+        formData.append("file", file) // gan file vào form data,
+
+        return axiosClient.post(url, formData, {
+            headers:{
+                "Content-Type": "multipart/form-data",
+            },
+        });
+
+    },
+
 };
+
 export default accountApi;

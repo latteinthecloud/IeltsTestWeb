@@ -45,11 +45,21 @@
     font-size: 14px;
 
   }
+.input-wrapper input[type="text"],
+.input-wrapper input[type="password"] {
+    border-radius: 20px; /* Bo tròn đồng nhất */
+    width: 87%;
+    padding: 10px 40px 10px 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+}
 
   .input[type="password"] {
     -webkit-appearance: none; /* Ẩn mắt nếu thuộc tính này được sử dụng */
     appearance: none;
-}
+  }
+  
 
   
   .input-wrapper i {

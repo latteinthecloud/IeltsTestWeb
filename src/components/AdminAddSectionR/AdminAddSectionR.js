@@ -1,76 +1,86 @@
 import React, { useState, useEffect } from 'react';
-import sectionApi from "../../api/sectionApi"; // Ensure you have this API to handle the creation of reading sections
+import sectionApi from "../../api/sectionApi"; // Đảm bảo rằng bạn đã có API này để tạo section
+import questionListApi from "../../api/questionListApi"; // Import API tạo question list
 import { useLocation } from "react-router-dom";
-import "./AdminAddSectionR.css"; // Import the CSS file for styling
+import "./AdminAddSectionR.css"; // Import file CSS để styling
 
 const AdminAddSectionR = () => {
-  const [forms, setForms] = useState([]); // State to manage dynamic forms for sections
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showQuestionForm, setShowQuestionForm] = useState(false); // State để hiển thị form question list
+  const [questionContent, setQuestionContent] = useState('');
+  const [questionListType, setQuestionListType] = useState('multiple_choice'); // Mặc định là 'multiple_choice'
+  const [sectionId, setSectionId] = useState(0); // Chỉnh sửa sectionId nếu cần
+  const [sectionType, setSectionType] = useState('reading'); // sectionType mặc định là 'reading'
 
   const location = useLocation();
-  const { testId, testSkill } = location.state || {}; // Get testId and testSkill from the location state
+  const { testId, testSkill } = location.state || {}; // Lấy testId và testSkill từ location state
 
-  // Number of forms to render based on the skill (for reading sections, it's 3 by default)
-  const numForms = 3;
-
-  // Initialize the forms when the component mounts or when testSkill changes
   useEffect(() => {
-    const initialForms = [];
-    for (let i = 0; i < numForms; i++) {
-      initialForms.push({
-        title: '',
-        content: '',
-        questionList: [
-          { qlistId: 0, content: '', choiceList: '', answer: '' }, // First questionList
-          { qlistId: 1, content: '', choiceList: '', answer: '' }  // Second questionList
-        ]
-      });
+    // Lấy sectionType từ trang createTest (ví dụ: nếu có phần cấu hình cho testSkill)
+    if (testSkill) {
+      setSectionType(testSkill); // Hoặc là logic xử lý khác
     }
-    setForms(initialForms);
   }, [testSkill]);
 
-  // Handle input change for section fields (title, content)
-  const handleSectionChange = (index, e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const updatedForms = [...forms];
-    updatedForms[index] = { ...updatedForms[index], [name]: value };
-    setForms(updatedForms);
+    if (name === "title") {
+      setTitle(value);
+    } else if (name === "content") {
+      setContent(value);
+    } else if (name === "questionContent") {
+      setQuestionContent(value);
+    } else if (name === "questionListType") {
+      setQuestionListType(value);
+    }
   };
 
-  // Handle input change for questionList fields (content, choiceList, answer)
-  const handleQuestionChange = (sectionIndex, questionIndex, e) => {
-    const { name, value } = e.target;
-    const updatedForms = [...forms];
-    updatedForms[sectionIndex].questionList[questionIndex] = {
-      ...updatedForms[sectionIndex].questionList[questionIndex],
-      [name]: value
-    };
-    setForms(updatedForms);
+  const handleAddQuestionList = () => {
+    // Chuyển trạng thái để hiển thị form
+    setShowQuestionForm(true);
   };
 
-  // Handle form submission for each section
-  const handleSubmit = async (index, e) => {
+  const handleSubmitQuestionList = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
-    const { title, content, questionList } = forms[index];
+    const data = {
+      sectionId, // Sử dụng sectionId đã có
+      sectionType, // Sử dụng sectionType từ testSkill hoặc mặc định 'reading'
+      questionListType, // Loại câu hỏi được chọn từ combobox
+      content: questionContent, // Nội dung câu hỏi
+    };
 
     try {
-      // Create reading section using the API
-      const response = await sectionApi.createRead({ testId, title, content, questionList });
+      // Gọi API tạo question list
+      const response = await questionListApi.create(data);
 
       // Set success message
-      setSuccess(`Section ${index + 1} created successfully!`);
+      setSuccess('Question List created successfully!');
 
-      // Optionally, reset the form or clear it after submission
-      const updatedForms = [...forms];
-      updatedForms[index] = { title: '', content: '', questionList: [
-        { qlistId: 0, content: '', choiceList: '', answer: '' },
-        { qlistId: 1, content: '', choiceList: '', answer: '' }
-      ]};
-      setForms(updatedForms);
+      // Reset form sau khi tạo question list thành công
+      setQuestionContent('');
+      setShowQuestionForm(false);
+    } catch (err) {
+      setError('Failed to create question list: ' + err.message);
+    }
+  };
+
+  const handleSubmitSection = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    try {
+      const response = await sectionApi.createRead({ testId, title, content });
+
+      setSuccess('Section created successfully!');
+      setTitle('');
+      setContent('');
     } catch (err) {
       setError('Failed to create section: ' + err.message);
     }
@@ -81,78 +91,74 @@ const AdminAddSectionR = () => {
       <h2>Add Reading Section</h2>
       {error && <p className="error-message">{error}</p>}
       {success && <p className="success-message">{success}</p>}
-      
-      {forms.map((form, index) => (
-        <form key={index} onSubmit={(e) => handleSubmit(index, e)} className="section-form">
+
+      {/* Form tạo Section */}
+      <form onSubmit={handleSubmitSection} className="section-form">
+        <div className="form-group">
+          <label htmlFor="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={title}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="content">Content:</label>
+          <textarea
+            id="content"
+            name="content"
+            value={content}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <button type="submit" className="submit-btn">Create Section</button>
+      </form>
+
+      {/* Nút Add Question List */}
+      <button onClick={handleAddQuestionList} className="add-question-btn">
+        Add Question List
+      </button>
+
+      {/* Form thêm Question List nếu bấm nút "Add Question List" */}
+      {showQuestionForm && (
+        <form onSubmit={handleSubmitQuestionList} className="question-list-form">
           <div className="form-group">
-            <label htmlFor={`title-${index}`}>Title:</label>
-            <input
-              type="text"
-              id={`title-${index}`}
-              name="title"
-              value={form.title}
-              onChange={(e) => handleSectionChange(index, e)}
+            <label htmlFor="questionListType">Question List Type:</label>
+            <select
+              id="questionListType"
+              name="questionListType"
+              value={questionListType}
+              onChange={handleInputChange}
               required
-            />
+            >
+              <option value="multiple_choice">Multiple Choice</option>
+              <option value="matching">Matching</option>
+              <option value="true_false">True/False</option>
+              <option value="complete">Complete</option>
+              <option value="diagram">Diagram</option>
+            </select>
           </div>
-          
+
           <div className="form-group">
-            <label htmlFor={`content-${index}`}>Content:</label>
+            <label htmlFor="questionContent">Question Content:</label>
             <textarea
-              id={`content-${index}`}
-              name="content"
-              value={form.content}
-              onChange={(e) => handleSectionChange(index, e)}
+              id="questionContent"
+              name="questionContent"
+              value={questionContent}
+              onChange={handleInputChange}
               required
             />
           </div>
 
-          {/* Render each QuestionList inside the section */}
-          {form.questionList.map((question, qIndex) => (
-            <div key={qIndex} className="question-list">
-              <h3>Question {qIndex + 1}</h3>
-              
-              <div className="form-group">
-                <label htmlFor={`question-content-${index}-${qIndex}`}>Question Content:</label>
-                <input
-                  type="text"
-                  id={`question-content-${index}-${qIndex}`}
-                  name="content"
-                  value={question.content}
-                  onChange={(e) => handleQuestionChange(index, qIndex, e)}
-                  required
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor={`choiceList-${index}-${qIndex}`}>Choice List (comma separated):</label>
-                <input
-                  type="text"
-                  id={`choiceList-${index}-${qIndex}`}
-                  name="choiceList"
-                  value={question.choiceList}
-                  onChange={(e) => handleQuestionChange(index, qIndex, e)}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor={`answer-${index}-${qIndex}`}>Answer:</label>
-                <input
-                  type="text"
-                  id={`answer-${index}-${qIndex}`}
-                  name="answer"
-                  value={question.answer}
-                  onChange={(e) => handleQuestionChange(index, qIndex, e)}
-                  required
-                />
-              </div>
-            </div>
-          ))}
-          
-          <button type="submit" className="submit-btn">Create Section {index + 1}</button>
+          <button type="submit" className="submit-btn">Create Question List</button>
         </form>
-      ))}
+      )}
     </div>
   );
 };

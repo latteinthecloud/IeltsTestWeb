@@ -66,6 +66,22 @@
   z-index: 10; /* Ensure dropdown is above other elements */
 }
 
+/* Styling for each dropdown item */
+.dropdown-item {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for dropdown items */
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
 /* Optional: Hover effect for the logout button in the dropdown */
 .dropdown-menu button {
   background: none;
@@ -76,5 +92,5 @@
 }
 
 .dropdown-menu button:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }

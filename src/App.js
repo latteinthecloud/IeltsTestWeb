@@ -22,6 +22,7 @@ import AddTestPage from "./pages/admin/AdminTest";
 import AdminAddTest from "./pages/admin/AdminAdd";
 import AdminAddS from "./pages/admin/AdminAddS";
 import AdminAddR from "./pages/admin/AdminAddR";
+import Profile from "./pages/Profile";
 
 
 const App = () => {  
@@ -69,6 +70,15 @@ const RoutesWrapper = () => {
             element={
               <ProtectedRoute>
                 <MainContent />
+              </ProtectedRoute>
+            }
+          />
+
+            <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />
