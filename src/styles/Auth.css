@@ -6,7 +6,8 @@
     text-align: center;
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(168, 168, 168, 0.3);
   }
   
   .tittle {
@@ -26,15 +27,15 @@
   }
   
   .form-group label {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 5px;
+    margin-left: 10px;
     display: block;
     color: #555;
   }
   
   .input-wrapper {
     position: relative;
- 
   }
   
   .input-wrapper input {
@@ -61,7 +62,6 @@
   }
   
 
-  
   .input-wrapper i {
     position: absolute;
     right: 10px; /* Đặt icon ở bên phải của ô input */
@@ -74,6 +74,7 @@
     background: #001f80;
     color: white;
     font-size: 16px;
+    font-weight: 600;
     padding: 10px;
     border: none;
     border-radius: 20px;
@@ -127,4 +128,3 @@
     text-decoration: none;
     font-weight: bold;
   }
-  

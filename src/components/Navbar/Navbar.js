@@ -52,65 +52,67 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="navbar">
-      <div className="nav-links">
-        {/* Conditionally render links only if the user is not an admin */}
-        {user?.role !== "admin" && (
-          <>
-            <Link to="/" className="nav-item">
-              IELTS Exam Library
+    <div className="nav-container">
+      <nav className="navbar">
+        <div className="nav-links">
+          {/* Conditionally render links only if the user is not an admin */}
+          {user?.role !== "admin" && (
+            <>
+              <Link to="/" className="nav-item">
+                IELTS Exam Library
+              </Link>
+              <Link to="/exercise" className="nav-item">
+                Exercise
+              </Link>
+              <Link to="/statistic" className="nav-item">
+                Statistic
+              </Link>
+            </>
+          )}
+        </div>
+        <div className="auth-links">
+          {isAuthenticated ? (
+            <>
+              <div 
+                ref={avatarContainerRef} 
+                className="avatar-container"
+                onClick={toggleDropdown} // Toggle dropdown on click
+                onMouseEnter={showDropdown} // Show dropdown on hover
+              >
+                <img 
+                  src="https://www.wikihow.tech/skins/owl/images/wikihow_logo_tech_4.png" 
+                  alt="User Avatar" 
+                  className="avatar" 
+                />
+                <span className="username">{user?.email}</span> {/* Display user's email */}
+                {/* Dropdown menu */}
+                {dropdownOpen && (
+                  <div 
+                    ref={dropdownRef} 
+                    className="dropdown-menu"
+                    onMouseLeave={hideDropdown} // Hide dropdown on mouse leave from menu
+                  >
+                    <Link to="/profile" className="dropdown-item">Profile</Link>
+                    <button onClick={handleLogout} className="logout-button">
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+            <Link to="/signup" className="nav-item">
+              Sign up
             </Link>
-            <Link to="/exercise" className="nav-item">
-              Exercise
-            </Link>
-            <Link to="/statistic" className="nav-item">
-              Statistic
+            <Link to="/login" className="nav-item">
+              Login
             </Link>
           </>
-        )}
-      </div>
-      <div className="auth-links">
-        {isAuthenticated ? (
-          <>
-            <div 
-              ref={avatarContainerRef} 
-              className="avatar-container"
-              onClick={toggleDropdown} // Toggle dropdown on click
-              onMouseEnter={showDropdown} // Show dropdown on hover
-            >
-              <img 
-                src="https://www.wikihow.tech/skins/owl/images/wikihow_logo_tech_4.png" 
-                alt="User Avatar" 
-                className="avatar" 
-              />
-              <span className="username">{user?.email}</span> {/* Display user's email */}
-              {/* Dropdown menu */}
-              {dropdownOpen && (
-                <div 
-                  ref={dropdownRef} 
-                  className="dropdown-menu"
-                  onMouseLeave={hideDropdown} // Hide dropdown on mouse leave from menu
-                >
-                   <Link to="/profile" className="dropdown-item">Profile</Link>
-                  <button onClick={handleLogout} className="logout-button">
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          </>
-        ) : (
-          <>
-          <Link to="/signup" className="nav-item">
-            Sign up
-          </Link>
-          <Link to="/login" className="nav-item">
-            Login
-          </Link>
-        </>
-        )}
-      </div>
-    </nav>
+          )}
+        </div>
+      </nav>
+    </div>
   );
 };
 

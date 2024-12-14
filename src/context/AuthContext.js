@@ -35,10 +35,12 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const loginResponse = await authenApi.login(email, password);
-      const decoded = jwtDecode(loginResponse);
+      const accessToken = loginResponse.accessToken;
+      const decoded = jwtDecode(accessToken);
       const foundUser = {
         email: decoded.sub,
         role: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+        id: decoded.id,
       };
 
       setIsAuthenticated(true);
