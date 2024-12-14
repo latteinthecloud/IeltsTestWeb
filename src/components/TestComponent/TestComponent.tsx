@@ -1,8 +1,8 @@
 import React from "react";
 import "./TestComponent.css";
-import StartButton from "../StartButton/StartButton.tsx";
+import RoundedButton from "../RoundedButton/RoundedButton.tsx";
+
 interface TestComponentProps {
-  id: number;
   name: string;
   year: number;
   month: number;
@@ -12,7 +12,6 @@ interface TestComponentProps {
 }
 
 export default function TestComponent({
-  id,
   name,
   year,
   month,
@@ -22,7 +21,7 @@ export default function TestComponent({
 }: TestComponentProps) {
   return (
     <div className="test-container">
-      <div className="test">
+      <div className="left">
         <img
           className="test-cover"
           src={require("../../assets/Cover.png")}
@@ -57,7 +56,8 @@ export default function TestComponent({
           </div>
         </div>
       </div>
-      <StartButton id={id} skill={skill}></StartButton>
+
+      <RoundedButton title="Start" onClick={() => {}}></RoundedButton>
     </div>
   );
 }

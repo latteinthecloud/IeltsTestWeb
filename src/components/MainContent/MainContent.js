@@ -5,7 +5,6 @@ import "./MainContent.css";
 import Pagination from "../Pagination/Pagination";
 import testApi from "../../api/testApi";
 import TestComponent from "../TestComponent/TestComponent.tsx";
-import TestComponent from "../TestComponent/TestComponent.tsx";
 
 const itemsPerPage = 6;
 const MainContent = () => {
@@ -150,7 +149,6 @@ const MainContent = () => {
             .map((test) => (
               <TestComponent
                 key={test.testId}
-                id={test.testId}
                 name={test.name}
                 month={test.monthEdition}
                 year={test.yearEdition}
