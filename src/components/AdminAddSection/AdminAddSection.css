@@ -50,7 +50,7 @@ textarea {
 
 input[type="text"]:focus,
 textarea:focus {
-  border-color: #007bff; /* Màu viền khi focus */
+  border-color: #001f80; /* Màu viền khi focus */
   border-width: 2px;
   outline: none;
 }

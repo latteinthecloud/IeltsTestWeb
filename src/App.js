@@ -38,7 +38,15 @@ const App = () => {
           {/* Common Header and Navbar */}
           <Header />
           <Navbar />
-          <RoutesWrapper />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
+            <RoutesWrapper />
+          </div>
         </div>
       </Router>
     </AuthProvider>

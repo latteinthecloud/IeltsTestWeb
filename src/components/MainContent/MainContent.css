@@ -1,10 +1,14 @@
 .main-content {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   background-color: #f9f9f9;
+  width: 60%;
+  gap: 10px;
 }
 
 .main-content h2 {
-  font-size: 18px;
+  font-size: 22px;
   color: #333;
 }
 
@@ -159,29 +163,11 @@
   /* Giúp không ảnh hưởng đến việc gõ trong input */
 }
 
-.test-group-item {
-  display: flex;
-  align-items: center;
-  /* Align items vertically at the center */
-  gap: 30px;
-  /* Add space between each item */
-  padding-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Add soft shadow */
-  border-radius: 10px;
-  /* Optional: rounded corners */
-  background-color: #fff;
-  /* Optional: background color for the item */
-}
-
 .test-group-list {
 
   display: flex;
-  /* Display items using Flexbox */
-  flex-direction: column;
-  /* Align items vertically (in a column) */
+  flex-wrap: wrap;
   gap: 30px;
-  /* Add 30px space between each item */
 }
 
 .start-button {

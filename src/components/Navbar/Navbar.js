@@ -98,9 +98,9 @@ const Navbar = () => {
                 onMouseEnter={showDropdown} // Show dropdown on hover
               >
                 <img
-                  src="https://www.wikihow.tech/skins/owl/images/wikihow_logo_tech_4.png"
+                  src="https://static.independent.co.uk/2024/10/18/15/shutterstock_editorial_13383768cn.jpg"
                   alt="User Avatar"
-                  className="avatar"
+                  className="avatar-img"
                 />
                 <span className="username">{user?.email}</span>{" "}
                 {/* Display user's email */}
@@ -111,14 +111,21 @@ const Navbar = () => {
                     className="dropdown-menu"
                     onMouseLeave={hideDropdown} // Hide dropdown on mouse leave from menu
                   >
-                    <Link to="/profile" className="dropdown-item">
+                    <button
+                      onClick={() => navigate("/profile")}
+                      className="dropdown-item"
+                    >
                       Profile
-                    </Link>
-                    <button onClick={handleLogout} className="logout-button">
+                    </button>
+                    <button onClick={handleLogout} className="dropdown-item">
                       Logout
                     </button>
                   </div>
                 )}
+                <img
+                  style={{ width: "20px", height: "20px" }}
+                  src={require("../../assets/expand_arrow_20px.png")}
+                />
               </div>
             </>
           ) : (
