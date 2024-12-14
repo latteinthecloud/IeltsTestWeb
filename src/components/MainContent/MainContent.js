@@ -150,7 +150,6 @@ const MainContent = () => {
             .map((test) => (
               <TestComponent
                 key={test.testId}
-                id={test.testId}
                 name={test.name}
                 month={test.monthEdition}
                 year={test.yearEdition}
