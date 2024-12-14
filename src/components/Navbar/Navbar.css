@@ -1,21 +1,24 @@
 .navbar {
   display: flex;
   justify-content: space-between;
+  width: 60%;
   align-items: center;
+}
+
+.nav-container {
+  display: flex;
   background-color: #001f80;
-  padding: 10px 20px;
-  color: white;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-links {
   display: flex;
-  gap: 20px;
 }
 
 .auth-links {
   display: flex;
   align-items: center;
-  gap: 15px;
 }
 
 .nav-item {
@@ -24,11 +27,14 @@
   padding: 5px 15px;
   font-size: 16px;
   transition: all 0.3s ease;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-item:hover {
   background-color: #0056b3;
-  border-radius: 5px;
 }
 
 .avatar-container {
