@@ -1,15 +1,19 @@
 .main-content {
   display: flex;
   flex-direction: column;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   background-color: #f9f9f9;
+  width: 60%;
+  gap: 10px;
   width: 60%;
   gap: 10px;
 }
 
 .main-content h2 {
   font-size: 22px;
-  color: rgb(41, 69, 99);
+  color: #333;
 }
 
 .main-content p {
@@ -161,6 +165,7 @@
 .test-group-list {
 
   display: flex;
+  flex-wrap: wrap;
   flex-wrap: wrap;
   gap: 30px;
 }
