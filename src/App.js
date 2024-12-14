@@ -24,7 +24,6 @@ import AdminAddS from "./pages/admin/AdminAddS";
 import AdminAddR from "./pages/admin/AdminAddR";
 import Profile from "./pages/Profile";
 
-
 const App = () => {  
   return (
     <AuthProvider>
@@ -33,8 +32,10 @@ const App = () => {
           {/* Common Header and Navbar */}
           <Header />
           <Navbar />
-          <RoutesWrapper />
-        </div>
+          <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
+            <RoutesWrapper />
+          </div>
+        </div>  
       </Router>
     </AuthProvider>
   );

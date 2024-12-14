@@ -40,23 +40,23 @@
 .avatar-container {
   display: flex; /* Align items horizontally */
   align-items: center; /* Vertically center the avatar and email */
+  justify-content: center;
   cursor: pointer;
-  margin-right: 5px;
   position: relative; /* Ensure dropdown is positioned relative to this container */
-  width: max-content; /* Ensure the container is only as wide as the content */
+  width: max-content;
+  gap: 10px; /* Ensure the container is only as wide as the content */
 }
 
-.avatar-container img {
-  width: 30px;
-  height: 30px;
+.avatar-img{
+  width: 40px;
+  height: 40px;
   border-radius: 50%; /* Make the image circular */
-  margin-right: 10px; /* Space between avatar and email */
+  object-fit: cover;
 }
 
 .username {
   font-size: 14px;
   color: white;
-  margin-left: 10px; /* Optional: add some space between the avatar and email */
 }
 
 .dropdown-menu {
@@ -80,11 +80,13 @@
   color: #333;
   font-size: 14px;
   transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
 }
 
 /* Hover effect for dropdown items */
 .dropdown-item:hover {
-  background-color: #f1f1f1;
+  background-color: #ddd;
   cursor: pointer;
 }
 
