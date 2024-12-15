@@ -48,11 +48,6 @@
 
 }
 
-.cover {
-  flex: 0 0 150px;
-  /* Fixed width for the cover */
-}
-
 .cover-placeholder {
   width: 150px;
   height: 150px;
@@ -153,7 +148,7 @@
 .search-icon {
   position: absolute;
   margin-top:5px;
-  right: 30px;
+  left: 10px;
   /* Đặt icon vào bên trái input */
   font-size: 18px;
   /* Kích thước của icon */

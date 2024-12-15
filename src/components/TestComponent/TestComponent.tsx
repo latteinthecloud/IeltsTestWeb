@@ -1,8 +1,8 @@
 import React from "react";
 import "./TestComponent.css"
-import RoundedButton from "../RoundedButton/RoundedButton.tsx";
-
+import StartButton from "../StartButton/StartButton.tsx";
 interface TestComponentProps {
+    id: number;
     name: string;
     year: number;
     month: number;
@@ -11,7 +11,9 @@ interface TestComponentProps {
     completed: number;
 }
 
-export default function TestComponent({name, year, month, type, skill, completed}: TestComponentProps){
+
+
+export default function TestComponent({id, name, year, month, type, skill, completed}: TestComponentProps){
     return (
         <div className="test-container">
             <div className="left">
@@ -38,11 +40,9 @@ export default function TestComponent({name, year, month, type, skill, completed
                     </div>
                 </div>
             </div>
+            <StartButton id={id} skill={skill}>
+            </StartButton>
 
-            <RoundedButton 
-                title="Start"
-                onClick={()=>{}}>
-            </RoundedButton>
         </div>
     );
 }
