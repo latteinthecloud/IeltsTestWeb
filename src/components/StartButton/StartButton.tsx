@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import "./StartButton.css";
 import sectionApi from "../../api/sectionApi.js";
+import { useNavigate } from "react-router-dom";
 
 interface StartButtonProps {
   id: number;
@@ -11,6 +12,7 @@ interface StartButtonProps {
 export default function StartButton({ id, skill }: StartButtonProps) {
   //show popup
   const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
 
   //fetch test sections
   const [sections, setSections] = useState<any[]>([]);
@@ -86,7 +88,9 @@ export default function StartButton({ id, skill }: StartButtonProps) {
 
               <RoundedButton
                 title="Start now"
-                onClick={() => {}}
+                onClick={() => {
+                  navigate("/start-test");
+                }}
               ></RoundedButton>
             </div>
           </div>

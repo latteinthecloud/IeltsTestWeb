@@ -26,24 +26,15 @@ import AdminAddTest from "./pages/admin/AdminAdd/AdminAdd";
 import AdminAddS from "./pages/admin/AdminAddS";
 import AdminAddR from "./pages/admin/AdminAddR";
 import Profile from "./pages/Profile";
+import StartTestPage from "./pages/user/StartTestPage.tsx";
+import MainLayout from "./layout/MainLayout.tsx";
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
         <div className="app">
-          {/* Common Header and Navbar */}
-          <Header />
-          <Navbar />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignContent: "center",
-            }}
-          >
-            <RoutesWrapper />
-          </div>
+          <RoutesWrapper />
         </div>
       </Router>
     </AuthProvider>
@@ -97,7 +88,7 @@ const RoutesWrapper = () => {
         path="/verify"
         element={
           <MainLayout>
-            <FVerification />
+            <FEnterPassword />
           </MainLayout>
         }
       />
@@ -105,7 +96,7 @@ const RoutesWrapper = () => {
         path="/enterPassword"
         element={
           <MainLayout>
-            <FEnterPassword />
+            <FVerification />
           </MainLayout>
         }
       />
@@ -174,14 +165,9 @@ const RoutesWrapper = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/start-test" element={<StartTestPage></StartTestPage>} />
           <Route
-            path="/result"
-            element={
-              <MainLayout>
-                <ResultPage />
-              </MainLayout>
-            }
+            path="/start-test"
+            element={<StartTestPage></StartTestPage>}
           ></Route>
         </>
       )}
