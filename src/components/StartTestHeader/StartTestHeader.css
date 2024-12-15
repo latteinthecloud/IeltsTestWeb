@@ -1,0 +1,51 @@
+.start-header-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
+    padding: 0px 20px;
+}
+
+.logo-start{
+    width: 55px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+}
+
+.start-header-container h1{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.timer-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.time-left{
+    font-size: 28px;
+    font-weight: 700;
+    color: #00ADFF;
+}
+
+.start-header-button-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.exit-button{
+    width: 45px;
+    border-radius: 10px;
+    aspect-ratio: 1;
+    background: linear-gradient(to bottom,#F40000,#720000);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.exit-button:hover{
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+}

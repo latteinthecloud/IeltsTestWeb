@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth, AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import Header from "./components/Header/Header";
-import Navbar from "./components/Navbar/Navbar";
 import MainContent from "./components/MainContent/MainContent";
 import ExercisePage from "./pages/user/ExercisePage";
 import StatisticPage from "./pages/user/StatisticPage";
@@ -23,18 +21,16 @@ import AdminAddTest from "./pages/admin/AdminAdd";
 import AdminAddS from "./pages/admin/AdminAddS";
 import AdminAddR from "./pages/admin/AdminAddR";
 import Profile from "./pages/Profile";
-
+import StartTestPage from "./pages/user/StartTestPage.tsx";
+import MainLayout from "./layout/MainLayout.tsx";
 
 const App = () => {  
   return (
     <AuthProvider>
       <Router>
         <div className="app">
-          {/* Common Header and Navbar */}
-          <Header />
-          <Navbar />
-          <RoutesWrapper />
-        </div>
+            <RoutesWrapper />
+        </div>  
       </Router>
     </AuthProvider>
   );
@@ -51,16 +47,15 @@ const RoutesWrapper = () => {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/forgot" element={<ForgotPassword />} />
-      <Route path="/signup/verify" element={<Verification />} />
-      <Route path="/verify" element={<FEnterPassword />} />
-      <Route path="/enterPassword" element={<FVerification />} />
+      <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
+      <Route path="/signup" element={<MainLayout><SignupPage /></MainLayout>} />
+      <Route path="/forgot" element={<MainLayout><ForgotPassword /></MainLayout>} />
+      <Route path="/signup/verify" element={<MainLayout><Verification /></MainLayout>} />
+      <Route path="/verify" element={<MainLayout><FEnterPassword /></MainLayout>} />
+      <Route path="/enterPassword" element={<MainLayout><FVerification /></MainLayout>} />
       <Route path="/admin-add-test" element={<AdminAddTest /> } />
       <Route path="/admin-add-test/admin-add-section" element={<AdminAddS/> } />
       <Route path="/admin-add-test/admin-add-sectionR" element={<AdminAddR/> } />
-
 
       {/* Protected Routes for user */}
       {user?.role === "learner" && (
@@ -69,7 +64,7 @@ const RoutesWrapper = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <MainContent />
+                <MainLayout><MainContent /></MainLayout>
               </ProtectedRoute>
             }
           />
@@ -86,7 +81,7 @@ const RoutesWrapper = () => {
             path="/exercise"
             element={
               <ProtectedRoute>
-                <ExercisePage />
+                <MainLayout><ExercisePage /></MainLayout>
               </ProtectedRoute>
             }
           />
@@ -94,7 +89,7 @@ const RoutesWrapper = () => {
             path="/statistic"
             element={
               <ProtectedRoute>
-                <StatisticPage />
+                <MainLayout><StatisticPage /></MainLayout>
               </ProtectedRoute>
             }
           />
@@ -114,6 +109,14 @@ const RoutesWrapper = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/start-test"
+            element={
+              <StartTestPage>
+              </StartTestPage>
+            }>
+
+          </Route>
         </>
       )}
 

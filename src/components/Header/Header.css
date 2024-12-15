@@ -1,7 +1,8 @@
 .header {
     background-color: white;
-    padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     width: 60%;
   }
 
@@ -9,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px 0px;
   }
 
   .logo{
@@ -18,7 +20,9 @@
   .logo h1 {
     font-size: 20px;
     color: #333;
+    font-weight: 700;
     margin: 0;
+    cursor: default;
   }
 
   .logo img{

@@ -3,10 +3,10 @@ import TestTabs from '../TestTabs/TestTabs';
 import FilterBar from '../FilterBar/FilterBar';
 import './MainContent.css';
 import Pagination from "../Pagination/Pagination";
-import Cover from '../../assets/Cover.png';
 import testApi from "../../api/testApi";
+import TestComponent from '../TestComponent/TestComponent.tsx';
 
-const itemsPerPage = 5;
+const itemsPerPage = 6;
 
 const MainContent = () => {
   const [activeTab, setActiveTab] = useState("all"); // State for current tab
@@ -118,13 +118,11 @@ const MainContent = () => {
       <div className="test-groups">
         <div className="control">
           <div className="search-container">
-            <i className="fas fa-magnifying-glass search-icon"></i>
             <input
               type="text"
               placeholder="Search by name"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="search-input-user"
             />
           </div>
 
@@ -140,51 +138,16 @@ const MainContent = () => {
 
         <div className="test-group-list">
           {filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((test) => (
-            <div key={test.testId} className="test-group-item"> {/* Use test.id as key */}
-              <img src={Cover} alt="Cover" className="cover-placeholder" />
-              <div className="test-group-details">
-                <strong>Name:</strong> {test.name || 'N/A'} <br />
-                <strong>Year Edition:</strong> {test.yearEdition || 'N/A'} <br />
-                <strong>Month Edition:</strong> {test.monthEdition || 'N/A'} <br />
-                <strong>Completed Users:</strong> {test.userCompletedNum || 0} <br />
-                <strong>Type:</strong> {test.testType ? test.testType.charAt(0).toUpperCase() + test.testType.slice(1) : 'N/A'} <br />
-                <strong>Skill:</strong> {test.testSkill ? test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1) : 'N/A'} <br />
-
-                {/* Nút Start */}
-                <button className="start-button" onClick={() => handlePopupToggle(test.id)}>
-                  <span className="icon">⚡</span> Start
-                </button>
-
-                {/* Popup */}
-                {openPopup[test.testId] && (
-                 
-                  <div className="popup-overlay">
-                    <div className="popup-content">
-                      <button onClick={() => handlePopupToggle(test.id)}>
-                        <i className="fas fa-x"></i>
-                      </button>
-                      <h2>Let's do the test</h2>
-                      <p>Practice mode is suitable for improving accuracy and time spent on each part.</p>
-                      <ol>
-                        <li>
-                          <strong>The test includes:</strong>
-                          <ul>
-                            <li>✅ Full parts (3 parts - 40 questions)</li>
-                            <li>✅ Part 1 (14 questions)</li>
-                            <li>✅ Part 2 (13 questions)</li>
-                            <li>✅ Part 3 (13 questions)</li>
-                          </ul>
-                        </li>
-                        <li>
-                          <strong>Time limit: 60 mins</strong>
-                        </li>
-                        <button>Start now</button>
-                      </ol>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+            <TestComponent 
+              key={test.testId}
+              id={test.testId}
+              name={test.name}
+              month={test.monthEdition}
+              year={test.yearEdition}
+              type={test.testType.charAt(0).toUpperCase() + test.testType.slice(1)}
+              skill={test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1)}
+              completed={test.userCompletedNum}> {/* Use test.id as key */}
+            </TestComponent>
           ))}
         </div>
 
