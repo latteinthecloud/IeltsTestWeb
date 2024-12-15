@@ -19,10 +19,11 @@ export default function RoundedButton({
     background: gradient,
     fontSize: "16px",
     fontWeight: "600",
+    width: "fit-content",
   };
 
   return (
-    <button style={style} onClick={onClick}>
+    <button className="rounded-button" style={style} onClick={onClick}>
       {title}
     </button>
   );

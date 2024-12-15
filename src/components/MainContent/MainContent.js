@@ -8,7 +8,6 @@ import TestComponent from "../TestComponent/TestComponent.tsx";
 import TestComponent from "../TestComponent/TestComponent.tsx";
 
 const itemsPerPage = 6;
-
 const MainContent = () => {
   const [activeTab, setActiveTab] = useState("all"); // State for current tab
   const [activeFilter, setActiveFilter] = useState("all"); // Filter state
@@ -151,6 +150,7 @@ const MainContent = () => {
             .map((test) => (
               <TestComponent
                 key={test.testId}
+                id={test.testId}
                 name={test.name}
                 month={test.monthEdition}
                 year={test.yearEdition}
