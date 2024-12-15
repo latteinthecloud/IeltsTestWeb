@@ -3,11 +3,10 @@ import TestTabs from '../TestTabs/TestTabs';
 import FilterBar from '../FilterBar/FilterBar';
 import './MainContent.css';
 import Pagination from "../Pagination/Pagination";
-import Cover from '../../assets/Cover.png';
 import testApi from "../../api/testApi";
 import TestComponent from '../TestComponent/TestComponent.tsx';
 
-const itemsPerPage = 5;
+const itemsPerPage = 6;
 
 const MainContent = () => {
   const [activeTab, setActiveTab] = useState("all"); // State for current tab
@@ -119,13 +118,11 @@ const MainContent = () => {
       <div className="test-groups">
         <div className="control">
           <div className="search-container">
-            <i className="fas fa-magnifying-glass search-icon"></i>
             <input
               type="text"
               placeholder="Search by name"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="search-input-user"
             />
           </div>
 
@@ -143,6 +140,7 @@ const MainContent = () => {
           {filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((test) => (
             <TestComponent 
               key={test.testId}
+              id={test.testId}
               name={test.name}
               month={test.monthEdition}
               year={test.yearEdition}

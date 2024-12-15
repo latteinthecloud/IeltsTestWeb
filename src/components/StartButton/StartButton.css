@@ -1,0 +1,97 @@
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-container{
+    position: absolute;
+    top: 50%;  
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: 450px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.popup-container h1{
+    font-size: 30px;
+    font-weight: 700;
+    color: #1FCD33;
+    cursor: default;
+    text-align: center;
+    margin: 0px;
+}
+
+.popup-container h2{
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+    margin: 0px;
+}
+
+.popup-container h3{
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0px;
+    text-align: left;
+    cursor: default;
+}
+
+.popup-container h4{
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    color: black;
+    cursor: default;
+}
+
+.title-container{
+    gap:5px;
+}
+
+.section-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.body{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 0px 15px;
+}
+
+.close-button{
+    width: fit-content;
+    background: white;
+}
