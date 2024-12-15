@@ -1,5 +1,10 @@
 import React from "react";
+import StartTestHeader from "../../components/StartTestHeader/StartTestHeader.tsx";
 
 export default function StartTestPage() {
-  return <h1>This is start test page</h1>;
+  return (
+    <div>
+      <StartTestHeader></StartTestHeader>
+    </div>
+  );
 }
