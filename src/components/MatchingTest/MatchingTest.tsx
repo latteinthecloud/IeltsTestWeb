@@ -1,36 +1,49 @@
 import React from "react";
-import "./MatchingTest.css"
+import "./MatchingTest.css";
 
-interface MatchingTestProps{
-    questionOrder: number;
-    content: string;
-    optionCount: number;
-    answers: Map<number, string>;
-    handleAnswerChange: (questionNumber: number, answer: string) => void;
-}
+export default function MatchingTest() {
+  return (
+    <div className="matching-test-container">
+      <table>
+        <thead>
+          <tr>
+            <th colSpan={2}>List of people</th>
+          </tr>
+        </thead>
 
-export default function MatchingTest({questionOrder, optionCount, content, answers, handleAnswerChange}: MatchingTestProps){
-    const options = Array.from({ length: optionCount }, (_, i) => String.fromCharCode(65 + i));
-    const selectedAnswer = answers.get(questionOrder) || "";
-    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const answer = e.target.value;
-        handleAnswerChange(questionOrder, answer);
-    };
+        <tbody>
+          <tr>
+            <td>
+              <strong>A</strong>
+            </td>
+            <td>A content</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>B</strong>
+            </td>
+            <td>B content</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>C</strong>
+            </td>
+            <td>C content</td>
+          </tr>
+        </tbody>
+      </table>
 
-    return(
-        <div className="matching-test-container">
-            <div className="matching-test-option">
-                <h1>{questionOrder}.</h1>
-                <select value={selectedAnswer} onChange={handleSelectChange}>
-                    <option value=""></option>
-                    {options.map((option, index) => (
-                        <option key={index} value={option}>
-                        {option}
-                        </option>
-                    ))}
-                </select>
-                <h2>{content}</h2>
-            </div>
-        </div>
-    );
+      <div className="matching-test-option">
+        <h1>12.</h1>
+        <select>
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <h1>
+          The educational system makes students aware of how their memory works.
+        </h1>
+      </div>
+    </div>
+  );
 }

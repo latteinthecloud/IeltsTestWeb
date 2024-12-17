@@ -7,8 +7,8 @@
 
 .true-false-container h1{
     font-size: 15px;
-    font-weight: 400;
-    color: black;
+    font-weight: 700;
+    width: 1;
 }
 
 .true-false-container select{
