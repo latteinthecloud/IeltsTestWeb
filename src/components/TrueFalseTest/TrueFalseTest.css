@@ -1,0 +1,18 @@
+.true-false-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.true-false-container h1{
+    font-size: 15px;
+    font-weight: 700;
+    width: 1;
+}
+
+.true-false-container select{
+    border-radius: 20px;
+    border-color: #ccc;
+    font-size: 15px;
+}
