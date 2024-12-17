@@ -5,6 +5,8 @@ import "../../styles/StartTestPage.css"
 import MultipleChoiceTest from "../../components/MultipleChoiceTest/MultipleChoiceTest.tsx";
 import TrueFalseTest from "../../components/TrueFalseTest/TrueFalseTest.tsx";
 import MatchingTest from "../../components/MatchingTest/MatchingTest.tsx";
+import DiagramTest from "../../components/DiagramTest/DiagramTest.tsx";
+import StartTestFooter from "../../components/StartTestFooter/StartTestFooter.tsx";
 
 
 export default function StartTestPage() {
@@ -19,8 +21,10 @@ export default function StartTestPage() {
                 <MultipleChoiceTest></MultipleChoiceTest>
                 <TrueFalseTest></TrueFalseTest>
                 <MatchingTest></MatchingTest>
+                <DiagramTest></DiagramTest>
                 </div>
             </div>
+            <StartTestFooter></StartTestFooter>
         </div>
     );
 }
