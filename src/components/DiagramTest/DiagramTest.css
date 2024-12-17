@@ -1,21 +1,24 @@
 .diagram-test-container{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.diagram-test-container img{
+    width: 50%;
+}
+
+.diagram-input-container{
+    display: flex;
     justify-content: flex-start;
     align-items: center;
+    width: 100%;
     gap: 10px;
-}
+} 
 
-.diagram-test-container h1{
+.diagram-input-container h1{
     font-size: 15px;
     font-weight: 700;
-}
-
-.diagram-test-container input{
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    padding: 10px;
-}
-
-.diagram-test-container input::placeholder{
-    color: #999;
 }

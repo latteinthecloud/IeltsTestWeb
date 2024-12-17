@@ -1,31 +1,16 @@
 import React from "react";
 import "./DiagramTest.css";
 
-interface DiagramTestProps {
-  questionOrder: number;
-  answers: Map<number, string>;
-  handleAnswerChange: (questionNumber: number, answer: string) => void;
-}
-
-export default function DiagramTest({
-  questionOrder,
-  answers,
-  handleAnswerChange,
-}: DiagramTestProps) {
-  const currentAnswer = answers.get(questionOrder) || "";
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    handleAnswerChange(questionOrder, value);
-  };
-
+export default function DiagramTest() {
   return (
     <div className="diagram-test-container">
-      <h1>{questionOrder}.</h1>
-      <input
-        placeholder="Write down your answer"
-        value={currentAnswer}
-        onChange={handleChange}
-      ></input>
+      <img src="https://ieltsonlinetests.com/sites/default/files/2023-09/Screenshot%202023-09-12%20140046.png"></img>
+      <div className="diagram-input-container">
+        <h1>1.</h1>
+        <div className="input-wrapper">
+          <input placeholder="Write your answer"></input>
+        </div>
+      </div>
     </div>
   );
 }
