@@ -1,0 +1,29 @@
+.reading-section-container img {
+    width: 100%;    
+}
+
+.reading-section-container h1{
+    font-size: 32px;
+    font-weight: 700;
+    color: #001f80;
+    margin: 0px;
+}
+
+.reading-section-container h2{
+    font-size: 26px;
+    font-weight: 700;
+    color: #001f80;
+    margin: 10px;
+}
+
+.reading-section-container h3{
+    font-size: 15px;
+    font-weight: 400;
+    color: #001f80;
+    margin: 10px 0px;
+}
+
+.reading-section-container p{
+    font-size: 14px;
+    text-align: left;
+}
