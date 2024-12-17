@@ -5,9 +5,10 @@ interface MultipleChoiceTestProps{
     questionOrder: number;
     content: string;
     choiceList: string;
+    answer: string;
 }
 
-export default function MultipleChoiceTest({questionOrder, content, choiceList}: MultipleChoiceTestProps){
+export default function MultipleChoiceTest({questionOrder, content, choiceList, answer}: MultipleChoiceTestProps){
     const options = choiceList.split("\\n");
 
     return (

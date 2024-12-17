@@ -14,7 +14,7 @@ export default function StartTestPage() {
         <div className="start-page-container">
             <StartTestHeader/>
             <div className="content-container">
-                <div className="part">
+                <div className="left">
                     <ReadingPassage
                         sectionOrder={1}
                         title="How the mind ages"
@@ -34,13 +34,14 @@ export default function StartTestPage() {
                                   Events, conversations and occurrences in time and space, on the other hand, make up episodic memory. It is true that episodic memory begins to decline when most people are in their 50s, but it is never perfect at any age.">
                     </ReadingPassage>
                 </div>
-                <div className="part">
+                <div className="right">
                 <div className="question-list-container">
                     <h1>Question 1-3</h1>
                     <h2>Choose the correct letter <strong>A, B, C</strong> or <strong>D</strong>.</h2>
                     <MultipleChoiceTest
                         questionOrder={1}
                         content="What does the writer say about the performance of older typists on the test?"
+                        answer="A"
                         choiceList="They used different motor skills from younger typists.\nThey had been more efficiently trained than younger typists.
                         \nThey used more time-saving techniques than younger typists.\nThey had better concentration skills than younger typists.">
                     </MultipleChoiceTest>
@@ -48,6 +49,7 @@ export default function StartTestPage() {
                     <MultipleChoiceTest
                         questionOrder={2}
                         content="The experiment with the rats showed that"
+                        answer="D"
                         choiceList="brain structure only changed when the rats were given a familiar toy\nthe rats became anxious after a lengthy period of time alone
                         \nthe rats lived longer then they were part of a social group\nthe rats'brains expanded or shrank depending on the level of mental activity">
                     </MultipleChoiceTest>
@@ -55,11 +57,45 @@ export default function StartTestPage() {
                     <MultipleChoiceTest
                         questionOrder={3}
                         content=" A comparison between adults and children who played chess showed that"
+                        answer="C"
                         choiceList="the children were as capable as the adults of remembering a series of numbers\nthe children had better recall of the layout of pieces
                         \nthe adults stored memories of chess moves in a more logical manner\nthe adults had clearer memories of chess games they had played">
                     </MultipleChoiceTest>
                 </div>
-                <TrueFalseTest></TrueFalseTest>
+
+                <div className="question-list-container">
+                    <h1>Question 4-7</h1>
+                    <h2>Do the following statements agree with the views of the writer in Reading Passage?</h2>
+                    <h2><strong>TRUE</strong>: if the statement agrees with the information</h2>
+                    <h2><strong>FALSE</strong>: if the statement contradicts the information</h2>
+                    <h2><strong>NOT GIVEN</strong>: If there is no information on this</h2>
+                    
+                    <TrueFalseTest
+                        questionOrder={4}
+                        content="Heritage Farm is different from most other nearby farms."
+                        answer="TRUE">
+                    </TrueFalseTest>
+
+                    <TrueFalseTest
+                        questionOrder={5}
+                        content="Most nongovernment-owned seed banks are bigger than Seed Savers Exchange."
+                        answer="FALSE">
+                    </TrueFalseTest>
+
+                    <TrueFalseTest
+                        questionOrder={6}
+                        content="Diane Ott Whealy's grandfather taught her a lot about seed varieties."
+                        answer="NOT GIVEN">
+                    </TrueFalseTest>
+
+                    <TrueFalseTest
+                        questionOrder={7}
+                        content="The seeds people give to the Seed Savers Exchange are stored outdoors."
+                        answer="TRUE">
+                    </TrueFalseTest>
+
+                </div>
+                
                 <MatchingTest></MatchingTest>
                 <DiagramTest></DiagramTest>
                 </div>
