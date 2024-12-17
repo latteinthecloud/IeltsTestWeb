@@ -1,37 +1,16 @@
 import React from "react";
 import "./TrueFalseTest.css";
 
-interface TrueFalseTestProps {
-  questionOrder: number;
-  content: string;
-  answers: Map<number, string>;
-  handleAnswerChange: (questionNumber: number, answer: string) => void;
-}
-
-export default function TrueFalseTest({
-  questionOrder,
-  content,
-  answers,
-  handleAnswerChange,
-}: TrueFalseTestProps) {
-  const selectedAnswer = answers.get(questionOrder) || "";
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const answer = e.target.value;
-    handleAnswerChange(questionOrder, answer);
-  };
-
+export default function TrueFalseTest() {
   return (
     <div className="true-false-container">
-      <h1>
-        <strong>{questionOrder}.</strong>
-      </h1>
-      <select value={selectedAnswer} onChange={handleSelectChange}>
-        <option value=""></option>
-        <option value="TRUE">TRUE</option>
-        <option value="FALSE">FALSE</option>
-        <option value="NOT GIVEN">NOT GIVEN</option>
+      <h1>14.</h1>
+      <select>
+        <option value="true">TRUE</option>
+        <option value="false">FALSE</option>
+        <option value="not-given">NOT GIVEN</option>
       </select>
-      <h1>{content}</h1>
+      <h1>Heritage Farm is different from most other nearby farms.</h1>
     </div>
   );
 }
