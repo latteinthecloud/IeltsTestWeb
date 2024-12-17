@@ -1,7 +1,19 @@
 import React from "react";
 import "./MultipleChoiceTest.css";
 
-export default function MultipleChoiceTest() {
+interface MultipleChoiceTestProps {
+  questionOrder: number;
+  content: string;
+  choiceList: string;
+}
+
+export default function MultipleChoiceTest({
+  questionOrder,
+  content,
+  choiceList,
+}: MultipleChoiceTestProps) {
+  const options = choiceList.split("\\n");
+
   return (
     <div
       className="test-panel__question-sm-group"
@@ -9,8 +21,7 @@ export default function MultipleChoiceTest() {
       data-q_type="6"
     >
       <div className="test-panel__question-sm-title">
-        27. The optimum amount of fluorine in fluoridated water is calculated
-        partly according to
+        {questionOrder}. {content}
       </div>
       <div className="test-panel__answer" data-question-item="27">
         <div className="test-panel__answer-item">
@@ -24,7 +35,7 @@ export default function MultipleChoiceTest() {
               value="A"
               id="radio-78074-A"
             />
-            how hot the area is.
+            {options[0]}
           </label>
         </div>
         <div className="test-panel__answer-item">
@@ -38,7 +49,7 @@ export default function MultipleChoiceTest() {
               value="B"
               id="radio-78075-B"
             />
-            how warm the water is.
+            {options[1]}
           </label>
         </div>
         <div className="test-panel__answer-item">
@@ -52,7 +63,7 @@ export default function MultipleChoiceTest() {
               value="C"
               id="radio-78076-C"
             />
-            how many dental problems there are in the community.
+            {options[2]}
           </label>
         </div>
         <div className="test-panel__answer-item">
@@ -66,7 +77,7 @@ export default function MultipleChoiceTest() {
               value="D"
               id="radio-78077-D"
             />
-            how much fluorine the community chooses to have in its water.
+            {options[3]}
           </label>
         </div>
       </div>
