@@ -3,7 +3,7 @@ import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import "./StartTestHeader.css"
 
 export default function StartTestHeader(){
-    const [remainingMinutes, setRemainingMinutes] = useState(5);  // Số phút ban đầu
+    const [remainingMinutes, setRemainingMinutes] = useState(60);  // Số phút ban đầu
 
     useEffect(() => {
     const intervalId = setInterval(() => {
@@ -32,7 +32,7 @@ export default function StartTestHeader(){
                 <RoundedButton 
                     title="Review"
                     icon={<img src={require("../../assets/review.png")} alt="review-icon"></img>}
-                    colors={["#FFCA44","#B79339"]}
+                    colors={["#33B2C7","#268695"]}
                     onClick={()=>{}}>
                 </RoundedButton>
                 <RoundedButton 
