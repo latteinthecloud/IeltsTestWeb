@@ -40,9 +40,12 @@ export default function StartTestHeader(){
                     icon={<img src={require("../../assets/send.png")} alt="send-icon"></img>} 
                     onClick={()=>{}}>
                 </RoundedButton>
-                <button className="exit-button">
-                    <img src={require("../../assets/logout.png")}></img>
-                </button>
+                <RoundedButton
+                    title="Exit"
+                    icon ={<img src={require("../../assets/logout.png")} alt="exit-icon"></img>}
+                    colors={["#001f80","#040160"]}
+                    onClick={()=>{}}>
+                </RoundedButton>
             </div>
         </div>
     );
