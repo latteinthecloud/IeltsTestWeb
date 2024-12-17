@@ -1,27 +1,14 @@
 import React from "react";
-import "./QuestionPalette.css"
+import "./QuestionPalette.css";
 
-interface QuestionPaletteProps{
-    sectionOrder: number;
-    startQuestion: number;
-    endQuestion: number;
-    status?: string;
-    onClick: () => void;
-    answers: Map<number, string>;
-}
-
-export default function QuestionPalette({sectionOrder, startQuestion, endQuestion, status= "", onClick, answers}: QuestionPaletteProps){
-    const numList = Array.from({ length: endQuestion - startQuestion + 1 }, (_, i) => startQuestion + i);
-    
-    return (
-        <div className={`question-palette-container ${status === "active" ? "active" : ""}`}
-            onClick={onClick}>
-            <h1>Part {sectionOrder}</h1>
-            { numList.map((num, index)=>{
-                return(
-                    <h2 className={answers.get(num) !== undefined ? "active": "" } key={num}>{num}</h2>
-                );
-            })}
-        </div>
-    );
+export default function SectionChange() {
+  return (
+    <div className="question-palette-container">
+      <h1>Part 1</h1>
+      <h2>1</h2>
+      <h2>2</h2>
+      <h2>3</h2>
+      <h2>4</h2>
+    </div>
+  );
 }
