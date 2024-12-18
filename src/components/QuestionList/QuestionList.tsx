@@ -1,4 +1,5 @@
 import React from "react";
+import CompleteTest from "../CompleteTest/CompleteTest.tsx";
 
 interface QuestionListProps {
   startQuestion: number;
@@ -6,6 +7,8 @@ interface QuestionListProps {
   type: string;
   choiceList?: string;
   img?: string;
+  content?: string;
+  completeAnswer?: string[];
   children?: React.ReactNode;
 }
 
@@ -13,11 +16,14 @@ export default function QuestionList({
   startQuestion,
   endQuestion,
   type,
+  content = "",
   choiceList = "",
   img = "",
+  completeAnswer = [],
   children,
-}) {
-  const options = choiceList !== null ? choiceList?.split("\\n") : null;
+}: QuestionListProps) {
+  const options = choiceList !== null ? choiceList.split("\\n") : null;
+  const parts = content !== null ? content.split("\\n") : null;
 
   const containerStyle: React.CSSProperties = {
     display: "flex",
@@ -50,6 +56,12 @@ export default function QuestionList({
     borderRadius: "5px",
     padding: "10px",
     textAlign: "left",
+  };
+
+  const formatText: React.CSSProperties = {
+    textAlign: "left",
+    fontSize: "15px",
+    margin: "0px",
   };
 
   return (
@@ -94,13 +106,13 @@ export default function QuestionList({
               <thead>
                 <tr>
                   <th colSpan={2} style={{ textAlign: "center" }}>
-                    {options[0]}
+                    {content}
                   </th>
                 </tr>
               </thead>
 
               <tbody>
-                {options.slice(1).map((option, index) => (
+                {options.map((option, index) => (
                   <tr key={index}>
                     <td style={{ width: "20px" }}>
                       <strong>{String.fromCharCode(65 + index)}</strong>
@@ -133,13 +145,31 @@ export default function QuestionList({
         </div>
       )}
 
-      {type === "complete" && (
+      {type === "complete" && parts !== null && (
         <div style={containerStyle}>
           <h2 style={instructionStyle}>Complete the paragraph below.</h2>
           <h2 style={instructionStyle}>
             Choose <strong style={{ color: "red" }}>ONE WORD ONLY</strong> from
             the passage for each answer.
           </h2>
+          {parts.map((part, index) => {
+            let startIndex = 0;
+
+            for (let i = 0; i < index; i++) {
+              startIndex += countInput(parts[i]);
+            }
+
+            return (
+              <p style={formatText}>
+                {formatPapagraph(
+                  part,
+                  startQuestion + startIndex,
+                  startIndex,
+                  completeAnswer
+                )}
+              </p>
+            );
+          })}
         </div>
       )}
 
@@ -147,3 +177,28 @@ export default function QuestionList({
     </div>
   );
 }
+
+function formatPapagraph(
+  text: string,
+  startIndex: number,
+  prevIndex: number,
+  completeAnswer: string[]
+) {
+  const parts = text.split("<i>");
+  return parts.flatMap((part, index) => [
+    <span key={`text-${index}`}>{part}</span>,
+    index < parts.length - 1 && (
+      <CompleteTest
+        key={`input-${index}`}
+        questionOrder={startIndex + index}
+        answer={completeAnswer[prevIndex + index]}
+      />
+    ),
+  ]);
+}
+
+function countInput(text: string) {
+  return (text.match(/<i>/g) || []).length;
+}
+
+function getQuestionOrder(index: number) {}
