@@ -29,9 +29,6 @@ form {
   border-radius: 5px;
 }
 
-.form-group {
-  margin-bottom: 15px; /* Khoảng cách giữa các nhóm form */
-}
 
 label {
   display: block;

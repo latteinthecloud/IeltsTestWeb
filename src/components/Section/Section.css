@@ -1,0 +1,146 @@
+/* Section.css */
+.container {
+  display: flex;
+  width: 696px;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(168, 168, 168, 0.50);
+  background: #FFF;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.file-wrapper{
+  display: flex;
+flex-direction: row;
+align-items: flex-start;
+gap: 10px;
+flex: 1 0 0;
+}
+h4 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.layout label {
+  color: #000;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 28px */
+  width: 81px;
+}
+
+input[type="textSection"], input[type="file"] {
+  display: flex;
+  width: 427.06px;
+  height: 100%;
+  padding: 5px 10px;
+  align-items: flex-start;
+  gap: 10px;
+ border: 1px solid #ccc;;
+}
+
+input[type="file"] {
+  display: none; 
+}
+/* Tạo kiểu cho label, thay thế button chọn file */
+.file-upload {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.file-upload:hover {
+  background-color: #e0e0e0; /* Hiệu ứng hover */
+}
+
+.file-upload-icon {
+display: flex;
+padding: 0px;
+justify-content: center;
+align-items: center;
+border-radius: 5px;
+background: #001A72;
+color: #ddd;
+width: 37.2px;
+height: 37.2px;
+}
+
+.file-upload input[type="file"]:focus {
+  outline: none;
+}
+h3 {
+  display: flex; /* Kích hoạt Flexbox */
+  justify-content: flex-end; /* Đẩy nội dung về bên phải */
+  align-items: center; /* Căn giữa theo chiều dọc (nếu cần) */
+  color: #000;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  width: 737.6px; /* Giữ nguyên chiều rộng */
+  margin: 0; /* Xóa margin mặc định */
+}
+
+i{
+  color: #001A72;
+  font-size: 15px;
+  padding-right: 15px;
+  vertical-align: middle; 
+}
+
+.layout{
+display: flex;
+padding: 0px 30px;
+align-items: center;
+gap: 50px;
+align-self: stretch;
+}
+.add-section {
+  display: flex;
+  padding: 5px 25px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+  width: 90%;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  color: #FFF;
+font-family: Poppins;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #1FCD33 0%, #0F671A 100%);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 121px;
+  height: 34px;
+}
+
+.add-button i {
+  font-size: 24px;
+  color: #FFF;
+
+}
+
+.add-button:hover {
+  background-color: white;
+}
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"; 
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Navbar.css";
@@ -38,8 +38,10 @@ const Navbar = () => {
     const handleClickOutside = (event) => {
       // Close dropdown if clicked outside avatar container or dropdown menu
       if (
-        dropdownRef.current && !dropdownRef.current.contains(event.target) &&
-        avatarContainerRef.current && !avatarContainerRef.current.contains(event.target)
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        avatarContainerRef.current &&
+        !avatarContainerRef.current.contains(event.target)
       ) {
         setDropdownOpen(false); // Close dropdown if clicked outside
       }
@@ -55,8 +57,8 @@ const Navbar = () => {
     <div className="nav-container">
       <nav className="navbar">
         <div className="nav-links">
-          {/* Conditionally render links only if the user is not an admin */}
-          {user?.role !== "admin" && (
+          {/* Hiển thị Nav cho user hoặc chưa xác định role */}
+          {(!user?.role || user?.role === "user") && (
             <>
               <Link to="/" className="nav-item">
                 IELTS Exam Library
@@ -69,30 +71,49 @@ const Navbar = () => {
               </Link>
             </>
           )}
+
+          {/* Hiển thị Nav dành riêng cho admin */}
+          {user?.role === "admin" && (
+            <>
+              <Link to="/statistics" className="nav-item">
+                Statistics
+              </Link>
+              <Link to="/test" className="nav-item">
+                Test
+              </Link>
+              <Link to="/user" className="nav-item">
+                User
+              </Link>
+            </>
+          )}
         </div>
+
         <div className="auth-links">
           {isAuthenticated ? (
             <>
-              <div 
-                ref={avatarContainerRef} 
+              <div
+                ref={avatarContainerRef}
                 className="avatar-container"
                 onClick={toggleDropdown} // Toggle dropdown on click
                 onMouseEnter={showDropdown} // Show dropdown on hover
               >
-                <img 
-                  src="https://www.wikihow.tech/skins/owl/images/wikihow_logo_tech_4.png" 
-                  alt="User Avatar" 
-                  className="avatar" 
+                <img
+                  src="https://www.wikihow.tech/skins/owl/images/wikihow_logo_tech_4.png"
+                  alt="User Avatar"
+                  className="avatar"
                 />
-                <span className="username">{user?.email}</span> {/* Display user's email */}
+                <span className="username">{user?.email}</span>{" "}
+                {/* Display user's email */}
                 {/* Dropdown menu */}
                 {dropdownOpen && (
-                  <div 
-                    ref={dropdownRef} 
+                  <div
+                    ref={dropdownRef}
                     className="dropdown-menu"
                     onMouseLeave={hideDropdown} // Hide dropdown on mouse leave from menu
                   >
-                    <Link to="/profile" className="dropdown-item">Profile</Link>
+                    <Link to="/profile" className="dropdown-item">
+                      Profile
+                    </Link>
                     <button onClick={handleLogout} className="logout-button">
                       Logout
                     </button>
@@ -102,13 +123,13 @@ const Navbar = () => {
             </>
           ) : (
             <>
-            <Link to="/signup" className="nav-item">
-              Sign up
-            </Link>
-            <Link to="/login" className="nav-item">
-              Login
-            </Link>
-          </>
+              <Link to="/signup" className="nav-item">
+                Sign up
+              </Link>
+              <Link to="/login" className="nav-item">
+                Login
+              </Link>
+            </>
           )}
         </div>
       </nav>

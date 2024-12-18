@@ -1,0 +1,124 @@
+.create-test-container {
+    width: 661px;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700; /* Bold */
+    font-size: 32px;  /* Cỡ chữ */
+  }
+/* Input và Select chung */
+input{
+  width: 100%; /* Kích thước đầy đủ */
+  padding: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  border: 2px solid rgba(140, 140, 140, 0.8);
+  border-radius: 4px;
+  box-sizing: border-box; /* Đảm bảo padding không làm to hơn container */
+  background-color: #fdfdfd;
+  transition: border-color 0.1s ease-in-out;
+}
+select {
+  width: 100%; /* Kích thước đầy đủ */
+  padding: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  border: 2px solid rgba(140, 140, 140, 0.8);
+  border-radius: 4px;
+  box-sizing: border-box; /* Đảm bảo padding không làm to hơn container */
+  background-color: #fdfdfd;
+  transition: border-color 0.1s ease-in-out;
+}
+select[name="editionMonth"] {
+  width: 100%; /* Thay đổi kích thước */
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 400; /* Đậm hơn */
+  border: 2px solid rgba(140, 140, 140, 0.8);/* Màu viền khác */
+  border-radius: 5px; /* Bo góc nhiều hơn */
+  color: #000000; /* Màu chữ */
+}
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #5e9ed6;
+}
+
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .general {
+    color: #001A72;
+  font-size: 24px;
+  }
+  
+  .form-content {
+    flex-direction: column; 
+  }
+/*   
+  .form-group {
+    width: 314px;
+    height: 67px;
+  
+  } */
+  .form-group1{
+    width: 100%;
+    gap:76px;
+    display: flex;
+    flex-direction: row;
+  }
+  .form-group2{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap:76px;
+  }
+  .group{
+    flex: 1; 
+  max-width: calc(50% - 0px);
+  }
+  .group1{
+    display: flex;
+    flex-direction: row;
+    width: 292.5px;
+    gap:30px;
+    align-items: center;    
+  }
+  .header{
+    font-family: "Poppins", sans-serif; /* Font Poppins */
+    font-weight: 600; /* SemiBold */
+    font-size: 20px;  /* Cỡ chữ */
+    padding: 0;
+    border-bottom: none;
+  }
+  .edition-group {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+  }
+  
+  .edition-group input {
+    width: 100%;
+  }
+  
+  input::placeholder {
+    color: #aaa;
+  }
+  
+  @media (max-width: 768px) {
+    .form-content {
+      grid-template-columns: 1fr;
+    }
+  }
+  

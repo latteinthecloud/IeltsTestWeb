@@ -1,5 +1,6 @@
 .test-tab-container {
-    padding: 20px;
+  width: 60%; /* Chiều rộng 60% */
+  margin: 0 auto; /* Căn giữa nội dung */
   }
   
   .controls {
@@ -76,4 +77,18 @@
     color: white;
     border: none;
   }
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+ 
+  
   
