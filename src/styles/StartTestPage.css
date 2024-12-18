@@ -48,3 +48,20 @@
     margin: 0px;
     text-align: left;
 }
+
+.matching-table-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.matching-table-container table{
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: left;
+}
+
+.matching-row{
+    width: 20px;
+}
