@@ -22,7 +22,7 @@ export default function TestComponent({
 }: TestComponentProps) {
   return (
     <div className="test-container">
-      <div className="left">
+      <div className="test">
         <img
           className="test-cover"
           src={require("../../assets/Cover.png")}

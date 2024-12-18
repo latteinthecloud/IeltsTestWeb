@@ -10,7 +10,7 @@
     border: 1px solid #000;
     border-radius: 5px;
     padding: 10px;
-    text-align: center;
+    text-align: left;
 }
 
 .matching-test-option{
@@ -24,6 +24,16 @@
 .matching-test-container h1{
     font-size: 15px;
     font-weight: 700;
+    color: #000;
+    width: 20px !important;
+    display: inline-block;
+}
+
+.matching-test-container h2{
+    font-size: 15px;
+    font-weight: 400;
+    color: #000;
+    text-align: left;
 }
 
 .matching-test-container select{
@@ -32,3 +42,4 @@
     padding: 5px 10px;
     font-size: 15px;
 }
+
