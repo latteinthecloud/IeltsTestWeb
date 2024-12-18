@@ -141,6 +141,7 @@ const AdminAdd = () => {
           <Section numberOfSections={3} />
         )}
       </div>
+      <div className="confirm-btn">Confirm</div>
     </div>
   );
 };

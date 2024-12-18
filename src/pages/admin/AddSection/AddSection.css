@@ -122,11 +122,24 @@ line-height: 140%; /* 33.6px */
   flex-wrap: wrap; /* Cho phép xuống dòng */
   gap: 20px; /* Khoảng cách giữa các phần tử */
   width: 100%; /* Đảm bảo container chiếm toàn bộ chiều rộng */
+
 }
 
 .question > div {
   flex: 0 0 calc(50% - 10px); /* Mỗi phần tử chiếm đúng 50% chiều rộng, trừ gap */
   box-sizing: border-box; /* Đảm bảo padding và border không ảnh hưởng */
+}
+.matching-container{
+  display: flex;
+  flex-wrap: wrap; /* Cho phép xuống dòng */
+  gap: 20px; /* Khoảng cách giữa các phần tử */
+  width: 687px; /* Đảm bảo container chiếm toàn bộ chiều rộng */
+
+}
+.complete-container{
+  display: flex;
+  flex-wrap: wrap; /* Cho phép xuống dòng */
+  width: 687px; /* Đảm bảo container chiếm toàn bộ chiều rộng */
 }
 
 

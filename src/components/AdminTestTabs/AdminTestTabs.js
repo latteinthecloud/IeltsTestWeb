@@ -20,17 +20,17 @@ const TestTab = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await testApi.getAll();
-  //       if (Array.isArray(response)) setTestData(response);
-  //     } catch (error) {
-  //       console.error("Error fetching test data:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await testApi.getAll();
+        if (Array.isArray(response)) setTestData(response);
+      } catch (error) {
+        console.error("Error fetching test data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleAddTestClick = () => {
     navigate("/admin-add-test");

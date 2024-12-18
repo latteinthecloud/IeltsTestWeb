@@ -1,60 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import "./Matching.css";
 
-const Matching = () => {
-  const [hint, setHint] = useState("");
-  const [options, setOptions] = useState({
-    A: "",
-    B: "",
-    C: "",
-    D: "",
-  });
-  const [correctAnswer, setCorrectAnswer] = useState("A");
+const Matching = ({ initialCount = 1 }) => {
+  const [title, setTitle] = useState("");
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  // Xử lý thay đổi input đáp án
-  const handleOptionChange = (key, value) => {
-    setOptions({ ...options, [key]: value });
+  // Khởi tạo state choices và matchings
+  const [choices, setChoices] = useState([]);
+  const [matchings, setMatchings] = useState([]);
+
+  // Khi initialCount thay đổi, cập nhật choices và matchings
+  useEffect(() => {
+    const count = Math.min(Math.max(initialCount, 1), 26); // Giới hạn từ 1 -> 26
+    setChoices((prevChoices) => {
+      const updatedChoices = Array(count).fill("");
+      return updatedChoices.map((_, idx) => prevChoices[idx] || "");
+    });
+    setMatchings((prevMatchings) => {
+      const updatedMatchings = Array(count).fill({ option: "", match: "A" });
+      return updatedMatchings.map(
+        (_, idx) => prevMatchings[idx] || { option: "", match: "A" }
+      );
+    });
+  }, [initialCount]);
+
+  // Cập nhật choices
+  const updateChoice = (index, value) => {
+    const updatedChoices = [...choices];
+    updatedChoices[index] = value;
+    setChoices(updatedChoices);
+  };
+
+  // Cập nhật Matching
+  const updateMatching = (index, field, value) => {
+    const updatedMatchings = [...matchings];
+    updatedMatchings[index][field] = value;
+    setMatchings(updatedMatchings);
   };
 
   return (
-    <div className="question-container">
-      {/* Hint Input */}
-      <label className="label">Content</label>
-      <input
-        type="text"
-        placeholder="Hint...."
-        value={hint}
-        onChange={(e) => setHint(e.target.value)}
-        className="input-hint"
-      />
+    <div className="matchingContainer">
+      {/* Tiêu đề */}
+      <div className="title-section">
+        <label>Title</label>
+        <input
+          type="text"
+          placeholder="Enter title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="input-title"
+        />
+      </div>
 
-      {/* Các lựa chọn A, B, C, D */}
-      {["A", "B", "C", "D"].map((option) => (
-        <div key={option} className="option-row">
-          <div className="icon"></div>
-          <span className="option-label">{option}</span>
-          <input
-            type="text"
-            placeholder={`Option ${option}`}
-            value={options[option]}
-            onChange={(e) => handleOptionChange(option, e.target.value)}
-            className="input-option"
-          />
-        </div>
-      ))}
+      {/* Choices */}
+      <div className="choices-section">
+        <label>Choices</label>
+        {choices.map((_, index) => (
+          <div key={index} className="choice-row">
+            <span className="choice-label">
+              <div class="icon"></div> {alphabet[index]}
+            </span>
+            <input
+              type="text"
+              placeholder={`Option ${alphabet[index]}`}
+              value={choices[index]}
+              onChange={(e) => updateChoice(index, e.target.value)}
+              className="input-choice"
+            />
+          </div>
+        ))}
+      </div>
 
-      {/* Dropdown chọn đáp án đúng */}
-      <div className="correct-answer">
-        <label className="label">Correct answer</label>
-        <select
-          value={correctAnswer}
-          onChange={(e) => setCorrectAnswer(e.target.value)}
-          className="dropdown"
-        >
-          <option value="A">A</option>
-          <option value="B">B</option>
-          <option value="C">C</option>
-          <option value="D">D</option>
-        </select>
+      {/* Matching */}
+      <div className="matching-section">
+        <label>Matching</label>
+        {matchings.map((match, index) => (
+          <div key={index} className="matching-row">
+            <input
+              type="text"
+              placeholder="Matching option"
+              value={match.option}
+              onChange={(e) => updateMatching(index, "option", e.target.value)}
+              className="input-matching"
+            />
+            <select
+              value={match.match}
+              onChange={(e) => updateMatching(index, "match", e.target.value)}
+              className="dropdown-matching"
+            >
+              {choices.map((_, choiceIndex) => (
+                <option key={choiceIndex} value={alphabet[choiceIndex]}>
+                  {alphabet[choiceIndex]}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
       </div>
     </div>
   );
