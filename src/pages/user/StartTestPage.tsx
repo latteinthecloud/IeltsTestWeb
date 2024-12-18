@@ -108,7 +108,66 @@ export default function StartTestPage() {
             ></TrueFalseTest>
           </div>
 
-          <MatchingTest></MatchingTest>
+          <div className="question-list-container">
+            <h1>Question 8-10</h1>
+            <h2>
+              Look at the following statements and the list below. Match each
+              statement with the correct answer.
+            </h2>
+            <div className="matching-table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th colSpan={2} style={{ textAlign: "center" }}>
+                      List of people
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td className="matching-row">
+                      <strong>A</strong>
+                    </td>
+                    <td>Stanley Rapoport</td>
+                  </tr>
+                  <tr>
+                    <td className="matching-row">
+                      <strong>B</strong>
+                    </td>
+                    <td>Marion Diamond</td>
+                  </tr>
+                  <tr>
+                    <td className="matching-row">
+                      <strong>C</strong>
+                    </td>
+                    <td>Warner Schaie</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <MatchingTest
+              questionOrder={8}
+              content="The educational system makes students aware of how their memory works."
+              choiceList="A\nB\nC"
+              answer="A"
+            ></MatchingTest>
+
+            <MatchingTest
+              questionOrder={9}
+              content="Being open to new ways of doing things can have a positive impact on your mental condition as we get older."
+              choiceList="A\nB\nC"
+              answer="B"
+            ></MatchingTest>
+
+            <MatchingTest
+              questionOrder={10}
+              content="Being open to new ways of doing things can have a positive impact on your mental condition as we get older."
+              choiceList="A\nB\nC"
+              answer="B"
+            ></MatchingTest>
+          </div>
           <DiagramTest></DiagramTest>
         </div>
       </div>
