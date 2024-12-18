@@ -5,7 +5,21 @@ import QuestionPalette from "../../components/QuestionPalette/QuestionPalette.ts
 export default function StartTestFooter() {
   return (
     <div className="start-footer-container">
-      <QuestionPalette></QuestionPalette>
+      <QuestionPalette
+        sectionOrder={1}
+        startQuestion={1}
+        endQuestion={17}
+      ></QuestionPalette>
+      <QuestionPalette
+        sectionOrder={2}
+        startQuestion={18}
+        endQuestion={30}
+      ></QuestionPalette>
+      <QuestionPalette
+        sectionOrder={3}
+        startQuestion={31}
+        endQuestion={40}
+      ></QuestionPalette>
     </div>
   );
 }
