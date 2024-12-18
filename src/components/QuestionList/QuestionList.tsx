@@ -116,19 +116,27 @@ export default function QuestionList({
 
       {type === "diagram" && Array.isArray(options) && options.length > 0 && (
         <div style={containerStyle}>
-          <h2>
+          <h2 style={instructionStyle}>
             Complete the labels. Write{" "}
             <strong style={{ color: "red" }}>ONE WORD OR A NUMBER</strong> for
             each answer.
           </h2>
-          <img style={{ width: "50%" }} src={img}></img>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img style={{ width: "50%" }} src={img}></img>
+          </div>
         </div>
       )}
 
       {type === "complete" && (
         <div style={containerStyle}>
-          <h2>Complete the paragraph below.</h2>
-          <h2>
+          <h2 style={instructionStyle}>Complete the paragraph below.</h2>
+          <h2 style={instructionStyle}>
             Choose <strong style={{ color: "red" }}>ONE WORD ONLY</strong> from
             the passage for each answer.
           </h2>
