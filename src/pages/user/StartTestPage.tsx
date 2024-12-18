@@ -144,7 +144,7 @@ export default function StartTestPage() {
         </div>
       </div>
 
-      <StartTestFooter></StartTestFooter>
+      <StartTestFooter totalQuestion={[13, 14, 13]}></StartTestFooter>
     </div>
   );
 }

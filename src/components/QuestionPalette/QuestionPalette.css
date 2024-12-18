@@ -7,6 +7,10 @@
     cursor: pointer;
 }
 
+.question-palette-container.active{
+    border-color: #001f80;
+}
+
 .question-palette-container h1{
     font-size: 15px;
     font-weight: 700;
