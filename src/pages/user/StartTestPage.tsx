@@ -124,10 +124,23 @@ export default function StartTestPage() {
                     </MatchingTest>
 
                 </QuestionList>
-                
-                <DiagramTest></DiagramTest>
+
+                <QuestionList
+                    startQuestion={11}
+                    endQuestion={14}
+                    type="diagram"
+                    img="https://ieltsonlinetests.com/sites/default/files/2023-09/Screenshot%202023-09-12%20140046.png">
+                    
+                    <DiagramTest questionOrder={11} answer=""></DiagramTest>
+                    <DiagramTest questionOrder={12} answer=""></DiagramTest>
+                    <DiagramTest questionOrder={13} answer=""></DiagramTest>
+                    <DiagramTest questionOrder={14} answer=""></DiagramTest>
+
+                </QuestionList>
                 </div>
             </div>
+
+                
             <StartTestFooter></StartTestFooter>
         </div>
     );
