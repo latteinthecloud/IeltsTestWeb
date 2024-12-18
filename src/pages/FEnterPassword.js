@@ -49,26 +49,25 @@ const EnterPassword = () => {
     <div className="auth-container">
       <h2>Reset Password</h2>
       <form className="auth-form" onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="form-group-auth">
           <label>New Password:</label>
           <div className="input-wrapper">
             <input
-                 type={showPassword ? "text" : "password"} // Toggle between password and text
-                 placeholder="Enter your password"
-                 value={password}
-                 onChange={(e) => setPassword(e.target.value)}
-                 required
+              type={showPassword ? "text" : "password"} // Toggle between password and text
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
-             <i
+            <i
               className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
               onClick={togglePasswordVisibility} // On click, toggle password visibility
               role="button"
               aria-label={showPassword ? "Hide password" : "Show password"}
-    />
+            />
           </div>
         </div>
-
-        <div className="form-group">
+        <div className="form-group-auth">
           <label>Confirm Password:</label>
           <div className="input-wrapper">
             <input
@@ -78,18 +77,16 @@ const EnterPassword = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-             <i
-             
+            <i
               className={showPassword1 ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
               onClick={togglePasswordVisibility1} // On click, toggle password visibility
               role="button"
               aria-label={showPassword1 ? "Hide password" : "Show password"}
-    />
+            />
           </div>
         </div>
-
-        {error && <div className="error-message">{error}</div>} {/* Display error message if any */}
-
+        {error && <div className="error-message">{error}</div>}{" "}
+        {/* Display error message if any */}
         <button type="submit" className="auth-button" disabled={loading}>
           {loading ? "Please wait..." : "Reset Password"}
         </button>

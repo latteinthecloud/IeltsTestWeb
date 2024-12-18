@@ -11,7 +11,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
 
@@ -21,8 +21,6 @@ const Register = () => {
   const togglePasswordVisibility1 = () => {
     setShowPassword1(!showPassword1); // Toggle password visibility
   };
-
-
 
   // Regex to validate email format
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -49,7 +47,7 @@ const Register = () => {
     try {
       // Step 1: Check if email already exists in the database
       const response = await accountApi.getAll(); // Get all accounts to check if email exists
-      const emailExists = response.some(account => account.email === email); // Check if the email is already in the list
+      const emailExists = response.some((account) => account.email === email); // Check if the email is already in the list
 
       if (emailExists) {
         setError("Email already exists.");
@@ -75,7 +73,7 @@ const Register = () => {
         {error && <div className="error-message">{error}</div>}
 
         {/* Email Input */}
-        <div className="form-group">
+        <div className="form-group-auth">
           <label>Email:</label>
           <div className="input-wrapper">
             <input
@@ -89,29 +87,28 @@ const Register = () => {
         </div>
 
         {/* Password Input */}
-        <div className="form-group">
+        <div className="form-group-auth">
           <label>Password:</label>
           <div className="input-wrapper">
             <input
-               type={showPassword ? "text" : "password"} // Toggle between password and text
+              type={showPassword ? "text" : "password"} // Toggle between password and text
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
 
-              <i
-                       className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
-                       onClick={togglePasswordVisibility} // On click, toggle password visibility
-                       role="button"
-                       aria-label={showPassword ? "Hide password" : "Show password"}
-             >
-             </i>
+            <i
+              className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
+              onClick={togglePasswordVisibility} // On click, toggle password visibility
+              role="button"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            ></i>
           </div>
         </div>
 
         {/* Confirm Password Input */}
-        <div className="form-group">
+        <div className="form-group-auth">
           <label>Confirm Password:</label>
           <div className="input-wrapper">
             <input
@@ -127,15 +124,11 @@ const Register = () => {
               onClick={togglePasswordVisibility1} // On click, toggle password visibility
               role="button"
               aria-label={showPassword1 ? "Hide password" : "Show password"}
-             >
-             </i>
+            ></i>
           </div>
         </div>
 
-        <button 
-        type="submit" 
-        className="auth-button" 
-        disabled={loading} >
+        <button type="submit" className="auth-button" disabled={loading}>
           Sign Up
         </button>
       </form>

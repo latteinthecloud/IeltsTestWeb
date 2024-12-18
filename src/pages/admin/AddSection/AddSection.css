@@ -6,40 +6,47 @@ padding-top: 20px;
 .add-section-container {
 width: 719px;
 min-height: 100px; /* Đặt chiều cao tối thiểu */
-flex-shrink: 0;
 border-radius: 10px;
 border: 1px solid rgba(0, 0, 0, 0.20);
 background: #FFF;
 box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 padding: 15px; /* Tạo khoảng cách bên trong container */
 box-sizing: border-box; /* Bao gồm padding và border vào tổng kích thước */
+display: flex; /* Sử dụng flexbox */
+flex-wrap: wrap;
+margin-bottom: 30px;
 }
 
 .header-row {
 display: flex;
 margin-bottom: 20px;
-gap:120px;
+gap:150px;
 }
 .form-group {
 display: flex;
 flex-direction: row;
-gap: 0; /* Loại bỏ khoảng cách giữa label và input */
+gap: 5px; /* Loại bỏ khoảng cách giữa label và input */
 }
 .number-input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 16;
+  height: 30px;
 }
-.dropdown {
+input[type="number"]{
+  height: 90%;
+}
+.dropdown-type {
 display: flex;
 width: 186px;
 height: 32px;
-padding: 5px 10px;
+padding: 3px 10px;
 align-items: center;
 border-radius: 5px;
 border: 1px solid rgba(140, 140, 140, 0.50);
 background: #FFF;
+margin-left: 0px;
 }
 .form-group label{
     color: #000;
@@ -50,5 +57,77 @@ background: #FFF;
     line-height: normal;
     margin-right: 0; /* Loại bỏ khoảng cách giữa label và dropdown */
 }
-  
+.section-header{
+  display: flex;
+  flex-direction: row;
+  width: 719px;
+ justify-content: space-between;
+ justify-items: flex-start;
+ padding-bottom: 20px;
+
+}
+.section-header text{
+  color: #000;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 28px */
+}
+.add-parts{
+display: flex;
+width: 143px;
+padding: 5px 25px;
+justify-content: center;
+align-items: center;
+gap: 5px;
+border-radius: 20px;
+background: linear-gradient(180deg, #1FCD33 0%, #18A329 100%);
+}
+.add-parts text{
+  color: #FFF;
+font-family: Poppins;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 140%; /* 28px */
+}
+.add-parts i{
+font-size: 24px;;
+color: #FFF;
+align-items: center;
+}
+.confirm-btn{
+margin: auto;
+margin-top: 34px;
+margin-bottom: 34px;
+display: flex;
+width: 188px;
+height: 51px;
+padding: 5px 25px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 20px;
+background: linear-gradient(180deg, #001A72 0%, #000 100%);
+color: #FFF;
+font-family: Poppins;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: 140%; /* 33.6px */
+}
+.question {
+  display: flex;
+  flex-wrap: wrap; /* Cho phép xuống dòng */
+  gap: 20px; /* Khoảng cách giữa các phần tử */
+  width: 100%; /* Đảm bảo container chiếm toàn bộ chiều rộng */
+}
+
+.question > div {
+  flex: 0 0 calc(50% - 10px); /* Mỗi phần tử chiếm đúng 50% chiều rộng, trừ gap */
+  box-sizing: border-box; /* Đảm bảo padding và border không ảnh hưởng */
+}
+
+
   

@@ -63,7 +63,7 @@ const SectionListen = ({ numberOfSections }) => {
             <div className="time-wrapper">
               <input
                 type="timestamp"
-                placeholder="00:00:00"
+                placeholder="00:00"
                 value={section.timestamp}
                 readOnly
               />

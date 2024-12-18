@@ -27,15 +27,13 @@ const ForgotPassword = () => {
     } finally {
       setIsLoading(false); // Reset loading state after the request is complete
     }
-  
-  }; 
-
+  };
 
   return (
     <div className="auth-container">
       <h2>Forgot Password</h2>
       <form className="auth-form" onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="form-group-auht">
           <label>Email:</label>
           <div className="input-wrapper">
             <input
@@ -47,7 +45,8 @@ const ForgotPassword = () => {
             />
           </div>
         </div>
-        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}{" "}
+        {/* Display error message */}
         <button type="submit" className="auth-button" disabled={isLoading}>
           {isLoading ? "Sending..." : "Continue"}
         </button>

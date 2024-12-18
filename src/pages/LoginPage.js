@@ -90,7 +90,7 @@ const Login = () => {
       {error && <p className="error-message">{error}</p>}{" "}
       {/* Display error message */}
       <div className="auth-form">
-        <div className="form-group">
+        <div className="form-group-auth">
           <label>Email</label>
           <div className="input-wrapper">
             <input
@@ -102,7 +102,7 @@ const Login = () => {
             />
           </div>
         </div>
-        <div className="form-group">
+        <div className="form-group-auth">
           <label>Password</label>
           <div className="input-wrapper">
             <input
