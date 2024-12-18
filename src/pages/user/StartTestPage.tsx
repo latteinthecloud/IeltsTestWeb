@@ -7,6 +7,7 @@ import TrueFalseTest from "../../components/TrueFalseTest/TrueFalseTest.tsx";
 import MatchingTest from "../../components/MatchingTest/MatchingTest.tsx";
 import DiagramTest from "../../components/DiagramTest/DiagramTest.tsx";
 import StartTestFooter from "../../components/StartTestFooter/StartTestFooter.tsx";
+import QuestionList from "../../components/QuestionList/QuestionList.tsx";
 
 export default function StartTestPage() {
   return (
@@ -34,12 +35,11 @@ export default function StartTestPage() {
           ></ReadingPassage>
         </div>
         <div className="right">
-          <div className="question-list-container">
-            <h1>Question 1-3</h1>
-            <h2>
-              Choose the correct letter <strong>A, B, C</strong> or{" "}
-              <strong>D</strong>.
-            </h2>
+          <QuestionList
+            startQuestion={1}
+            endQuestion={3}
+            type="multiple_choice"
+          >
             <MultipleChoiceTest
               questionOrder={1}
               content="What does the writer say about the performance of older typists on the test?"
@@ -63,26 +63,9 @@ export default function StartTestPage() {
               choiceList="the children were as capable as the adults of remembering a series of numbers\nthe children had better recall of the layout of pieces
                         \nthe adults stored memories of chess moves in a more logical manner\nthe adults had clearer memories of chess games they had played"
             ></MultipleChoiceTest>
-          </div>
+          </QuestionList>
 
-          <div className="question-list-container">
-            <h1>Question 4-7</h1>
-            <h2>
-              Do the following statements agree with the views of the writer in
-              Reading Passage?
-            </h2>
-            <h2>
-              <strong>TRUE</strong>: if the statement agrees with the
-              information
-            </h2>
-            <h2>
-              <strong>FALSE</strong>: if the statement contradicts the
-              information
-            </h2>
-            <h2>
-              <strong>NOT GIVEN</strong>: If there is no information on this
-            </h2>
-
+          <QuestionList startQuestion={4} endQuestion={7} type="true_false">
             <TrueFalseTest
               questionOrder={4}
               content="Heritage Farm is different from most other nearby farms."
@@ -106,47 +89,14 @@ export default function StartTestPage() {
               content="The seeds people give to the Seed Savers Exchange are stored outdoors."
               answer="TRUE"
             ></TrueFalseTest>
-          </div>
+          </QuestionList>
 
-          <div className="question-list-container">
-            <h1>Question 8-10</h1>
-            <h2>
-              Look at the following statements and the list below. Match each
-              statement with the correct answer.
-            </h2>
-            <div className="matching-table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th colSpan={2} style={{ textAlign: "center" }}>
-                      List of people
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td className="matching-row">
-                      <strong>A</strong>
-                    </td>
-                    <td>Stanley Rapoport</td>
-                  </tr>
-                  <tr>
-                    <td className="matching-row">
-                      <strong>B</strong>
-                    </td>
-                    <td>Marion Diamond</td>
-                  </tr>
-                  <tr>
-                    <td className="matching-row">
-                      <strong>C</strong>
-                    </td>
-                    <td>Warner Schaie</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
+          <QuestionList
+            startQuestion={8}
+            endQuestion={10}
+            type="matching"
+            choiceList="List of people\nStanley Rapoport\nMarion Diamond\nWarner Schaie"
+          >
             <MatchingTest
               questionOrder={8}
               content="The educational system makes students aware of how their memory works."
@@ -167,7 +117,8 @@ export default function StartTestPage() {
               choiceList="A\nB\nC"
               answer="B"
             ></MatchingTest>
-          </div>
+          </QuestionList>
+
           <DiagramTest></DiagramTest>
         </div>
       </div>
