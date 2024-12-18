@@ -95,7 +95,8 @@ export default function StartTestPage() {
             startQuestion={8}
             endQuestion={10}
             type="matching"
-            choiceList="List of people\nStanley Rapoport\nMarion Diamond\nWarner Schaie"
+            content="List of people"
+            choiceList="Stanley Rapoport\nMarion Diamond\nWarner Schaie"
           >
             <MatchingTest
               questionOrder={8}
@@ -130,6 +131,16 @@ export default function StartTestPage() {
             <DiagramTest questionOrder={13} answer=""></DiagramTest>
             <DiagramTest questionOrder={14} answer=""></DiagramTest>
           </QuestionList>
+
+          <QuestionList
+            startQuestion={15}
+            endQuestion={17}
+            type="complete"
+            content="Psychologists distinguish between two different types of memory: <i> and <i> memory. A study was conducted into people's knowledge of
+                    <i> to determine recall ability. This aspect of memory was found to be a function not of age but rather of length of tuition.\n
+                    School also helps with a brain function called <i> . This is why a more highly educated person is generally more successful and does better in 
+                    <i> tests."
+          ></QuestionList>
         </div>
       </div>
 
