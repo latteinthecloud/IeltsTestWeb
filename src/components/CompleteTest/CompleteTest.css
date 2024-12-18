@@ -1,0 +1,13 @@
+.complete-test-input{
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    width: 100px;
+    margin: 0px;
+}
+
+.complete-test-input::placeholder{
+    text-align: center;
+    font-weight: 700;
+    color: #001f80;
+}
