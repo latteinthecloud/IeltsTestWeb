@@ -1,0 +1,30 @@
+.start-page-container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.content-container {
+    display: flex;
+    flex: 1;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.left {
+    width: 50%;
+    padding: 20px;
+    overflow-y: auto;
+    min-width: 150px;
+}
+
+.right{
+    width: 50%;
+    padding: 20px;
+    overflow-y: auto;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap:30px;
+}

@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import "./StartTestHeader.css"
 
-export default function StartTestHeader(){
-    const [remainingMinutes, setRemainingMinutes] = useState(5);  // Số phút ban đầu
+interface StartTestHeaderProps{
+  time: number;
+}
+
+export default function StartTestHeader({time}: StartTestHeaderProps){
+    const [remainingMinutes, setRemainingMinutes] = useState(time);  // Số phút ban đầu
 
     useEffect(() => {
     const intervalId = setInterval(() => {
@@ -32,7 +36,7 @@ export default function StartTestHeader(){
                 <RoundedButton 
                     title="Review"
                     icon={<img src={require("../../assets/review.png")} alt="review-icon"></img>}
-                    colors={["#FFCA44","#B79339"]}
+                    colors={["#33B2C7","#268695"]}
                     onClick={()=>{}}>
                 </RoundedButton>
                 <RoundedButton 
@@ -40,9 +44,12 @@ export default function StartTestHeader(){
                     icon={<img src={require("../../assets/send.png")} alt="send-icon"></img>} 
                     onClick={()=>{}}>
                 </RoundedButton>
-                <button className="exit-button">
-                    <img src={require("../../assets/logout.png")}></img>
-                </button>
+                <RoundedButton
+                    title="Exit"
+                    icon ={<img src={require("../../assets/logout.png")} alt="exit-icon"></img>}
+                    colors={["#001f80","#040160"]}
+                    onClick={()=>{}}>
+                </RoundedButton>
             </div>
         </div>
     );

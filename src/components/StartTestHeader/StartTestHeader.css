@@ -14,7 +14,7 @@
 
 .start-header-container h1{
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .timer-container{
@@ -22,6 +22,7 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
+    padding-left: 300px;
 }
 
 .time-left{
@@ -35,17 +36,4 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
-}
-
-.exit-button{
-    width: 45px;
-    border-radius: 10px;
-    aspect-ratio: 1;
-    background: linear-gradient(to bottom,#F40000,#720000);
-    transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
-
-.exit-button:hover{
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-    transform: translateY(-1px);
 }

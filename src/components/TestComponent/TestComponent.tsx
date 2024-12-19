@@ -16,7 +16,7 @@ interface TestComponentProps {
 export default function TestComponent({id, name, year, month, type, skill, completed}: TestComponentProps){
     return (
         <div className="test-container">
-            <div className="left">
+            <div className="test">
                 <img 
                     className="test-cover"
                     src={require("../../assets/Cover.png")}
