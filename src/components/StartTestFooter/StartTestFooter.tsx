@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import "./StartTestFooter.css";
 import QuestionPalette from "../../components/QuestionPalette/QuestionPalette.tsx";
 
 interface StartTestFooterProps {
   totalQuestion: number[];
+  activeIndex: number;
+  setActiveIndex: (number) => void;
 }
 
 export default function StartTestFooter({
   totalQuestion,
+  activeIndex,
+  setActiveIndex,
 }: StartTestFooterProps) {
-  const [activeIndex, setActiveIndex] = useState(1);
-
   return (
     <div className="start-footer-container">
       {totalQuestion.map((questions, index) => {
