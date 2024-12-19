@@ -18,6 +18,7 @@ export default function StartTestPage() {
 
   const skill = searchParams.get("skill");
   const id = searchParams.get("test");
+  const questionNums: number[] = [];
 
   useEffect(() => {
     const fetchSections = async () => {
@@ -35,21 +36,23 @@ export default function StartTestPage() {
 
   return (
     <div className="start-page-container">
-      <StartTestHeader />
+      <StartTestHeader time={skill === "Reading" ? 60 : 32} />
       <div className="content-container">
         <div className="left">
-          {sections.map((section, index) => {
-            return (
-              activeSection === index + 1 && (
-                <ReadingPassage
-                  sectionOrder={index + 1}
-                  img={section.imageLink}
-                  title={section.title}
-                  content={section.content}
-                ></ReadingPassage>
-              )
-            );
-          })}
+          {skill === "Reading" &&
+            sections.map((section, index) => {
+              questionNums.push(section.questionNum);
+              return (
+                activeSection === index + 1 && (
+                  <ReadingPassage
+                    sectionOrder={index + 1}
+                    img={section.imageLink}
+                    title={section.title}
+                    content={section.content}
+                  ></ReadingPassage>
+                )
+              );
+            })}
         </div>
         <div className="right">
           <QuestionList
@@ -162,7 +165,7 @@ export default function StartTestPage() {
       </div>
 
       <StartTestFooter
-        totalQuestion={[13, 14, 13]}
+        totalQuestion={questionNums}
         activeIndex={activeSection}
         setActiveIndex={setActiveSection}
       ></StartTestFooter>
