@@ -14,7 +14,7 @@ export default function StartButton({ id, skill }: StartButtonProps) {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
-  //fetch test sections
+  // fetch test sections
   const [sections, setSections] = useState<any[]>([]);
 
   useEffect(() => {
@@ -30,6 +30,11 @@ export default function StartButton({ id, skill }: StartButtonProps) {
     };
     fetchSections();
   }, [id]);
+
+  const handleNavigation = () => {
+    const params = new URLSearchParams({ skill: skill, test: id.toString() });
+    navigate("/start-test?" + params.toString());
+  };
 
   return (
     <>
@@ -88,9 +93,7 @@ export default function StartButton({ id, skill }: StartButtonProps) {
 
               <RoundedButton
                 title="Start now"
-                onClick={() => {
-                  navigate("/start-test");
-                }}
+                onClick={handleNavigation}
               ></RoundedButton>
             </div>
           </div>
