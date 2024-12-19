@@ -14,7 +14,7 @@ export default function ReadingPassage({
   title,
   content,
 }: ReadingPassageProps) {
-  const paragraphs = content.split("\\n");
+  const paragraphs = content.split("<br>");
   console.log(paragraphs);
 
   return (
