@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import "./StartTestHeader.css"
 
-export default function StartTestHeader(){
-    const [remainingMinutes, setRemainingMinutes] = useState(60);  // Số phút ban đầu
+interface StartTestHeaderProps{
+  time: number;
+}
+
+export default function StartTestHeader({time}: StartTestHeaderProps){
+    const [remainingMinutes, setRemainingMinutes] = useState(time);  // Số phút ban đầu
 
     useEffect(() => {
     const intervalId = setInterval(() => {
