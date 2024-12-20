@@ -5,16 +5,19 @@ interface MultipleChoiceTestProps {
   questionOrder: number;
   content: string;
   choiceList: string;
-  answer: string;
+  answers: Map<number, string>;
+  handleAnswerChange: (questionNumber: number, answer: string) => void;
 }
 
 export default function MultipleChoiceTest({
   questionOrder,
   content,
   choiceList,
-  answer,
+  answers,
+  handleAnswerChange,
 }: MultipleChoiceTestProps) {
-  const options = choiceList.split("\\n");
+  const options = choiceList.split("<br>");
+  const selectedAnswer = answers.get(questionOrder);
 
   return (
     <div
@@ -26,62 +29,27 @@ export default function MultipleChoiceTest({
         {questionOrder}. {content}
       </div>
       <div className="test-panel__answer" data-question-item="27">
-        <div className="test-panel__answer-item">
-          <span className="test-panel__answer-option">A</span>
-          <label className="iot-radio">
-            <input
-              type="radio"
-              className="radio-iot iot-lr-question"
-              name="q-27"
-              data-num="27"
-              value="A"
-              id="radio-78074-A"
-            />
-            {options[0]}
-          </label>
-        </div>
-        <div className="test-panel__answer-item">
-          <span className="test-panel__answer-option">B</span>
-          <label className="iot-radio">
-            <input
-              type="radio"
-              className="radio-iot iot-lr-question"
-              name="q-27"
-              data-num="27"
-              value="B"
-              id="radio-78075-B"
-            />
-            {options[1]}
-          </label>
-        </div>
-        <div className="test-panel__answer-item">
-          <span className="test-panel__answer-option">C</span>
-          <label className="iot-radio">
-            <input
-              type="radio"
-              className="radio-iot iot-lr-question"
-              name="q-27"
-              data-num="27"
-              value="C"
-              id="radio-78076-C"
-            />
-            {options[2]}
-          </label>
-        </div>
-        <div className="test-panel__answer-item">
-          <span className="test-panel__answer-option">D</span>
-          <label className="iot-radio">
-            <input
-              type="radio"
-              className="radio-iot iot-lr-question"
-              name="q-27"
-              data-num="27"
-              value="D"
-              id="radio-78077-D"
-            />
-            {options[3]}
-          </label>
-        </div>
+        {options.map((option, index) => {
+          const optionValue = String.fromCharCode(65 + index);
+          return (
+            <div key={index} className="test-panel__answer-item">
+              <span className="test-panel__answer-option">{optionValue}</span>
+              <label className="iot-radio">
+                <input
+                  type="radio"
+                  className="radio-iot"
+                  name={`q-${questionOrder}`}
+                  value={optionValue}
+                  defaultChecked={selectedAnswer === optionValue}
+                  onChange={() =>
+                    handleAnswerChange(questionOrder, optionValue)
+                  }
+                />
+                {option}
+              </label>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

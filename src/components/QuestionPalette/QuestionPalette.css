@@ -5,6 +5,7 @@
     border-radius: 20px;
     padding: 15px 30px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .question-palette-container.active{
@@ -31,4 +32,11 @@
 
 .question-palette-container h2:hover{
     cursor: pointer;
+}
+
+.question-palette-container h2.active {
+    background: rgb(51, 178, 199);
+    border-color: rgb(51, 178, 199);
+    font-weight: 700;
+    color: #000;
 }
