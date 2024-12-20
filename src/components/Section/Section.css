@@ -12,6 +12,8 @@
   border: 1px solid rgba(168, 168, 168, 0.50);
   background: #FFF;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-left: 390px;
+  margin-top: 20px;
 }
 .file-wrapper{
   display: flex;
@@ -90,8 +92,9 @@ h3 {
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
-  width: 737.6px; /* Giữ nguyên chiều rộng */
+  width: 74%; /* Giữ nguyên chiều rộng */
   margin: 0; /* Xóa margin mặc định */
+  margin-top: 40px;
 }
 
 i{
@@ -145,4 +148,13 @@ font-weight: 600;
 .add-button:hover {
   background-color: white;
 }
+.content-preview {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 10px;
+  white-space: pre-wrap;
+}
+
 

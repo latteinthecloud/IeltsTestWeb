@@ -88,6 +88,13 @@ select:focus {
     flex: 1; 
   max-width: calc(50% - 0px);
   }
+  .groupSound{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%; /* Hoặc kích thước cụ thể */
+    gap:10px
+  }
   .group1{
     display: flex;
     flex-direction: row;
@@ -120,5 +127,10 @@ select:focus {
     .form-content {
       grid-template-columns: 1fr;
     }
+  }
+  .input[type="soundSection"] {
+    margin-top: 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
   }
   

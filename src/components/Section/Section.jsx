@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Section.css"; // Import CSS file
+import "./Section.css";
 import { useNavigate } from "react-router-dom";
 
 const Section = ({ numberOfSections }) => {
@@ -7,6 +7,7 @@ const Section = ({ numberOfSections }) => {
     Array.from({ length: numberOfSections }, (_, index) => ({
       num: index + 1,
       title: "",
+      content: "", // Thêm nội dung đã format vào đây
       contentFile: null,
       imageFile: null,
     }))
@@ -19,7 +20,18 @@ const Section = ({ numberOfSections }) => {
     setSections(updatedSections);
   };
 
-  const navigate = useNavigate(); // Hook để chuyển hướng
+  const handleFileUpload = (num, file) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileContent = e.target.result;
+      const formattedContent = fileContent.replace(/\n/g, "<br>");
+      handleInputChange(num, "content", formattedContent);
+    };
+    reader.readAsText(file);
+    handleInputChange(num, "contentFile", file);
+  };
+
+  const navigate = useNavigate();
 
   const handleAddSection = (num) => {
     navigate(`/admin-add-section?num=${num}`);
@@ -28,6 +40,7 @@ const Section = ({ numberOfSections }) => {
   return (
     <div>
       <h3>Total Questions: {sections.length}</h3>
+
       {sections.map((section) => (
         <div key={section.num} className="container">
           <h4>
@@ -38,7 +51,7 @@ const Section = ({ numberOfSections }) => {
           <div className="layout">
             <label>Title: </label>
             <input
-              type="textSection"
+              type="text"
               placeholder="Enter section title"
               value={section.title}
               onChange={(e) =>
@@ -62,7 +75,7 @@ const Section = ({ numberOfSections }) => {
                 id={`content-${section.num}`}
                 className="hidden-file-input"
                 onChange={(e) =>
-                  handleInputChange(section.num, "contentFile", e.target.files[0])
+                  handleFileUpload(section.num, e.target.files[0])
                 }
               />
               <label
@@ -72,6 +85,15 @@ const Section = ({ numberOfSections }) => {
                 <i className="fa-solid fa-arrow-up-from-bracket file-upload-icon"></i>
               </label>
             </div>
+          </div>
+
+          {/* Formatted Content Preview */}
+          <div className="layout">
+            <label>Preview: </label>
+            <div
+              className="content-preview"
+              dangerouslySetInnerHTML={{ __html: section.content }}
+            ></div>
           </div>
 
           {/* Image */}

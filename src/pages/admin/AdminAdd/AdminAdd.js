@@ -1,24 +1,121 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./AdminAdd.css";
-import "@fontsource/poppins/700.css"; /* Bold */
-import "@fontsource/poppins/600.css"; /* SemiBold */
-import "@fontsource/poppins/400.css"; /* Regular */
+import "@fontsource/poppins/700.css";
+import "@fontsource/poppins/600.css";
+import "@fontsource/poppins/400.css";
 import Section from "../../../components/Section/Section";
 import SectionListen from "../../../components/SectionListen/SectionListen";
 
 const AdminAdd = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false); // Trạng thái tải file
   const [formData, setFormData] = useState({
     name: "",
-    editionMonth: "January",
+    editionMonth: "1",
     editionYear: "",
-    skill: "Reading",
-    type: "Academic",
-    sound: "", // Thêm state cho Sound
+    skill: "reading",
+    type: "academic",
+    sound: "",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleIconClick = () => {
+    // Tạo input file tạm thời
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "audio/mpeg, audio/wav"; // Chỉ chấp nhận file âm thanh .mp3 và .wav
+
+    // Khi người dùng chọn file
+    fileInput.onchange = (event) => {
+      const file = event.target.files[0];
+
+      if (!file) {
+        alert("Vui lòng chọn file!");
+        return;
+      }
+
+      if (!["audio/mpeg", "audio/wav"].includes(file.type)) {
+        alert("Chỉ chấp nhận file âm thanh định dạng .mp3 hoặc .wav!");
+        return;
+      }
+
+      // Lưu file vào state
+      setFormData((prev) => ({ ...prev, sound: file }));
+      alert("Tệp âm thanh đã được chọn!");
+    };
+
+    // Tự động mở hộp thoại chọn file
+    fileInput.click();
+  };
+
+  const handleConfirm = async () => {
+    try {
+      if (!formData.name || !formData.editionYear) {
+        alert("Vui lòng điền đầy đủ thông tin trước khi tạo bài kiểm tra!");
+        return;
+      }
+
+      // Gọi API tạo bài kiểm tra
+      const response = await axios.post("/Test", {
+        testType: formData.type,
+        testSkill: formData.skill,
+        name: formData.name,
+        monthEdition: formData.editionMonth,
+        yearEdition: formData.editionYear,
+      });
+
+      if (response.status === 200) {
+        const testId = response.data.testId; // Lấy testId từ phản hồi của API
+
+        alert("Tạo bài kiểm tra thành công!");
+
+        // Nếu là bài kiểm tra listening, upload âm thanh
+        if (formData.skill === "listening" && formData.sound) {
+          try {
+            const soundFormData = new FormData();
+            soundFormData.append("file", formData.sound); // Thêm file vào FormData
+
+            // Gọi API upload âm thanh
+            const soundResponse = await axios.post(
+              `/Sound/${testId}`,
+              soundFormData,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data", // Gửi dạng multipart
+                },
+              }
+            );
+
+            if (soundResponse.status === 200) {
+              alert("Upload âm thanh thành công!");
+            } else {
+              alert("Có lỗi khi upload âm thanh. Vui lòng thử lại.");
+            }
+          } catch (soundError) {
+            console.error("Lỗi khi upload âm thanh:", soundError);
+            alert("Không thể upload âm thanh. Vui lòng thử lại sau.");
+          }
+        }
+
+        // Điều hướng tới trang phù hợp
+        if (formData.skill === "reading") {
+          navigate(`/admin-add-test/admin-add-sectionR?testId=${testId}`);
+        } else if (formData.skill === "listening") {
+          navigate(`/admin-add-test/admin-add-section?testId=${testId}`);
+        }
+      } else {
+        alert("Có lỗi xảy ra khi tạo bài kiểm tra! Vui lòng thử lại.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi gọi API:", error);
+      alert("Không thể tạo bài kiểm tra. Vui lòng thử lại sau.");
+    }
   };
 
   return (
@@ -29,7 +126,6 @@ const AdminAdd = () => {
       </div>
       <div className="form-content">
         <div className="form-group1">
-          {/* Name */}
           <div className="group">
             <div className="header">Name</div>
             <input
@@ -40,8 +136,6 @@ const AdminAdd = () => {
               onChange={handleInputChange}
             />
           </div>
-
-          {/* Edition */}
           <div className="group">
             <div className="header">Edition</div>
             <div className="edition-group">
@@ -50,22 +144,9 @@ const AdminAdd = () => {
                 value={formData.editionMonth}
                 onChange={handleInputChange}
               >
-                {[
-                  "January",
-                  "February",
-                  "March",
-                  "April",
-                  "May",
-                  "June",
-                  "July",
-                  "August",
-                  "September",
-                  "October",
-                  "November",
-                  "December",
-                ].map((month) => (
-                  <option key={month} value={month}>
-                    {month}
+                {[...Array(12).keys()].map((month) => (
+                  <option key={month + 1} value={month + 1}>
+                    {month + 1}
                   </option>
                 ))}
               </select>
@@ -79,10 +160,7 @@ const AdminAdd = () => {
             </div>
           </div>
         </div>
-
-        {/* Skill và Type */}
         <div className="form-group2">
-          {/* Skill */}
           <div className="group1">
             <div className="group">
               <div className="header">Skill</div>
@@ -91,12 +169,10 @@ const AdminAdd = () => {
                 value={formData.skill}
                 onChange={handleInputChange}
               >
-                <option>Reading</option>
-                <option>Listening</option>
+                <option>reading</option>
+                <option>listening</option>
               </select>
             </div>
-
-            {/* Type */}
             <div className="group">
               <div className="header">Type</div>
               <select
@@ -104,44 +180,39 @@ const AdminAdd = () => {
                 value={formData.type}
                 onChange={handleInputChange}
               >
-                <option>Academic</option>
-                <option>General</option>
+                <option>academic</option>
+                <option>general</option>
               </select>
             </div>
           </div>
-
-          {/* Sound Track - Hiển thị chỉ khi skill là Listening */}
-          {formData.skill === "Listening" && (
+          {formData.skill === "listening" && (
             <div className="group">
               <div className="header">Sound</div>
-              <select
-                name="sound"
-                value={formData.sound}
-                onChange={handleInputChange}
-              >
-                <option value="">Select Sound</option>
-                <option>Sound track 1</option>
-                <option>Sound track 2</option>
-                <option>Sound track 3</option>
-              </select>
+              <div className="groupSound">
+                <input
+                  type="file"
+                  id="file-input"
+                  style={{ display: "none" }}
+                />
+                <input
+                  type="text"
+                  placeholder="Browse your file"
+                  readOnly
+                  value={formData.sound || ""}
+                />
+                <i
+                  className="fa-solid fa-arrow-up-from-bracket file-upload-icon"
+                  onClick={handleIconClick}
+                ></i>
+              </div>
+              {isLoading && <p>Đang tải file lên...</p>}
             </div>
           )}
         </div>
       </div>
-
-      {/* Section 2 */}
-      <div>
-        <div className="section-title">
-          <span className="general">2. Sections</span>
-        </div>
-        {/* Kiểm tra nếu skill là "Listening", thì gọi component SectionListen */}
-        {formData.skill === "Listening" ? (
-          <SectionListen numberOfSections={4} />
-        ) : (
-          <Section numberOfSections={3} />
-        )}
+      <div className="confirm-btn" onClick={handleConfirm}>
+        Confirm
       </div>
-      <div className="confirm-btn">Confirm</div>
     </div>
   );
 };

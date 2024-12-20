@@ -1,9 +1,9 @@
 import React from "react";
-import AdminAddSectionR from "../../components/AdminAddSectionR/AdminAddSectionR";
+import Section from "../../components/Section/Section";
 const AdminAddR = () => {
   return (
     <div>
-      <AdminAddSectionR/>
+      <Section numberOfSections={3} />
     </div>
   );
 };

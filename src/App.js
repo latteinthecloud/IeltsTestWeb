@@ -136,7 +136,7 @@ const RoutesWrapper = () => {
           }
         >
           <Route path="statistics" element={<AdminStatistics />} />
-          <Route path="test" element={<AdminTest />} />
+          <Route path="/test" element={<AdminTest />} />
           <Route path="user" element={<AdminUser />} />
           <Route path="/admin-add-test" element={<AddTestPage />} />
 
