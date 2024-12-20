@@ -1,29 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CompleteTest from "../CompleteTest/CompleteTest.tsx";
+import MultipleChoiceTest from "../MultipleChoiceTest/MultipleChoiceTest.tsx";
+import MatchingTest from "../MatchingTest/MatchingTest.tsx";
+import TrueFalseTest from "../TrueFalseTest/TrueFalseTest.tsx";
+import DiagramTest from "../DiagramTest/DiagramTest.tsx";
+import sectionApi from "../../api/sectionApi.js";
 
-interface QuestionListProps {
-  startQuestion: number;
-  endQuestion: number;
-  type: string;
-  choiceList?: string;
-  img?: string;
-  content?: string;
-  completeAnswer?: string[];
-  children?: React.ReactNode;
+interface QuestionListProps{
+    startQuestion: number;
+    endQuestion: number;
+    questionList: any;
+    questions: any
 }
 
-export default function QuestionList({
-  startQuestion,
-  endQuestion,
-  type,
-  content = "",
-  choiceList = "",
-  img = "",
-  completeAnswer = [],
-  children,
-}: QuestionListProps) {
-  const options = choiceList !== null ? choiceList.split("\\n") : null;
-  const parts = content !== null ? content.split("\\n") : null;
+export default function QuestionList({startQuestion, endQuestion, questionList, questions} : QuestionListProps){
+    const type = questionList.type;
+    const [fectString, setFetchString] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (type === "matching") {
+                const result = await fetchChoiceList(questionList.id);
+                setFetchString(result);
+            }
+
+            if(type === "diagram"){
+                const result = await fetchImage(questionList.id);
+                setFetchString(result);
+            }
+        };
+
+        fetchData();
+    }, [questionList.id, type]);
+
+    const options = type === "matching" ? fectString.split("<br>") : null;
+    const parts = questionList.content !== null? questionList.content.split("<br>") : null;
 
   const containerStyle: React.CSSProperties = {
     display: "flex",
@@ -58,92 +69,108 @@ export default function QuestionList({
     textAlign: "left",
   };
 
-  const formatText: React.CSSProperties = {
-    textAlign: "left",
-    fontSize: "15px",
-    margin: "0px",
-  };
-
-  return (
-    <div style={containerStyle}>
-      <h1 style={titleStyle}>
-        Question {startQuestion}-{endQuestion}
-      </h1>
-
-      {type === "multiple_choice" && (
-        <h2 style={instructionStyle}>
-          Choose the correct letter <strong>A, B, C</strong> or{" "}
-          <strong>D</strong>.
-        </h2>
-      )}
-
-      {type === "true_false" && (
+    const formatText: React.CSSProperties={
+        textAlign: "left",
+        fontSize: "15px",
+        margin: "0px",
+    }
+    
+    return (
         <div style={containerStyle}>
-          <h2 style={instructionStyle}>
-            Do the following statements agree with the views of the writer in
-            Reading Passage?
-          </h2>
-          <h2 style={instructionStyle}>
-            <strong>TRUE</strong>: if the statement agrees with the information
-          </h2>
-          <h2 style={instructionStyle}>
-            <strong>FALSE</strong>: if the statement contradicts the information
-          </h2>
-          <h2 style={instructionStyle}>
-            <strong>NOT GIVEN</strong>: If there is no information on this
-          </h2>
-        </div>
-      )}
+            <h1 style={titleStyle}>Question {startQuestion}-{endQuestion}</h1>
+            
+            {type === "multiple_choice" &&
+            <div style={containerStyle}>
+                <h2 style={instructionStyle}>Choose the correct letter <strong>A, B, C</strong> or <strong>D</strong>.</h2>
+                {
+                    questions.map((question, index)=>{
+                    return(
+                        <MultipleChoiceTest
+                            questionOrder={startQuestion + index}
+                            content={question.question.content}
+                            choiceList={question.question.choiceList}>
 
-      {type === "matching" && Array.isArray(options) && options.length > 0 && (
-        <div style={containerStyle}>
-          <h2 style={instructionStyle}>
-            Look at the following statements and the list below. Match each
-            statement with the correct answer.
-          </h2>
-          <div style={tableContainerStyle}>
-            <table style={tableStyle}>
-              <thead>
-                <tr>
-                  <th colSpan={2} style={{ textAlign: "center" }}>
-                    {content}
-                  </th>
-                </tr>
-              </thead>
+                        </MultipleChoiceTest>);
+                    })
+                }
+            </div>
+            }
+            
+            {type === "true_false" &&
+                <div style={containerStyle}>
+                    <h2 style={instructionStyle}>Do the following statements agree with the views of the writer in Reading Passage?</h2>
+                    <h2 style={instructionStyle}><strong>TRUE</strong>: if the statement agrees with the information</h2>
+                    <h2 style={instructionStyle}><strong>FALSE</strong>: if the statement contradicts the information</h2>
+                    <h2 style={instructionStyle}><strong>NOT GIVEN</strong>: If there is no information on this</h2>
+                    {
+                        questions.map((question, index)=>{
+                            return (
+                                <TrueFalseTest
+                                    questionOrder={startQuestion + index}
+                                    content={question.question.content}>
+                                </TrueFalseTest>
+                            );
+                        })
+                    }
+                </div>
+                
+            }
 
-              <tbody>
-                {options.map((option, index) => (
-                  <tr key={index}>
-                    <td style={{ width: "20px" }}>
-                      <strong>{String.fromCharCode(65 + index)}</strong>
-                    </td>
-                    <td>{option}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+            {type === "matching" && Array.isArray(options) && options.length > 0 &&
+                <div style={containerStyle}>
+                    <h2 style={instructionStyle}>Look at the following statements and the list below. Match each statement with the correct answer.</h2>
+                    <div style={tableContainerStyle}>
+                        <table style={tableStyle}>
+                            <thead>
+                                <tr>
+                                    <th colSpan={2} style={{textAlign: "center"}}>{questionList.content}</th>
+                                </tr>   
+                            </thead>
 
-      {type === "diagram" && Array.isArray(options) && options.length > 0 && (
-        <div style={containerStyle}>
-          <h2 style={instructionStyle}>
-            Complete the labels. Write{" "}
-            <strong style={{ color: "red" }}>ONE WORD OR A NUMBER</strong> for
-            each answer.
-          </h2>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <img style={{ width: "50%" }} src={img}></img>
-          </div>
-        </div>
-      )}
+                            <tbody>
+                                {options.map((option, index) => (
+                                    <tr key={index}>
+                                        <td style={{width: "20px"}}><strong>{String.fromCharCode(65 + index)}</strong></td>
+                                        <td>{option}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    {
+                        questions.map((question, index)=>{
+                            return (
+                                <MatchingTest
+                                    questionOrder={startQuestion + index}
+                                    content={question.question.content}
+                                    optionCount={options.length}>
+                                </MatchingTest>
+                            );
+                        })
+                    }
+                    
+                </div>
+            }
+
+            {type === "diagram" &&
+                <div style={containerStyle}>
+                    <h2 style={instructionStyle}>Complete the labels. Write <strong style={{color: "red"}}>ONE WORD OR A NUMBER</strong> for each answer.</h2>
+                    <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                        <img style={{width: "50%"}} src={fectString} alt="ql-img"></img>
+                    </div>
+                    {
+                        questions.map((question, index)=> {
+                            console.log("In a diagram");
+                            return(
+                                <DiagramTest questionOrder={startQuestion + index}>
+                                </DiagramTest>
+                            );
+                        })
+                    }
+
+                </div>
+            }
 
       {type === "complete" && parts !== null && (
         <div style={containerStyle}>
@@ -159,46 +186,54 @@ export default function QuestionList({
               startIndex += countInput(parts[i]);
             }
 
-            return (
-              <p style={formatText}>
-                {formatPapagraph(
-                  part,
-                  startQuestion + startIndex,
-                  startIndex,
-                  completeAnswer
-                )}
-              </p>
-            );
-          })}
+                            return (
+                                <p style={formatText}>{formatPapagraph(part, startQuestion + startIndex)}</p>
+                            );
+                        })
+                    }
+                </div>
+            }
         </div>
-      )}
-
-      {children}
-    </div>
-  );
+    );
 }
 
-function formatPapagraph(
-  text: string,
-  startIndex: number,
-  prevIndex: number,
-  completeAnswer: string[]
-) {
-  const parts = text.split("<i>");
-  return parts.flatMap((part, index) => [
-    <span key={`text-${index}`}>{part}</span>,
-    index < parts.length - 1 && (
-      <CompleteTest
-        key={`input-${index}`}
-        questionOrder={startIndex + index}
-        answer={completeAnswer[prevIndex + index]}
-      />
-    ),
-  ]);
+
+function formatPapagraph(text: string, startIndex: number) {
+    const parts = text.split("<i>");
+    return parts.flatMap((part, index) => [
+        <span key={`text-${index}`}>{part}</span>,
+        index < parts.length - 1 && (
+          <CompleteTest key={`input-${index}`} questionOrder={ startIndex + index }/>
+        ),
+      ]);
 }
 
 function countInput(text: string) {
   return (text.match(/<i>/g) || []).length;
 }
 
-function getQuestionOrder(index: number) {}
+async function fetchChoiceList(id: number): Promise<string>{
+    try {
+        const response = await sectionApi.getChoiceList(id);
+        if (typeof response === 'string')
+            return response;
+        else
+            return "";
+    } catch (error) {
+        console.error(error);
+        return "error";
+    }
+}
+
+async function fetchImage(id: number): Promise<string>{
+    try {
+        const response = await sectionApi.getImg(id);
+        if (typeof response === 'string')
+            return response;
+        else
+            return "";
+    } catch (error) {
+        console.error(error);
+        return "error";
+    }
+}

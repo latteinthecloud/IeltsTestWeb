@@ -4,25 +4,14 @@ import QuestionList from "../QuestionList/QuestionList.tsx";
 interface SectionComponentProps {
   questionLists: any;
   lastQuestionIndex: number;
-  answers: Map<number, string>;
-  handleAnswerChange: (questionNumber: number, answer: string) => void;
 }
 
 export default function SectionComponent({
   questionLists,
   lastQuestionIndex,
-  answers,
-  handleAnswerChange,
 }: SectionComponentProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-        transition: "all 0.3s ease",
-      }}
-    >
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       {questionLists.map((ql, index) => {
         let startIndex = 0;
 
@@ -36,8 +25,6 @@ export default function SectionComponent({
             endQuestion={lastQuestionIndex + startIndex + ql.questionList.qnum}
             questionList={ql.questionList}
             questions={ql.questions}
-            answers={answers}
-            handleAnswerChange={handleAnswerChange}
           ></QuestionList>
         );
       })}

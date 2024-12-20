@@ -13,16 +13,15 @@ interface MultipleChoiceTestProps {
   questionOrder: number;
   content: string;
   choiceList: string;
-  answer: string;
+  answer?: string;
 }
 
 export default function MultipleChoiceTest({
   questionOrder,
   content,
   choiceList,
-  answer,
 }: MultipleChoiceTestProps) {
-  const options = choiceList.split("\\n");
+  const options = choiceList.split("<br>");
 
   return (
     <div
