@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import RoundedButton from "../RoundedButton/RoundedButton.tsx";
-import { useNavigate } from "react-router-dom";
 
 export default function SubmitButton() {
   const [showPopup, setShowPopup] = useState(false);
-  const navigate = useNavigate();
 
   const buttonPanel: React.CSSProperties = {
     display: "flex",
@@ -70,9 +68,7 @@ export default function SubmitButton() {
                 <RoundedButton
                   title="Yes"
                   colors={["rgb(51, 178, 199)", "rgb(38, 134, 149)"]}
-                  onClick={() => {
-                    navigate("/result");
-                  }}
+                  onClick={() => {}}
                 ></RoundedButton>
               </div>
             </div>

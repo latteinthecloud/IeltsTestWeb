@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import "./StartTestHeader.css";
 import ReviewButton from "../TestButton/ReviewButton.tsx";
 import ExitButton from "../TestButton/ExitButton.tsx";
+import SubmitButton from "../TestButton/SubmitButton.tsx";
 
 interface StartTestHeaderProps {
   time: number;
@@ -48,13 +48,7 @@ export default function StartTestHeader({
       </div>
       <div className="start-header-button-container">
         <ReviewButton answers={answers} totalQuestion={totalQuestion} />
-        <RoundedButton
-          title="Submit"
-          icon={
-            <img src={require("../../assets/send.png")} alt="send-icon"></img>
-          }
-          onClick={() => {}}
-        ></RoundedButton>
+        <SubmitButton></SubmitButton>
         <ExitButton />
       </div>
     </div>
