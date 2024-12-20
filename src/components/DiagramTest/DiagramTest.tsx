@@ -3,10 +3,10 @@ import "./DiagramTest.css"
 
 interface DiagramTestProps{
     questionOrder: number;
-    answer: string;
+    answer?: string;
 }
 
-export default function DiagramTest({questionOrder, answer}: DiagramTestProps){
+export default function DiagramTest({questionOrder}: DiagramTestProps){
     return (
         <div className="diagram-test-container">
             <h1>{questionOrder}.</h1>

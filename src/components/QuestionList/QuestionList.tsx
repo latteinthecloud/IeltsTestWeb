@@ -1,21 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CompleteTest from "../CompleteTest/CompleteTest.tsx";
+import MultipleChoiceTest from "../MultipleChoiceTest/MultipleChoiceTest.tsx";
+import MatchingTest from "../MatchingTest/MatchingTest.tsx";
+import TrueFalseTest from "../TrueFalseTest/TrueFalseTest.tsx";
+import DiagramTest from "../DiagramTest/DiagramTest.tsx";
+import sectionApi from "../../api/sectionApi.js";
 
 interface QuestionListProps{
     startQuestion: number;
     endQuestion: number;
-    type: string;
-    choiceList?: string;
-    img?: string;
-    content?: string;
-    completeAnswer?: string[];
-    children?: React.ReactNode;
+    questionList: any;
+    questions: any
 }
 
-export default function QuestionList({startQuestion, endQuestion, type,
-    content= "",choiceList = "", img = "", completeAnswer= [], children} : QuestionListProps){
-    const options = choiceList !== null ? choiceList.split("\\n") : null;
-    const parts = content !== null ? content.split("\\n"): null;
+export default function QuestionList({startQuestion, endQuestion, questionList, questions} : QuestionListProps){
+    const type = questionList.type;
+    const [fectString, setFetchString] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (type === "matching") {
+                const result = await fetchChoiceList(questionList.id);
+                setFetchString(result);
+            }
+
+            if(type === "diagram"){
+                const result = await fetchImage(questionList.id);
+                setFetchString(result);
+            }
+        };
+
+        fetchData();
+    }, [questionList.id, type]);
+
+    const options = type === "matching" ? fectString.split("<br>") : null;
+    const parts = questionList.content !== null? questionList.content.split("<br>") : null;
 
     const containerStyle: React.CSSProperties = {
         display: "flex",
@@ -60,7 +79,22 @@ export default function QuestionList({startQuestion, endQuestion, type,
         <div style={containerStyle}>
             <h1 style={titleStyle}>Question {startQuestion}-{endQuestion}</h1>
             
-            {type === "multiple_choice" && <h2 style={instructionStyle}>Choose the correct letter <strong>A, B, C</strong> or <strong>D</strong>.</h2>}
+            {type === "multiple_choice" &&
+            <div style={containerStyle}>
+                <h2 style={instructionStyle}>Choose the correct letter <strong>A, B, C</strong> or <strong>D</strong>.</h2>
+                {
+                    questions.map((question, index)=>{
+                    return(
+                        <MultipleChoiceTest
+                            questionOrder={startQuestion + index}
+                            content={question.question.content}
+                            choiceList={question.question.choiceList}>
+
+                        </MultipleChoiceTest>);
+                    })
+                }
+            </div>
+            }
             
             {type === "true_false" &&
                 <div style={containerStyle}>
@@ -68,7 +102,18 @@ export default function QuestionList({startQuestion, endQuestion, type,
                     <h2 style={instructionStyle}><strong>TRUE</strong>: if the statement agrees with the information</h2>
                     <h2 style={instructionStyle}><strong>FALSE</strong>: if the statement contradicts the information</h2>
                     <h2 style={instructionStyle}><strong>NOT GIVEN</strong>: If there is no information on this</h2>
-                </div> 
+                    {
+                        questions.map((question, index)=>{
+                            return (
+                                <TrueFalseTest
+                                    questionOrder={startQuestion + index}
+                                    content={question.question.content}>
+                                </TrueFalseTest>
+                            );
+                        })
+                    }
+                </div>
+                
             }
 
             {type === "matching" && Array.isArray(options) && options.length > 0 &&
@@ -78,7 +123,7 @@ export default function QuestionList({startQuestion, endQuestion, type,
                         <table style={tableStyle}>
                             <thead>
                                 <tr>
-                                    <th colSpan={2} style={{textAlign: "center"}}>{content}</th>
+                                    <th colSpan={2} style={{textAlign: "center"}}>{questionList.content}</th>
                                 </tr>   
                             </thead>
 
@@ -92,15 +137,38 @@ export default function QuestionList({startQuestion, endQuestion, type,
                             </tbody>
                         </table>
                     </div>
+                    
+                    {
+                        questions.map((question, index)=>{
+                            return (
+                                <MatchingTest
+                                    questionOrder={startQuestion + index}
+                                    content={question.question.content}
+                                    optionCount={options.length}>
+                                </MatchingTest>
+                            );
+                        })
+                    }
+                    
                 </div>
             }
 
-            {type === "diagram" && Array.isArray(options) && options.length > 0 &&
+            {type === "diagram" &&
                 <div style={containerStyle}>
                     <h2 style={instructionStyle}>Complete the labels. Write <strong style={{color: "red"}}>ONE WORD OR A NUMBER</strong> for each answer.</h2>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        <img style={{width: "50%"}} src={img}></img>
+                        <img style={{width: "50%"}} src={fectString} alt="ql-img"></img>
                     </div>
+                    {
+                        questions.map((question, index)=> {
+                            console.log("In a diagram");
+                            return(
+                                <DiagramTest questionOrder={startQuestion + index}>
+                                </DiagramTest>
+                            );
+                        })
+                    }
+
                 </div>
             }
 
@@ -117,25 +185,23 @@ export default function QuestionList({startQuestion, endQuestion, type,
                             }
 
                             return (
-                                <p style={formatText}>{formatPapagraph(part, startQuestion + startIndex, startIndex, completeAnswer)}</p>
+                                <p style={formatText}>{formatPapagraph(part, startQuestion + startIndex)}</p>
                             );
                         })
                     }
                 </div>
             }
-
-            {children}
         </div>
     );
 }
 
 
-function formatPapagraph(text: string, startIndex: number, prevIndex: number, completeAnswer: string[]) {
+function formatPapagraph(text: string, startIndex: number) {
     const parts = text.split("<i>");
     return parts.flatMap((part, index) => [
         <span key={`text-${index}`}>{part}</span>,
         index < parts.length - 1 && (
-          <CompleteTest key={`input-${index}`} questionOrder={ startIndex + index } answer={completeAnswer[ prevIndex + index]} />
+          <CompleteTest key={`input-${index}`} questionOrder={ startIndex + index }/>
         ),
       ]);
 }
@@ -144,6 +210,28 @@ function countInput(text: string){
     return (text.match(/<i>/g) || []).length;
 }
 
-function getQuestionOrder(index: number){
+async function fetchChoiceList(id: number): Promise<string>{
+    try {
+        const response = await sectionApi.getChoiceList(id);
+        if (typeof response === 'string')
+            return response;
+        else
+            return "";
+    } catch (error) {
+        console.error(error);
+        return "error";
+    }
+}
 
+async function fetchImage(id: number): Promise<string>{
+    try {
+        const response = await sectionApi.getImg(id);
+        if (typeof response === 'string')
+            return response;
+        else
+            return "";
+    } catch (error) {
+        console.error(error);
+        return "error";
+    }
 }

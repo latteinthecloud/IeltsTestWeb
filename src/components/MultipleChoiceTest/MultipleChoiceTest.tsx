@@ -5,11 +5,11 @@ interface MultipleChoiceTestProps{
     questionOrder: number;
     content: string;
     choiceList: string;
-    answer: string;
+    answer?: string;
 }
 
-export default function MultipleChoiceTest({questionOrder, content, choiceList, answer}: MultipleChoiceTestProps){
-    const options = choiceList.split("\\n");
+export default function MultipleChoiceTest({questionOrder, content, choiceList}: MultipleChoiceTestProps){
+    const options = choiceList.split("<br>");
 
     return (
         <div className="test-panel__question-sm-group" data-num="27" data-q_type="6">

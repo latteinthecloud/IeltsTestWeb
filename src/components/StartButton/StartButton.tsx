@@ -58,7 +58,7 @@ export default function StartButton({id, skill}: StartButtonProps){
                                 <h3><strong>1. Test stucture:</strong> {skill === "Reading"? "3 parts - 40 questions" : "4 parts - 40 questions"}</h3>
                                 <div className="section-container">
                                     {   sections.map((section, index)=> (
-                                            <div key={id} className="row">
+                                            <div key={index} className="row">
                                                 <img src={require("../../assets/dot.png")} alt="dot-icon"></img>
                                                 <h4>Part {index + 1}: {section.questionNum} questions</h4>
                                             </div>
