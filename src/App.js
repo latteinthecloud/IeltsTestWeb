@@ -52,6 +52,7 @@ const RoutesWrapper = () => {
   return (
     <Routes>
       {/* Public Routes */}
+<<<<<<< HEAD
       <Route
         path="/login"
         element={
@@ -106,6 +107,17 @@ const RoutesWrapper = () => {
         path="/admin-add-test/admin-add-sectionR"
         element={<AdminAddR />}
       />
+=======
+      <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
+      <Route path="/signup" element={<MainLayout><SignupPage /></MainLayout>} />
+      <Route path="/forgot" element={<MainLayout><ForgotPassword /></MainLayout>} />
+      <Route path="/signup/verify" element={<MainLayout><Verification /></MainLayout>} />
+      <Route path="/verify" element={<MainLayout><FVerification /></MainLayout>} />
+      <Route path="/enterPassword" element={<MainLayout><FEnterPassword /></MainLayout>} />
+      <Route path="/admin-add-test" element={<AdminAddTest /> } />
+      <Route path="/admin-add-test/admin-add-section" element={<AdminAddS/> } />
+      <Route path="/admin-add-test/admin-add-sectionR" element={<AdminAddR/> } />
+>>>>>>> d64687f (Complete Start Test Fetching API)
 
       {/* Protected Routes for user */}
       {user?.role === "learner" && (

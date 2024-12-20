@@ -4,13 +4,12 @@ import "./TrueFalseTest.css";
 interface TrueFalseTestProps {
   questionOrder: number;
   content: string;
-  answer: string;
+  answer?: string;
 }
 
 export default function TrueFalseTest({
   questionOrder,
   content,
-  answer,
 }: TrueFalseTestProps) {
   return (
     <div className="true-false-container">
@@ -18,6 +17,7 @@ export default function TrueFalseTest({
         <strong>{questionOrder}.</strong>
       </h1>
       <select>
+        <option value=""></option>
         <option value="true">TRUE</option>
         <option value="false">FALSE</option>
         <option value="not-given">NOT GIVEN</option>
