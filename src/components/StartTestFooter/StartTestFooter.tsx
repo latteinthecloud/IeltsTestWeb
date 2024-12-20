@@ -6,12 +6,14 @@ interface StartTestFooterProps {
   totalQuestion: number[];
   activeIndex: number;
   setActiveIndex: (number) => void;
+  answers: Map<number, string>;
 }
 
 export default function StartTestFooter({
   totalQuestion,
   activeIndex,
   setActiveIndex,
+  answers,
 }: StartTestFooterProps) {
   return (
     <div className="start-footer-container">
@@ -27,6 +29,7 @@ export default function StartTestFooter({
             endQuestion={startIndex + questions}
             onClick={() => setActiveIndex(index + 1)}
             status={activeIndex === index + 1 ? "active" : ""}
+            answers={answers}
           ></QuestionPalette>
         );
       })}

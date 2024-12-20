@@ -6,40 +6,51 @@ import TrueFalseTest from "../TrueFalseTest/TrueFalseTest.tsx";
 import DiagramTest from "../DiagramTest/DiagramTest.tsx";
 import sectionApi from "../../api/sectionApi.js";
 
-interface QuestionListProps{
-    startQuestion: number;
-    endQuestion: number;
-    questionList: any;
-    questions: any
+interface QuestionListProps {
+  startQuestion: number;
+  endQuestion: number;
+  questionList: any;
+  questions: any;
+  answers: Map<number, string>;
+  handleAnswerChange: (questionNumber: number, answer: string) => void;
 }
 
-export default function QuestionList({startQuestion, endQuestion, questionList, questions} : QuestionListProps){
-    const type = questionList.type;
-    const [fectString, setFetchString] = useState("");
+export default function QuestionList({
+  startQuestion,
+  endQuestion,
+  questionList,
+  questions,
+  answers,
+  handleAnswerChange,
+}: QuestionListProps) {
+  const type = questionList.type;
+  const [fectString, setFetchString] = useState("");
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (type === "matching") {
-                const result = await fetchChoiceList(questionList.id);
-                setFetchString(result);
-            }
+  useEffect(() => {
+    const fetchData = async () => {
+      if (type === "matching") {
+        const result = await fetchChoiceList(questionList.id);
+        setFetchString(result);
+      }
 
-            if(type === "diagram"){
-                const result = await fetchImage(questionList.id);
-                setFetchString(result);
-            }
-        };
+      if (type === "diagram") {
+        const result = await fetchImage(questionList.id);
+        setFetchString(result);
+      }
+    };
 
-        fetchData();
-    }, [questionList.id, type]);
+    fetchData();
+  }, [questionList.id, type]);
 
-    const options = type === "matching" ? fectString.split("<br>") : null;
-    const parts = questionList.content !== null? questionList.content.split("<br>") : null;
+  const options = type === "matching" ? fectString.split("<br>") : null;
+  const parts =
+    questionList.content !== null ? questionList.content.split("<br>") : null;
 
   const containerStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
     gap: "15px",
+    transition: "all 0.3s ease",
   };
 
   const titleStyle: React.CSSProperties = {
@@ -67,110 +78,143 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
     borderRadius: "5px",
     padding: "10px",
     textAlign: "left",
+    transition: "all 0.3s ease",
   };
 
-    const formatText: React.CSSProperties={
-        textAlign: "left",
-        fontSize: "15px",
-        margin: "0px",
-    }
-    
-    return (
+  const formatText: React.CSSProperties = {
+    textAlign: "left",
+    fontSize: "15px",
+    margin: "0px",
+  };
+
+  return (
+    <div style={containerStyle}>
+      <h1 style={titleStyle}>
+        Question {startQuestion}-{endQuestion}
+      </h1>
+
+      {type === "multiple_choice" && (
         <div style={containerStyle}>
-            <h1 style={titleStyle}>Question {startQuestion}-{endQuestion}</h1>
-            
-            {type === "multiple_choice" &&
-            <div style={containerStyle}>
-                <h2 style={instructionStyle}>Choose the correct letter <strong>A, B, C</strong> or <strong>D</strong>.</h2>
-                {
-                    questions.map((question, index)=>{
-                    return(
-                        <MultipleChoiceTest
-                            questionOrder={startQuestion + index}
-                            content={question.question.content}
-                            choiceList={question.question.choiceList}>
+          <h2 style={instructionStyle}>
+            Choose the correct letter <strong>A, B, C</strong> or{" "}
+            <strong>D</strong>.
+          </h2>
+          {questions.map((question, index) => {
+            return (
+              <MultipleChoiceTest
+                questionOrder={startQuestion + index}
+                content={question.question.content}
+                choiceList={question.question.choiceList}
+                handleAnswerChange={handleAnswerChange}
+                answers={answers}
+              ></MultipleChoiceTest>
+            );
+          })}
+        </div>
+      )}
 
-                        </MultipleChoiceTest>);
-                    })
-                }
-            </div>
-            }
-            
-            {type === "true_false" &&
-                <div style={containerStyle}>
-                    <h2 style={instructionStyle}>Do the following statements agree with the views of the writer in Reading Passage?</h2>
-                    <h2 style={instructionStyle}><strong>TRUE</strong>: if the statement agrees with the information</h2>
-                    <h2 style={instructionStyle}><strong>FALSE</strong>: if the statement contradicts the information</h2>
-                    <h2 style={instructionStyle}><strong>NOT GIVEN</strong>: If there is no information on this</h2>
-                    {
-                        questions.map((question, index)=>{
-                            return (
-                                <TrueFalseTest
-                                    questionOrder={startQuestion + index}
-                                    content={question.question.content}>
-                                </TrueFalseTest>
-                            );
-                        })
-                    }
-                </div>
-                
-            }
+      {type === "true_false" && (
+        <div style={containerStyle}>
+          <h2 style={instructionStyle}>
+            Do the following statements agree with the views of the writer in
+            Reading Passage?
+          </h2>
+          <h2 style={instructionStyle}>
+            <strong>TRUE</strong>: if the statement agrees with the information
+          </h2>
+          <h2 style={instructionStyle}>
+            <strong>FALSE</strong>: if the statement contradicts the information
+          </h2>
+          <h2 style={instructionStyle}>
+            <strong>NOT GIVEN</strong>: If there is no information on this
+          </h2>
+          {questions.map((question, index) => {
+            return (
+              <TrueFalseTest
+                questionOrder={startQuestion + index}
+                content={question.question.content}
+                answers={answers}
+                handleAnswerChange={handleAnswerChange}
+              ></TrueFalseTest>
+            );
+          })}
+        </div>
+      )}
 
-            {type === "matching" && Array.isArray(options) && options.length > 0 &&
-                <div style={containerStyle}>
-                    <h2 style={instructionStyle}>Look at the following statements and the list below. Match each statement with the correct answer.</h2>
-                    <div style={tableContainerStyle}>
-                        <table style={tableStyle}>
-                            <thead>
-                                <tr>
-                                    <th colSpan={2} style={{textAlign: "center"}}>{questionList.content}</th>
-                                </tr>   
-                            </thead>
+      {type === "matching" && Array.isArray(options) && options.length > 0 && (
+        <div style={containerStyle}>
+          <h2 style={instructionStyle}>
+            Look at the following statements and the list below. Match each
+            statement with the correct answer.
+          </h2>
+          <div style={tableContainerStyle}>
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th colSpan={2} style={{ textAlign: "center" }}>
+                    {questionList.content}
+                  </th>
+                </tr>
+              </thead>
 
-                            <tbody>
-                                {options.map((option, index) => (
-                                    <tr key={index}>
-                                        <td style={{width: "20px"}}><strong>{String.fromCharCode(65 + index)}</strong></td>
-                                        <td>{option}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    {
-                        questions.map((question, index)=>{
-                            return (
-                                <MatchingTest
-                                    questionOrder={startQuestion + index}
-                                    content={question.question.content}
-                                    optionCount={options.length}>
-                                </MatchingTest>
-                            );
-                        })
-                    }
-                    
-                </div>
-            }
+              <tbody>
+                {options.map((option, index) => (
+                  <tr key={index}>
+                    <td style={{ width: "20px" }}>
+                      <strong>{String.fromCharCode(65 + index)}</strong>
+                    </td>
+                    <td>{option}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-            {type === "diagram" &&
-                <div style={containerStyle}>
-                    <h2 style={instructionStyle}>Complete the labels. Write <strong style={{color: "red"}}>ONE WORD OR A NUMBER</strong> for each answer.</h2>
-                    <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        <img style={{width: "50%"}} src={fectString} alt="ql-img"></img>
-                    </div>
-                    {
-                        questions.map((question, index)=> {
-                            console.log("In a diagram");
-                            return(
-                                <DiagramTest questionOrder={startQuestion + index}>
-                                </DiagramTest>
-                            );
-                        })
-                    }
+          {questions.map((question, index) => {
+            return (
+              <MatchingTest
+                questionOrder={startQuestion + index}
+                content={question.question.content}
+                optionCount={options.length}
+                answers={answers}
+                handleAnswerChange={handleAnswerChange}
+              ></MatchingTest>
+            );
+          })}
+        </div>
+      )}
 
-                </div>
-            }
+      {type === "diagram" && (
+        <div style={containerStyle}>
+          <h2 style={instructionStyle}>
+            Complete the labels. Write{" "}
+            <strong style={{ color: "red" }}>ONE WORD OR A NUMBER</strong> for
+            each answer.
+          </h2>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              style={{ width: "50%", transition: "all 0.3s ease" }}
+              src={fectString}
+              alt="ql-img"
+            ></img>
+          </div>
+          {questions.map((question, index) => {
+            return (
+              <DiagramTest
+                questionOrder={startQuestion + index}
+                answers={answers}
+                handleAnswerChange={handleAnswerChange}
+              ></DiagramTest>
+            );
+          })}
+        </div>
+      )}
 
       {type === "complete" && parts !== null && (
         <div style={containerStyle}>
@@ -186,54 +230,65 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
               startIndex += countInput(parts[i]);
             }
 
-                            return (
-                                <p style={formatText}>{formatPapagraph(part, startQuestion + startIndex)}</p>
-                            );
-                        })
-                    }
-                </div>
-            }
+            return (
+              <p style={formatText}>
+                {formatPapagraph(
+                  part,
+                  startQuestion + startIndex,
+                  answers,
+                  handleAnswerChange
+                )}
+              </p>
+            );
+          })}
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
-
-function formatPapagraph(text: string, startIndex: number) {
-    const parts = text.split("<i>");
-    return parts.flatMap((part, index) => [
-        <span key={`text-${index}`}>{part}</span>,
-        index < parts.length - 1 && (
-          <CompleteTest key={`input-${index}`} questionOrder={ startIndex + index }/>
-        ),
-      ]);
+function formatPapagraph(
+  text: string,
+  startIndex: number,
+  answers,
+  handleAnswerChange
+) {
+  const parts = text.split("<i>");
+  return parts.flatMap((part, index) => [
+    <span key={`text-${index}`}>{part}</span>,
+    index < parts.length - 1 && (
+      <CompleteTest
+        key={`input-${index}`}
+        questionOrder={startIndex + index}
+        answers={answers}
+        handleAnswerChange={handleAnswerChange}
+      />
+    ),
+  ]);
 }
 
 function countInput(text: string) {
   return (text.match(/<i>/g) || []).length;
 }
 
-async function fetchChoiceList(id: number): Promise<string>{
-    try {
-        const response = await sectionApi.getChoiceList(id);
-        if (typeof response === 'string')
-            return response;
-        else
-            return "";
-    } catch (error) {
-        console.error(error);
-        return "error";
-    }
+async function fetchChoiceList(id: number): Promise<string> {
+  try {
+    const response = await sectionApi.getChoiceList(id);
+    if (typeof response === "string") return response;
+    else return "";
+  } catch (error) {
+    console.error(error);
+    return "error";
+  }
 }
 
-async function fetchImage(id: number): Promise<string>{
-    try {
-        const response = await sectionApi.getImg(id);
-        if (typeof response === 'string')
-            return response;
-        else
-            return "";
-    } catch (error) {
-        console.error(error);
-        return "error";
-    }
+async function fetchImage(id: number): Promise<string> {
+  try {
+    const response = await sectionApi.getImg(id);
+    if (typeof response === "string") return response;
+    else return "";
+  } catch (error) {
+    console.error(error);
+    return "error";
+  }
 }

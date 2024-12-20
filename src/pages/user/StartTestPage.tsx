@@ -11,6 +11,16 @@ export default function StartTestPage() {
   const [searchParams] = useSearchParams();
   const [activeSection, setActiveSection] = useState(1);
   const [sections, setSections] = useState<any[]>([]);
+  const [answers, setAnswers] = useState<Map<number, string>>(new Map());
+  const handleAnswerChange = (questionNumber: number, answer: string) => {
+    setAnswers((prev) => {
+      const newAnswers = new Map(prev);
+      if (answer === "") newAnswers.delete(questionNumber);
+      else newAnswers.set(questionNumber, answer);
+
+      return newAnswers;
+    });
+  };
 
   const skill = searchParams.get("skill");
   const id = searchParams.get("test");
@@ -58,6 +68,8 @@ export default function StartTestPage() {
                   <SectionComponent
                     lastQuestionIndex={getLastIndex(index, questionNums)}
                     questionLists={section.questionLists}
+                    answers={answers}
+                    handleAnswerChange={handleAnswerChange}
                   ></SectionComponent>
                 )
               );
@@ -69,6 +81,7 @@ export default function StartTestPage() {
         totalQuestion={questionNums}
         activeIndex={activeSection}
         setActiveIndex={setActiveSection}
+        answers={answers}
       ></StartTestFooter>
     </div>
   );
