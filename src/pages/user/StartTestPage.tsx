@@ -13,6 +13,8 @@ export default function StartTestPage() {
     const [activeSection, setActiveSection] = useState(1);
     const [sections, setSections] = useState<any[]>([]);
     const [answers, setAnswers] = useState<Map<number, string>>(new Map());
+    const [questionNums, setQuestionNums] = useState<number[]>([]);
+
     const handleAnswerChange = (questionNumber: number, answer: string) => {
         setAnswers((prev) => {
             const newAnswers = new Map(prev);
@@ -27,7 +29,6 @@ export default function StartTestPage() {
 
     const skill = searchParams.get("skill");
     const id = searchParams.get("test")
-    const questionNums: number[] = [];
 
     useEffect(()=>{
         const fetchSections = async () => {
@@ -35,6 +36,8 @@ export default function StartTestPage() {
                 const response = await sectionApi.getFull(id);
                 if(Array.isArray(response)){
                     setSections(response);
+                    const nums = response.map((section: any) => section.section.questionNum);
+                    setQuestionNums(nums);
                 }
             }
             catch (error: any) {
@@ -46,13 +49,15 @@ export default function StartTestPage() {
 
     return (
         <div className="start-page-container">
-            <StartTestHeader time={skill === "Reading" ? 60 : 32 }/>
+            <StartTestHeader 
+                time={skill === "Reading" ? 60 : 32 }
+                totalQuestion={getLastIndex(questionNums.length,questionNums)}
+                answers={answers}/>
             <div className="content-container">
                 <div className="left">
                     {
                         skill === "Reading" &&
                         sections.map((section, index)=>{
-                            questionNums.push(section.section.questionNum);
                             return( 
                                 activeSection === index + 1 && 
                                 <ReadingPassage
