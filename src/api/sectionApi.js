@@ -69,6 +69,21 @@ const sectionApi = {
     const url = "/Section/" + id;
     return axiosClient.get(url);
   },
+
+  getChoiceList(id) {
+    const url = "/QuestionList/Choice/" + id;
+    return axiosClient.get(url);
+  },
+
+  getImg(id) {
+    const url = "/QuestionList/Image/" + id;
+    return axiosClient.get(url);
+  },
+
+  getFull(id) {
+    const url = "/Section/Details/" + id;
+    return axiosClient.get(url);
+  },
 };
 
 export default sectionApi;

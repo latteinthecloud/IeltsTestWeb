@@ -3,13 +3,10 @@ import "./CompleteTest.css";
 
 interface CompleteTestProps {
   questionOrder: number;
-  answer: string;
+  answer?: string;
 }
 
-export default function CompleteTest({
-  questionOrder,
-  answer,
-}: CompleteTestProps) {
+export default function CompleteTest({ questionOrder }: CompleteTestProps) {
   return (
     <input
       className="complete-test-input"

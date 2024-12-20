@@ -6,10 +6,11 @@ import MultipleChoiceTest from "../../components/MultipleChoiceTest/MultipleChoi
 import TrueFalseTest from "../../components/TrueFalseTest/TrueFalseTest.tsx";
 import MatchingTest from "../../components/MatchingTest/MatchingTest.tsx";
 import DiagramTest from "../../components/DiagramTest/DiagramTest.tsx";
+import "../../styles/StartTestPage.css";
 import StartTestFooter from "../../components/StartTestFooter/StartTestFooter.tsx";
-import QuestionList from "../../components/QuestionList/QuestionList.tsx";
 import { useSearchParams } from "react-router-dom";
 import sectionApi from "../../api/sectionApi.js";
+import SectionComponent from "../../components/SectionComponent/SectionComponent.tsx";
 
 export default function StartTestPage() {
   const [searchParams] = useSearchParams();
@@ -24,6 +25,19 @@ export default function StartTestPage() {
     const fetchSections = async () => {
       try {
         const response = await sectionApi.getAll(id);
+        if (Array.isArray(response)) {
+          setSections(response);
+        }
+      } catch (error: any) {
+        console.error("Error occurs: " + error.message);
+      }
+    };
+    fetchSections();
+  }, [id]);
+  useEffect(() => {
+    const fetchSections = async () => {
+      try {
+        const response = await sectionApi.getFull(id);
         if (Array.isArray(response)) {
           setSections(response);
         }
@@ -171,4 +185,52 @@ export default function StartTestPage() {
       ></StartTestFooter>
     </div>
   );
+  return (
+    <div className="start-page-container">
+      <StartTestHeader time={skill === "Reading" ? 60 : 32} />
+      <div className="content-container">
+        <div className="left">
+          {skill === "Reading" &&
+            sections.map((section, index) => {
+              questionNums.push(section.section.questionNum);
+              return (
+                activeSection === index + 1 && (
+                  <ReadingPassage
+                    sectionOrder={index + 1}
+                    img={section.section.imageLink}
+                    title={section.section.title}
+                    content={section.section.content}
+                  ></ReadingPassage>
+                )
+              );
+            })}
+        </div>
+        <div className="right">
+          {skill !== null &&
+            sections.map((section, index) => {
+              return (
+                activeSection === index + 1 && (
+                  <SectionComponent
+                    lastQuestionIndex={getLastIndex(index, questionNums)}
+                    questionLists={section.questionLists}
+                  ></SectionComponent>
+                )
+              );
+            })}
+        </div>
+      </div>
+
+      <StartTestFooter
+        totalQuestion={questionNums}
+        activeIndex={activeSection}
+        setActiveIndex={setActiveSection}
+      ></StartTestFooter>
+    </div>
+  );
+}
+
+function getLastIndex(sectionIndex: number, totalQuestion: number[]) {
+  let lastIndex = 0;
+  for (let i = 0; i < sectionIndex; i++) lastIndex += totalQuestion[i];
+  return lastIndex;
 }

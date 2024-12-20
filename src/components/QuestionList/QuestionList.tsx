@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CompleteTest from "../CompleteTest/CompleteTest.tsx";
+import MultipleChoiceTest from "../MultipleChoiceTest/MultipleChoiceTest.tsx";
+import MatchingTest from "../MatchingTest/MatchingTest.tsx";
+import TrueFalseTest from "../TrueFalseTest/TrueFalseTest.tsx";
+import DiagramTest from "../DiagramTest/DiagramTest.tsx";
+import sectionApi from "../../api/sectionApi.js";
 
 interface QuestionListProps {
   startQuestion: number;
