@@ -88,7 +88,8 @@ export default function ExitButton(){
                                 <RoundedButton 
                                     title="Yes" 
                                     onClick={()=>{navigate("/")}}
-                                    colors={["rgb(51, 178, 199)","rgb(38, 134, 149)"]}></RoundedButton>
+                                    colors={["rgb(51, 178, 199)","rgb(38, 134, 149)"]}>
+                                </RoundedButton>
                             </div>
                         </div>
                     </div>

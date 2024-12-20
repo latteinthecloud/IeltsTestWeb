@@ -11,7 +11,7 @@ export default function ReviewButton({totalQuestion, answers}: ReviewButtonProps
     const rows = Math.ceil(totalQuestion / 4);
 
     const tableStyle: React.CSSProperties={
-        border: "1px solid rgba(0, 0, 0, 0.5);",
+        border: "1px solid rgba(0, 0, 0, 0.5)",
         padding: "10px",
         textAlign: "left",
         borderCollapse: "collapse",
@@ -21,7 +21,7 @@ export default function ReviewButton({totalQuestion, answers}: ReviewButtonProps
         border: "1px solid #999",
         width: "200px",
         padding: "10px",
-        color: "rgba(0, 0, 0, 0.5);"
+        color: "rgba(0, 0, 0, 0.5)"
     }
 
     const infoStyle: React.CSSProperties={
