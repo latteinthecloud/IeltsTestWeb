@@ -74,7 +74,7 @@ export default function StartButton({ id, skill }: StartButtonProps) {
                 </h3>
                 <div className="section-container">
                   {sections.map((section, index) => (
-                    <div key={id} className="row">
+                    <div key={index} className="row">
                       <img
                         src={require("../../assets/dot.png")}
                         alt="dot-icon"

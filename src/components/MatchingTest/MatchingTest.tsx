@@ -4,23 +4,25 @@ import "./MatchingTest.css";
 interface MatchingTestProps {
   questionOrder: number;
   content: string;
-  choiceList: string;
-  answer: string;
+  optionCount: number;
+  answer?: string;
 }
 
 export default function MatchingTest({
   questionOrder,
-  choiceList,
+  optionCount,
   content,
-  answer,
 }: MatchingTestProps) {
-  const options = choiceList.split("\\n");
+  const options = Array.from({ length: optionCount }, (_, i) =>
+    String.fromCharCode(65 + i)
+  );
 
   return (
     <div className="matching-test-container">
       <div className="matching-test-option">
         <h1>{questionOrder}.</h1>
         <select>
+          <option value=""></option>
           {options.map((option, index) => (
             <option key={index} value={option}>
               {option}

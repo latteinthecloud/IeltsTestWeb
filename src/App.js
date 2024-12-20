@@ -88,7 +88,7 @@ const RoutesWrapper = () => {
         path="/verify"
         element={
           <MainLayout>
-            <FEnterPassword />
+            <FVerification />
           </MainLayout>
         }
       />
@@ -96,7 +96,7 @@ const RoutesWrapper = () => {
         path="/enterPassword"
         element={
           <MainLayout>
-            <FVerification />
+            <FEnterPassword />
           </MainLayout>
         }
       />

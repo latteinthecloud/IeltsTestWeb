@@ -15,7 +15,6 @@ export default function ReadingPassage({
   content,
 }: ReadingPassageProps) {
   const paragraphs = content.split("<br>");
-  console.log(paragraphs);
 
   return (
     <div className="reading-section-container">
