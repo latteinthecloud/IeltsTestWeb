@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import "./StartTestHeader.css";
 import ReviewButton from "../TestButton/ReviewButton.tsx";
+import ExitButton from "../TestButton/ExitButton.tsx";
 
 interface StartTestHeaderProps {
   time: number;
@@ -33,9 +34,13 @@ export default function StartTestHeader({
 
   return (
     <div className="start-header-container">
-      <img className="logo-start" src={require("../../assets/logo.png")}></img>
+      <img
+        className="logo-start"
+        src={require("../../assets/logo.png")}
+        alt="logo"
+      ></img>
       <div className="timer-container">
-        <img src={require("../../assets/alarm.png")} alt="logo"></img>
+        <img src={require("../../assets/alarm.png")} alt="timer"></img>
         <h1>
           <span className="time-left">{remainingMinutes}</span> minutes
           remaining
@@ -50,14 +55,7 @@ export default function StartTestHeader({
           }
           onClick={() => {}}
         ></RoundedButton>
-        <RoundedButton
-          title="Exit"
-          icon={
-            <img src={require("../../assets/logout.png")} alt="exit-icon"></img>
-          }
-          colors={["#001f80", "#040160"]}
-          onClick={() => {}}
-        ></RoundedButton>
+        <ExitButton />
       </div>
     </div>
   );
