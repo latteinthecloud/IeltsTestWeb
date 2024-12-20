@@ -10,7 +10,6 @@ interface ReadingPassageProps{
 
 export default function ReadingPassage({sectionOrder, img, title, content}: ReadingPassageProps){
     const paragraphs = content.split("<br>");
-    console.log(paragraphs);
 
     return(
         <div className="reading-section-container">
