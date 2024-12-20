@@ -10,10 +10,12 @@ interface QuestionListProps{
     startQuestion: number;
     endQuestion: number;
     questionList: any;
-    questions: any
+    questions: any;
+    answers: Map<number, string>;
+    handleAnswerChange: (questionNumber: number, answer: string) => void;
 }
 
-export default function QuestionList({startQuestion, endQuestion, questionList, questions} : QuestionListProps){
+export default function QuestionList({startQuestion, endQuestion, questionList, questions, answers, handleAnswerChange} : QuestionListProps){
     const type = questionList.type;
     const [fectString, setFetchString] = useState("");
 
@@ -36,11 +38,12 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
     const options = type === "matching" ? fectString.split("<br>") : null;
     const parts = questionList.content !== null? questionList.content.split("<br>") : null;
 
-  const containerStyle: React.CSSProperties = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-  };
+    const containerStyle: React.CSSProperties = {
+        display: "flex",
+        flexDirection: "column",
+        gap: "15px",
+        transition: "all 0.3s ease",
+    }
 
   const titleStyle: React.CSSProperties = {
     fontSize: "22px",
@@ -62,12 +65,13 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
     alignItems: "center",
   };
 
-  const tableStyle: React.CSSProperties = {
-    border: "1px solid #000",
-    borderRadius: "5px",
-    padding: "10px",
-    textAlign: "left",
-  };
+    const tableStyle: React.CSSProperties={
+        border: "1px solid #000",
+        borderRadius: "5px",
+        padding: "10px",
+        textAlign: "left",
+        transition: "all 0.3s ease",
+    }
 
     const formatText: React.CSSProperties={
         textAlign: "left",
@@ -88,8 +92,9 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                         <MultipleChoiceTest
                             questionOrder={startQuestion + index}
                             content={question.question.content}
-                            choiceList={question.question.choiceList}>
-
+                            choiceList={question.question.choiceList}
+                            handleAnswerChange={handleAnswerChange}
+                            answers={answers}>
                         </MultipleChoiceTest>);
                     })
                 }
@@ -107,7 +112,9 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                             return (
                                 <TrueFalseTest
                                     questionOrder={startQuestion + index}
-                                    content={question.question.content}>
+                                    content={question.question.content}
+                                    answers={answers}
+                                    handleAnswerChange={handleAnswerChange}>
                                 </TrueFalseTest>
                             );
                         })
@@ -144,7 +151,9 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                                 <MatchingTest
                                     questionOrder={startQuestion + index}
                                     content={question.question.content}
-                                    optionCount={options.length}>
+                                    optionCount={options.length}
+                                    answers={answers}
+                                    handleAnswerChange={handleAnswerChange}>
                                 </MatchingTest>
                             );
                         })
@@ -157,13 +166,15 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                 <div style={containerStyle}>
                     <h2 style={instructionStyle}>Complete the labels. Write <strong style={{color: "red"}}>ONE WORD OR A NUMBER</strong> for each answer.</h2>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        <img style={{width: "50%"}} src={fectString} alt="ql-img"></img>
+                        <img style={{width: "50%", transition: "all 0.3s ease"}} src={fectString} alt="ql-img"></img>
                     </div>
                     {
                         questions.map((question, index)=> {
-                            console.log("In a diagram");
                             return(
-                                <DiagramTest questionOrder={startQuestion + index}>
+                                <DiagramTest 
+                                    questionOrder={startQuestion + index}
+                                    answers={answers}
+                                    handleAnswerChange={handleAnswerChange}>
                                 </DiagramTest>
                             );
                         })
@@ -187,7 +198,7 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
             }
 
                             return (
-                                <p style={formatText}>{formatPapagraph(part, startQuestion + startIndex)}</p>
+                                <p style={formatText}>{formatPapagraph(part, startQuestion + startIndex, answers, handleAnswerChange)}</p>
                             );
                         })
                     }
@@ -198,12 +209,16 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
 }
 
 
-function formatPapagraph(text: string, startIndex: number) {
+function formatPapagraph(text: string, startIndex: number, answers, handleAnswerChange) {
     const parts = text.split("<i>");
     return parts.flatMap((part, index) => [
         <span key={`text-${index}`}>{part}</span>,
         index < parts.length - 1 && (
-          <CompleteTest key={`input-${index}`} questionOrder={ startIndex + index }/>
+          <CompleteTest 
+            key={`input-${index}`} 
+            questionOrder={ startIndex + index } 
+            answers={answers}
+            handleAnswerChange={handleAnswerChange}/>
         ),
       ]);
 }

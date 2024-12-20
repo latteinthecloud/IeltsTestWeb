@@ -7,6 +7,7 @@ interface QuestionPaletteProps {
   endQuestion: number;
   status?: string;
   onClick: () => void;
+  answers: Map<number, string>;
 }
 
 export default function QuestionPalette({
@@ -15,6 +16,7 @@ export default function QuestionPalette({
   endQuestion,
   status = "",
   onClick,
+  answers,
 }: QuestionPaletteProps) {
   const numList = Array.from(
     { length: endQuestion - startQuestion + 1 },
@@ -30,7 +32,14 @@ export default function QuestionPalette({
     >
       <h1>Part {sectionOrder}</h1>
       {numList.map((num, index) => {
-        return <h2 key={num}>{num}</h2>;
+        return (
+          <h2
+            className={answers.get(num) !== undefined ? "active" : ""}
+            key={num}
+          >
+            {num}
+          </h2>
+        );
       })}
     </div>
   );
