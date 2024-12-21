@@ -27,7 +27,6 @@ export default function StartTestPage() {
 
   const skill = searchParams.get("skill");
   const id = searchParams.get("test");
-  const questionNums: number[] = [];
 
   useEffect(() => {
     const fetchSections = async () => {
