@@ -10,10 +10,9 @@ const StatisticPage = () => {
       <StatisticHeader />
       <h2 className="section-title">Overview</h2>
       <OverviewCards />
-      <h2 className="section-title">Listening</h2>
+      <h2 className="section-title">Score distributed</h2>
       <Charts chartDataKey="listening" color="#4a90e2" />
-      <h2 className="section-title">Reading</h2>
-      <Charts chartDataKey="reading" color="#4caf50" />
+      
     </div>
   );
 };

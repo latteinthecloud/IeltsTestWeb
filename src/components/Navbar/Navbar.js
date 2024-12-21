@@ -64,9 +64,6 @@ const Navbar = () => {
               <Link to="/exercise" className="nav-item">
                 Exercise
               </Link>
-              <Link to="/statistic" className="nav-item">
-                Statistic
-              </Link>
             </>
           )}
         </div>
