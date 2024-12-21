@@ -84,6 +84,20 @@ const sectionApi = {
     const url = "/Section/Details/" + id;
     return axiosClient.get(url);
   },
+
+  uploadContent(fileData) {
+    const url = "/Section/Content";
+
+    if (!fileData || !fileData.get("file")) {
+      throw new Error("Không có tệp để tải lên!");
+    }
+
+    return axiosClient.post(url, fileData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
 };
 
 export default sectionApi;

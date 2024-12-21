@@ -133,4 +133,27 @@ select:focus {
     font-family: "Poppins", sans-serif;
     font-size: 14px;
   }
+.confirm-btn{
+  margin: auto;
+  margin-top: 34px;
+  margin-bottom: 34px;
+  display: flex;
+  width: 188px;
+  height: 51px;
+  padding: 5px 25px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #001A72 0%, #000 100%);
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 33.6px */
+  }
+  .input[type="textTitle"] {
+ width: 60%;
+  }
   
