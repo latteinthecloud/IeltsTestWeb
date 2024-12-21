@@ -1,4 +1,84 @@
 .score-circle{
-    border: 2px solid rgb(31, 205, 51);
-    
+    border: 5px solid #327846;
+    border-radius: 60px; 
+    background: #d7e6dc;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.score-circle h2{
+    font-size: 35px;
+    font-weight: 700;
+    margin: 0px;
+    text-align: center;
+    color: #327846;
+}
+
+.panel{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.panel h1{
+    font-size: 16px;
+    margin: 0px;
+}
+
+.correct-circle{
+    border: 5px solid #001f80;
+    border-radius: 50px;
+    background: #DDE2FD;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.correct-circle h2{ 
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    color: #001f80; 
+}
+
+.time-circle{
+    border: 5px solid #33B2C7;
+    border-radius: 50px;
+    background: #BCEEF7;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.time-circle h2{
+    font-size: 26px;
+    color:#33B2C7;
+    margin: 0px;
+}
+
+.circle-header-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    margin: 20px;
+}
+
+.review-container{
+    display: flex;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(168, 168, 168, 0.3);
+    padding: 10px;
+    background: white;
 }
