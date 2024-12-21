@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 
-export default function BandScore(){
-    const [activeBand, setActiveBand] = useState(-1);
+interface BandScoreProps{
+    userBand: number;
+}
+
+export default function BandScore({userBand}: BandScoreProps){
     const bands = [3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9];
+    const [activeBand, setActiveBand] = useState(bands.indexOf(userBand));
     const correctAnswers = ["6-7","8-9","10-12","13-14","15-18","19-22","23-26","27-29","30-32","33-34","35-36","37-38","39-40"];
     const skillLevels = ["Extremely limited user","Extremely limited user","Limited user","Limited user","Modest user","Modest user","Competent user","Competent user","Good user","Good user","Very good user","Very good user","Expert user"];
     const descriptions = ["You convey and understand only general meaning in very familiar situations. There are frequent breakdowns in communication.",
@@ -81,7 +85,6 @@ export default function BandScore(){
                     }
                 </div>
                 {
-                    activeBand !== -1 &&
                     <table style={{ display: "flex", flexDirection: "column"}}>
                         <tr style={underlineStyle}>
                             <td style={headerStyle}>Correct Answers:</td>

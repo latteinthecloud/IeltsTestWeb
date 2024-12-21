@@ -8,9 +8,11 @@ interface StartTestHeaderProps{
   time: number;
   totalQuestion: number;
   answers: Map<number,string>;
+  skill: any;
+  testId: any;
 }
 
-export default function StartTestHeader({time, totalQuestion, answers}: StartTestHeaderProps){
+export default function StartTestHeader({time, totalQuestion, answers, skill, testId}: StartTestHeaderProps){
     const [remainingMinutes, setRemainingMinutes] = useState(time);
 
     useEffect(() => {
@@ -38,7 +40,13 @@ export default function StartTestHeader({time, totalQuestion, answers}: StartTes
             </div>
             <div className="start-header-button-container">
                 <ReviewButton answers={answers} totalQuestion={totalQuestion}/>
-                <SubmitButton></SubmitButton>
+                <SubmitButton 
+                    minute={time - remainingMinutes}
+                    totalQuestion={totalQuestion}
+                    skill={skill}
+                    testId={testId}
+                    answers={answers}>
+                </SubmitButton>
                 <ExitButton/>
             </div>
         </div>

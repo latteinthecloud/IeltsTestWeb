@@ -2,9 +2,30 @@ import React, { useState } from "react";
 import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import { useNavigate } from "react-router-dom";
 
-export default function SubmitButton(){
+interface SubmitButtonProps{
+    minute: number;
+    totalQuestion: number;
+    skill: any;
+    testId: any;
+    answers: Map<number, string>;
+}
+
+
+export default function SubmitButton({minute, totalQuestion, skill, testId, answers}: SubmitButtonProps){
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
+
+    const handleNavigation = () => {
+        const dataToSend = {
+            timeSpent: minute,
+            totalQuestion: totalQuestion,
+            skill: skill,
+            testId: testId,
+            answers: answers,
+        };
+
+        navigate("/result", { state: dataToSend });
+    };
 
     const buttonPanel: React.CSSProperties={
         display: "flex",
@@ -56,7 +77,7 @@ export default function SubmitButton(){
                                 <RoundedButton 
                                     title="Yes"
                                     colors={["rgb(51, 178, 199)","rgb(38, 134, 149)"]}
-                                    onClick={()=>{navigate("/result")}}>
+                                    onClick={handleNavigation}>
                                 </RoundedButton>
                             </div>
                         </div>

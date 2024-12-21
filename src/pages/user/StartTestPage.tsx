@@ -60,7 +60,9 @@ export default function StartTestPage() {
             <StartTestHeader 
                 time={skill === "Reading" ? 60 : 32 }
                 totalQuestion={getLastIndex(questionNums.length,questionNums)}
-                answers={answers}/>
+                answers={answers}
+                skill={skill}
+                testId={id}/>   
             <div className="content-container">
                 <div className="left">
                     {

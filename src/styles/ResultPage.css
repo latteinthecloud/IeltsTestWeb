@@ -82,3 +82,22 @@
     padding: 10px;
     background: white;
 }
+
+.bottom-button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.simple-blue-button{
+    border-radius: 5px;
+    background: rgb(41, 69, 99);
+    text-align: center;
+    width: 120px;
+    border: "0px solid #ccc";
+}
+
+.simple-blue-button:hover{
+    background: rgb(29, 49, 70);
+}
