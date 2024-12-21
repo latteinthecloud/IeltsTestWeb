@@ -13,6 +13,7 @@ export default function StartTestPage() {
   const [sections, setSections] = useState<any[]>([]);
   const [answers, setAnswers] = useState<Map<number, string>>(new Map());
   const [questionNums, setQuestionNums] = useState<number[]>([]);
+  const [questionIds, setQuestionIds] = useState<number[]>([]);
 
   const handleAnswerChange = (questionNumber: number, answer: string) => {
     setAnswers((prev) => {
@@ -37,6 +38,12 @@ export default function StartTestPage() {
             (section: any) => section.section.questionNum
           );
           setQuestionNums(nums);
+          const questionIds = response.flatMap((item) =>
+            item.questionLists.flatMap((qList) =>
+              qList.questions.map((q) => q.question.questionId)
+            )
+          );
+          setQuestionIds(questionIds);
         }
       } catch (error: any) {
         console.error("Error occurs: " + error.message);
