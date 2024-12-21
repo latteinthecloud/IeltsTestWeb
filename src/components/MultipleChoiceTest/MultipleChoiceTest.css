@@ -1,0 +1,47 @@
+.test-panel__answer-item{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.test-panel__answer-option{
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    color: black;
+    width: 18px;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    background-color: rgb(51, 178, 199);
+}
+
+.radio-iot iot-lr-question{
+    background: brown;
+}
+
+.iot-radio{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    margin: 0px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.test-panel__answer{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.test-panel__question-sm-group{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.test-panel__question-sm-title{
+    font-size: 16px;
+    font-weight: 700;
+}

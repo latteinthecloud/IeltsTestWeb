@@ -64,7 +64,7 @@ const Login = () => {
       const loginResponse = await login(email, password); // Assuming you have a login API
       console.log(loginResponse)
   
-      if (loginResponse) {
+      if (loginResponse.success === true) {
         // Navigate to the home page after successful login
             // If login is successful, check "Remember Me" option
             if (rememberMe) {
@@ -91,10 +91,10 @@ const Login = () => {
   return (
     <div className="auth-container">
       <h2>Login</h2>
-      {error && <p className="error">{error}</p>} {/* Display error message */}
+      {error && <p className="error-message">{error}</p>} {/* Display error message */}
       <div className="auth-form">
         <div className="form-group">
-          <label>Email:</label>
+          <label>Email</label>
           <div className="input-wrapper">
             <input
               type="email"
@@ -106,7 +106,7 @@ const Login = () => {
           </div>
         </div>
         <div className="form-group">
-  <label>Password:</label>
+  <label>Password</label>
   <div className="input-wrapper">
     <input
       type={showPassword ? "text" : "password"} // Toggle between password and text
@@ -117,7 +117,7 @@ const Login = () => {
     />
     {/* Eye icon positioned outside the input */}
     <i
-      className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
+      className={ showPassword ? "fas fa-eye" : "fas fa-eye-slash"} // Toggle icon based on showPassword state
       onClick={togglePasswordVisibility} // On click, toggle password visibility
       role="button"
       aria-label={showPassword ? "Hide password" : "Show password"}
@@ -138,7 +138,7 @@ const Login = () => {
             onChange={() => setRememberMe(!rememberMe)}
             /> Remember Password
           </label>
-          <a href="/forgot">Forgot Password?</a>
+          <a style={{fontWeight: 600}} href="/forgot">Forgot Password?</a>
         </div>
         <div className="divider">
           <span>OR</span>

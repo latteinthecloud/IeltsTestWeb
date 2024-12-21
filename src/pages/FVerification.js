@@ -20,7 +20,7 @@ const Verify = () => {
       await authenApi.verificationApi(email, code);
       
       // Navigate to the next page after successful verification
-      navigate("/enterPassword", { state: { email } });
+      navigate("/reset-password", { state: { email } });
     } catch (err) {
       setError("Account verification failed. Please check the code.");
     }

@@ -13,6 +13,7 @@ h2 {
   text-align: center;
   color: #333; /* Màu chữ */
   margin-bottom: 10px;
+  cursor: default;
 }
 
 p {
@@ -25,7 +26,6 @@ form {
   margin-bottom: 20px; /* Khoảng cách giữa các form */
   padding: 15px;
   background-color: #fff; /* Màu nền trắng */
-  border: 1px solid #ccc; /* Viền nhẹ */
   border-radius: 5px;
 }
 
@@ -53,7 +53,8 @@ textarea {
 
 input[type="text"]:focus,
 textarea:focus {
-  border-color: #007bff; /* Màu viền khi focus */
+  border-color: #001f80; /* Màu viền khi focus */
+  border-width: 2px;
   outline: none;
 }
 

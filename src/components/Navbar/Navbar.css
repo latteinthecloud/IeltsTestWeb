@@ -1,21 +1,24 @@
 .navbar {
   display: flex;
   justify-content: space-between;
+  width: 60%;
   align-items: center;
+}
+
+.nav-container {
+  display: flex;
   background-color: #001f80;
-  padding: 10px 20px;
-  color: white;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-links {
   display: flex;
-  gap: 20px;
 }
 
 .auth-links {
   display: flex;
   align-items: center;
-  gap: 15px;
 }
 
 .nav-item {
@@ -24,33 +27,36 @@
   padding: 5px 15px;
   font-size: 16px;
   transition: all 0.3s ease;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-item:hover {
   background-color: #0056b3;
-  border-radius: 5px;
 }
 
 .avatar-container {
   display: flex; /* Align items horizontally */
   align-items: center; /* Vertically center the avatar and email */
+  justify-content: center;
   cursor: pointer;
-  margin-right: 5px;
   position: relative; /* Ensure dropdown is positioned relative to this container */
-  width: max-content; /* Ensure the container is only as wide as the content */
+  width: max-content;
+  gap: 10px; /* Ensure the container is only as wide as the content */
 }
 
-.avatar-container img {
-  width: 30px;
-  height: 30px;
+.avatar-img{
+  width: 40px;
+  height: 40px;
   border-radius: 50%; /* Make the image circular */
-  margin-right: 10px; /* Space between avatar and email */
+  object-fit: cover;
 }
 
 .username {
   font-size: 14px;
   color: white;
-  margin-left: 10px; /* Optional: add some space between the avatar and email */
 }
 
 .dropdown-menu {
@@ -66,6 +72,24 @@
   z-index: 10; /* Ensure dropdown is above other elements */
 }
 
+/* Styling for each dropdown item */
+.dropdown-item {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
+}
+
+/* Hover effect for dropdown items */
+.dropdown-item:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
 /* Optional: Hover effect for the logout button in the dropdown */
 .dropdown-menu button {
   background: none;
@@ -76,5 +100,5 @@
 }
 
 .dropdown-menu button:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }

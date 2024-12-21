@@ -67,6 +67,11 @@ const sectionApi={
     });
   },
 
+  getAll(id){
+    const url = "/Section/" + id;
+    return axiosClient.get(url);
+  }
+
 
  
 };

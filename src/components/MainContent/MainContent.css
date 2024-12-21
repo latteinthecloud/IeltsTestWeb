@@ -1,11 +1,15 @@
 .main-content {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   background-color: #f9f9f9;
+  width: 60%;
+  gap: 10px;
 }
 
 .main-content h2 {
-  font-size: 18px;
-  color: #333;
+  font-size: 22px;
+  color: rgb(41, 69, 99);
 }
 
 .main-content p {
@@ -42,11 +46,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   /* Thêm bóng đổ */
 
-}
-
-.cover {
-  flex: 0 0 150px;
-  /* Fixed width for the cover */
 }
 
 .cover-placeholder {
@@ -128,12 +127,12 @@
 .search-input-user {
   width: 98%;
   /* Input chiếm hết chiều rộng */
-  height: 30px;
+  height: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 14px;
   color: #333;
-  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .search-container {
@@ -141,12 +140,15 @@
   display: flex;
   align-items: center;
   width: 100%;
+  height:60px;
+  margin-right: 10px;
   /* Đảm bảo thanh tìm kiếm chiếm toàn bộ chiều rộng */
 }
 
 .search-icon {
   position: absolute;
-  right: 30px;
+  margin-top:5px;
+  left: 10px;
   /* Đặt icon vào bên trái input */
   font-size: 18px;
   /* Kích thước của icon */
@@ -156,27 +158,67 @@
   /* Giúp không ảnh hưởng đến việc gõ trong input */
 }
 
-.test-group-item {
-  display: flex;
-  align-items: center;
-  /* Align items vertically at the center */
-  gap: 30px;
-  /* Add space between each item */
-  padding-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Add soft shadow */
-  border-radius: 10px;
-  /* Optional: rounded corners */
-  background-color: #fff;
-  /* Optional: background color for the item */
-}
-
 .test-group-list {
 
   display: flex;
-  /* Display items using Flexbox */
-  flex-direction: column;
-  /* Align items vertically (in a column) */
+  flex-wrap: wrap;
   gap: 30px;
-  /* Add 30px space between each item */
+}
+
+.start-button {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #183C5E; /* Màu nền giống như hình */
+  color: #ffffff; /* Màu chữ trắng */
+  border: 2px solid #183C5E; /* Viền cùng màu với nền */
+  border-radius: 25px; /* Góc bo tròn */
+  padding: 10px 20px; /* Khoảng cách bên trong nút */
+  font-size: 16px; /* Kích thước chữ */
+  font-weight: bold; /* Chữ đậm */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Hiệu ứng khi hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng nhẹ */
+  height: 30px;
+}
+
+.start-button .icon {
+  margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+  font-size: 18px; /* Kích thước icon */
+}
+
+.start-button:hover {
+  background-color: #ffffff; /* Màu nền khi hover */
+  color: #183C5E; /* Màu chữ khi hover */
+  border-color: #183C5E; /* Viền không đổi */
+}
+
+.start-button:active {
+  transform: scale(0.95); /* Hiệu ứng nhấn */
+}
+/* .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+} */
+
+.popup-content {
+  background: white;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
+  max-width: 500px;
+  width: 100%;
+}
+.popup-content .start-button{
+  background-color: #001f80;
 }

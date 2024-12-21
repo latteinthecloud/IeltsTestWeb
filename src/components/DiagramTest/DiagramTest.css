@@ -1,0 +1,21 @@
+.diagram-test-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.diagram-test-container h1{
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.diagram-test-container input{
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.diagram-test-container input::placeholder{
+    color: #999;
+}

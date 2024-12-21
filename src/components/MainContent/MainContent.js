@@ -3,10 +3,10 @@ import TestTabs from '../TestTabs/TestTabs';
 import FilterBar from '../FilterBar/FilterBar';
 import './MainContent.css';
 import Pagination from "../Pagination/Pagination";
-import Cover from '../../assets/Cover.png';
 import testApi from "../../api/testApi";
+import TestComponent from '../TestComponent/TestComponent.tsx';
 
-const itemsPerPage = 5;
+const itemsPerPage = 6;
 
 const MainContent = () => {
   const [activeTab, setActiveTab] = useState("all"); // State for current tab
@@ -90,16 +90,25 @@ const MainContent = () => {
     
       return 0; // If both yearEdition and monthEdition are the same, return 0 (no change)
     });
-    
 
     setFilteredData(sortedData);
   };
-
+  
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   const onFilterChange = (filter) => {
     setActiveFilter(filter); // Update filter state
   };
+
+  // popup
+  const [openPopup, setOpenPopup] = useState({}); // Khởi tạo state với object rỗng
+  const handlePopupToggle = (testId) => {
+    setOpenPopup(prevState => ({
+      ...prevState,
+      [testId]: !prevState[testId] // Chuyển đổi trạng thái popup cho testId
+    }));
+  };
+  
 
   return (
     <div className="main-content">
@@ -109,13 +118,11 @@ const MainContent = () => {
       <div className="test-groups">
         <div className="control">
           <div className="search-container">
-            <i className="fas fa-magnifying-glass search-icon"></i>
             <input
               type="text"
               placeholder="Search by name"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="search-input-user"
             />
           </div>
 
@@ -130,19 +137,17 @@ const MainContent = () => {
         </div>
 
         <div className="test-group-list">
-          {filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((test, index) => (
-            <div key={index} className="test-group-item">
-              <img src={Cover} alt="Cover" className="cover-placeholder" />
-              <div className="test-group-details">
-                <strong>Name:</strong> {test.name} <br />
-                <strong>Year Edition:</strong> {test.yearEdition} <br />
-                <strong>Month Edition:</strong> {test.monthEdition} <br />
-                <strong>Completed Users:</strong> {test.userCompletedNum} <br />
-                <strong>Type:</strong> {test.testType.charAt(0).toUpperCase() + test.testType.slice(1)} <br />
-                <strong>Skill:</strong> {test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1)}
-
-              </div>
-            </div>
+          {filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((test) => (
+            <TestComponent 
+              key={test.testId}
+              id={test.testId}
+              name={test.name}
+              month={test.monthEdition}
+              year={test.yearEdition}
+              type={test.testType.charAt(0).toUpperCase() + test.testType.slice(1)}
+              skill={test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1)}
+              completed={test.userCompletedNum}> {/* Use test.id as key */}
+            </TestComponent>
           ))}
         </div>
 
