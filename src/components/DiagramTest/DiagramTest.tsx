@@ -9,15 +9,18 @@ interface DiagramTestProps{
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
     status?: number;
-    answerState?: string;
 }
 
-export default function DiagramTest({questionOrder, question, explanation, answers, handleAnswerChange, status=1, answerState=""}: DiagramTestProps){
+export default function DiagramTest({questionOrder, question, explanation, answers, handleAnswerChange, status=1}: DiagramTestProps){
     const currentAnswer = answers.get(questionOrder) || "";
+    const answerState = currentAnswer.toLocaleLowerCase().trim() === question.answer.toLocaleLowerCase().trim();
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         handleAnswerChange(questionOrder, value);
     };
+    
+    console.log(question.answer);
     
     return (
         <div className="diagram">
@@ -30,7 +33,7 @@ export default function DiagramTest({questionOrder, question, explanation, answe
                     disabled={status === 0}>
                 </input>
             </div>
-            {status === 0 && <AnswerComponent answer={question.answers} explain={explanation.content} state={answerState}/>}
+            {status === 0 && <AnswerComponent answer={question.answer} explain={explanation.content} state={answerState}/>}
         </div>
     );
 }

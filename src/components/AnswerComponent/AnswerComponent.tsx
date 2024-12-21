@@ -4,7 +4,7 @@ import ExplainButton from "../ExplainButton/ExplainButton.tsx";
 interface AnswerComponentProps{
     answer: string;
     explain: string;
-    state: string;
+    state: boolean;
 }
 
 export default function AnswerComponent({answer, explain, state}: AnswerComponentProps){
@@ -20,15 +20,15 @@ export default function AnswerComponent({answer, explain, state}: AnswerComponen
     }
 
     const correctStyle : React.CSSProperties={
-        color: state === "right"? "rgb(50, 120, 70)": "red"
+        color: state? "rgb(50, 120, 70)": "red"
     }
 
     return(
         <div style={{ display: "flex", flexDirection: "column", gap: "5px"}}>
             <h1 style={answerStyle}>Answer: 
                 <span style={{fontWeight: "bold", color: "rgb(0, 31, 128)"}}> {answer} </span>
-                <span style={correctStyle}>{state === "right"? "correct": "incorrect"}</span>
-                <img src={require(`../../assets/${state === "right" ? "check-circle" : "cross-circle"}.png`)} alt="correct-icon"></img>
+                <span style={correctStyle}>{state? "correct": "incorrect"}</span>
+                <img src={require(`../../assets/${state? "check-circle" : "cross-circle"}.png`)} alt="correct-icon"></img>
             </h1>
             <ExplainButton content={explain}/>
         </div>

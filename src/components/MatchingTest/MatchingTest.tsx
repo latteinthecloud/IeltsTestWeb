@@ -10,12 +10,13 @@ interface MatchingTestProps{
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
     status?: number;
-    answerState?: string;
 }
 
-export default function MatchingTest({questionOrder, optionCount, question, explanation, answers, handleAnswerChange, status = 1, answerState=""}: MatchingTestProps){
+export default function MatchingTest({questionOrder, optionCount, question, explanation, answers, handleAnswerChange, status = 1}: MatchingTestProps){
     const options = Array.from({ length: optionCount }, (_, i) => String.fromCharCode(65 + i));
     const selectedAnswer = answers.get(questionOrder) || "";
+    const answerState = selectedAnswer === question.answer;
+
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const answer = e.target.value;
         handleAnswerChange(questionOrder, answer);

@@ -9,11 +9,11 @@ interface TrueFalseTestProps{
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
     status?: number;
-    answerState?: string;
 }
 
-export default function TrueFalseTest({questionOrder, question, explanation, answers, handleAnswerChange, status=1, answerState=""}: TrueFalseTestProps){
+export default function TrueFalseTest({questionOrder, question, explanation, answers, handleAnswerChange, status=1}: TrueFalseTestProps){
     const selectedAnswer = answers.get(questionOrder) || "";
+    const answerState = selectedAnswer === question.answer;
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const answer = e.target.value;
         handleAnswerChange(questionOrder, answer);

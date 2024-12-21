@@ -232,7 +232,9 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                                     <AnswerComponent 
                                         answer={question.question.answer}
                                         explain={question.explanation.content}
-                                        state=""
+                                        state={
+                                            answers.get(startQuestion + index)?.toLocaleLowerCase().trim() === question.question.answer.toLocaleLowerCase().trim()
+                                        }
                                     />
                                 </div>
                             );

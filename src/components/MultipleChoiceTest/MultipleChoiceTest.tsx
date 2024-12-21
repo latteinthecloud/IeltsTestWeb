@@ -9,12 +9,12 @@ interface MultipleChoiceTestProps{
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
     status?: number;
-    answerState?: string;
 }
 
-export default function MultipleChoiceTest({questionOrder, question, explanation, answers, handleAnswerChange, status = 1, answerState=""}: MultipleChoiceTestProps){
+export default function MultipleChoiceTest({questionOrder, question, explanation, answers, handleAnswerChange, status = 1}: MultipleChoiceTestProps){
     const options = question.choiceList.split("<br>");
     const selectedAnswer = answers.get(questionOrder);
+    const answerState = selectedAnswer === question.answer;
 
     return (
         <div className="test-panel__question-sm-group" data-num="27" data-q_type="6">
