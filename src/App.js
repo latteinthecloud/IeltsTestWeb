@@ -23,6 +23,7 @@ import AdminAddR from "./pages/admin/AdminAddR";
 import Profile from "./pages/Profile";
 import StartTestPage from "./pages/user/StartTestPage.tsx";
 import MainLayout from "./layout/MainLayout.tsx";
+import ResultPage from "./pages/user/ResultPage.tsx";
 
 const App = () => {  
   return (
@@ -51,8 +52,8 @@ const RoutesWrapper = () => {
       <Route path="/signup" element={<MainLayout><SignupPage /></MainLayout>} />
       <Route path="/forgot" element={<MainLayout><ForgotPassword /></MainLayout>} />
       <Route path="/signup/verify" element={<MainLayout><Verification /></MainLayout>} />
-      <Route path="/verify" element={<MainLayout><FEnterPassword /></MainLayout>} />
-      <Route path="/enterPassword" element={<MainLayout><FVerification /></MainLayout>} />
+      <Route path="/verify" element={<MainLayout><FVerification /></MainLayout>} />
+      <Route path="/enterPassword" element={<MainLayout><FEnterPassword /></MainLayout>} />
       <Route path="/admin-add-test" element={<AdminAddTest /> } />
       <Route path="/admin-add-test/admin-add-section" element={<AdminAddS/> } />
       <Route path="/admin-add-test/admin-add-sectionR" element={<AdminAddR/> } />
@@ -114,8 +115,15 @@ const RoutesWrapper = () => {
             element={
               <StartTestPage>
               </StartTestPage>
-            }>
-
+            }
+          />
+          <Route
+            path="/result"
+            element={
+              <MainLayout>
+                <ResultPage/>
+              </MainLayout>
+          }>
           </Route>
         </>
       )}
