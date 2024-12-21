@@ -91,8 +91,8 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                     return(
                         <MultipleChoiceTest
                             questionOrder={startQuestion + index}
-                            content={question.question.content}
-                            choiceList={question.question.choiceList}
+                            question={question.question}
+                            explanation={question.explanation}
                             handleAnswerChange={handleAnswerChange}
                             answers={answers}>
                         </MultipleChoiceTest>);
