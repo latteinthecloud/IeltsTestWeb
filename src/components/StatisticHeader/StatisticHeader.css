@@ -19,14 +19,18 @@
     padding: 10px 20px;
     border: 1px solid #ddd;
     border-radius: 20px;
-    background: white;
+    background: #001f80;
     cursor: pointer;
     transition: all 0.3s;
   }
   
   .filter-group button.active {
-    background: #001f80;
+    background: #16c786;
     color: white;
-    border-color: #001f80;
+    border-color: #e5e5e8;
+  }
+
+  .filter-group button:hover {
+    background-color: #16c786;
   }
   
