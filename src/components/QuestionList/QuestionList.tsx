@@ -166,7 +166,7 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                 <div style={containerStyle}>
                     <h2 style={instructionStyle}>Complete the labels. Write <strong style={{color: "red"}}>ONE WORD OR A NUMBER</strong> for each answer.</h2>
                     <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        <img style={{width: "50%", transition: "all 0.3s ease"}} src={fectString} alt="ql-img"></img>
+                        <img style={{width: "50%", transition: "all 0.3s ease"}} src={"http://localhost:8080"+fectString} alt="ql-img"></img>
                     </div>
                     {
                         questions.map((question, index)=> {

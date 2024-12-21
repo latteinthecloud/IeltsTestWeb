@@ -8,12 +8,13 @@ interface MultipleChoiceTestProps{
     explanation: any;
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
+    status?: number;
+    answerState?: string;
 }
 
-export default function MultipleChoiceTest({questionOrder, question, explanation, answers, handleAnswerChange}: MultipleChoiceTestProps){
+export default function MultipleChoiceTest({questionOrder, question, explanation, answers, handleAnswerChange, status = 1, answerState=""}: MultipleChoiceTestProps){
     const options = question.choiceList.split("<br>");
     const selectedAnswer = answers.get(questionOrder);
-    console.log(explanation);
 
     return (
         <div className="test-panel__question-sm-group" data-num="27" data-q_type="6">
@@ -33,6 +34,7 @@ export default function MultipleChoiceTest({questionOrder, question, explanation
                                     name={`q-${questionOrder}`}
                                     value={optionValue}
                                     defaultChecked={selectedAnswer === optionValue}
+                                    disabled={status === 0}
                                     onChange={() => handleAnswerChange(questionOrder, optionValue)}
                                 />
                                 {option}
@@ -41,7 +43,7 @@ export default function MultipleChoiceTest({questionOrder, question, explanation
                     );
                 })}
             </div>
-            <AnswerComponent answer={question.answer} explain={explanation.content} state="wrong"/>
+            {status === 0 && <AnswerComponent answer={question.answer} explain={explanation.content} state={answerState}/>}
         </div>
     );
 }
