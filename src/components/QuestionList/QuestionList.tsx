@@ -5,6 +5,7 @@ import MatchingTest from "../MatchingTest/MatchingTest.tsx";
 import TrueFalseTest from "../TrueFalseTest/TrueFalseTest.tsx";
 import DiagramTest from "../DiagramTest/DiagramTest.tsx";
 import sectionApi from "../../api/sectionApi.js";
+import AnswerComponent from "../AnswerComponent/AnswerComponent.tsx";
 
 interface QuestionListProps{
     startQuestion: number;
@@ -13,9 +14,10 @@ interface QuestionListProps{
     questions: any;
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
+    status?: number;
 }
 
-export default function QuestionList({startQuestion, endQuestion, questionList, questions, answers, handleAnswerChange} : QuestionListProps){
+export default function QuestionList({startQuestion, endQuestion, questionList, questions, answers, handleAnswerChange, status=1} : QuestionListProps){
     const type = questionList.type;
     const [fectString, setFetchString] = useState("");
 
@@ -78,6 +80,20 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
         fontSize: "15px",
         margin: "0px",
     }
+
+    const completeAnswerContainer:React.CSSProperties={
+        display: "flex",
+        justifyContent:"flex-start",
+        alignItems: "flex-start",
+        gap: "5px",
+    }
+
+    const numberStyle: React.CSSProperties={
+        fontSize: "15px",
+        marginTop: "2px",
+        fontWeight: "700",
+        color: "rgb(0, 31, 128)",
+    }
     
     return (
         <div style={containerStyle}>
@@ -94,7 +110,8 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                             question={question.question}
                             explanation={question.explanation}
                             handleAnswerChange={handleAnswerChange}
-                            answers={answers}>
+                            answers={answers}
+                            status={status}>
                         </MultipleChoiceTest>);
                     })
                 }
@@ -112,9 +129,11 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                             return (
                                 <TrueFalseTest
                                     questionOrder={startQuestion + index}
-                                    content={question.question.content}
+                                    question={question.question}
+                                    explanation={question.explanation}
                                     answers={answers}
-                                    handleAnswerChange={handleAnswerChange}>
+                                    handleAnswerChange={handleAnswerChange}
+                                    status={status}>
                                 </TrueFalseTest>
                             );
                         })
@@ -150,10 +169,12 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                             return (
                                 <MatchingTest
                                     questionOrder={startQuestion + index}
-                                    content={question.question.content}
+                                    question={question.question}
+                                    explanation={question.explanation}
                                     optionCount={options.length}
                                     answers={answers}
-                                    handleAnswerChange={handleAnswerChange}>
+                                    handleAnswerChange={handleAnswerChange}
+                                    status={status}>
                                 </MatchingTest>
                             );
                         })
@@ -174,7 +195,10 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                                 <DiagramTest 
                                     questionOrder={startQuestion + index}
                                     answers={answers}
-                                    handleAnswerChange={handleAnswerChange}>
+                                    question={question.question}
+                                    explanation={question.explanation}
+                                    handleAnswerChange={handleAnswerChange}
+                                    status={status}>
                                 </DiagramTest>
                             );
                         })
@@ -196,7 +220,21 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
                             }
 
                             return (
-                                <p style={formatText}>{formatPapagraph(part, startQuestion + startIndex, answers, handleAnswerChange)}</p>
+                                <p style={formatText}>{formatPapagraph(part, startQuestion + startIndex, answers, status, handleAnswerChange)}</p>
+                            );
+                        })
+                    }
+                    { status === 0 &&
+                        questions.map((question,index)=>{
+                            return(
+                                <div style={completeAnswerContainer}>
+                                    <h1 style={numberStyle}>{startQuestion + index}.</h1>
+                                    <AnswerComponent 
+                                        answer={question.question.answer}
+                                        explain={question.explanation.content}
+                                        state=""
+                                    />
+                                </div>
                             );
                         })
                     }
@@ -207,7 +245,7 @@ export default function QuestionList({startQuestion, endQuestion, questionList, 
 }
 
 
-function formatPapagraph(text: string, startIndex: number, answers, handleAnswerChange) {
+function formatPapagraph(text: string, startIndex: number, answers, status: number, handleAnswerChange) {
     const parts = text.split("<i>");
     return parts.flatMap((part, index) => [
         <span key={`text-${index}`}>{part}</span>,
@@ -216,7 +254,8 @@ function formatPapagraph(text: string, startIndex: number, answers, handleAnswer
             key={`input-${index}`} 
             questionOrder={ startIndex + index } 
             answers={answers}
-            handleAnswerChange={handleAnswerChange}/>
+            handleAnswerChange={handleAnswerChange}
+            status={status}/>
         ),
       ]);
 }

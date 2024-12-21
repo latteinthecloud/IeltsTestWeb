@@ -62,7 +62,7 @@ export default function ExplainButton({content}: ExplainButtonProps){
             {
                 open &&
                 <div style={exStyle}>
-                    <p style={pStyle}>{content}</p>
+                    <p style={pStyle}>{content? content : "This question's explanation hasn't been uploaded."}</p>
                 </div>
             }
         </div>
