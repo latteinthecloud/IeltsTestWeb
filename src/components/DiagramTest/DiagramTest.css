@@ -19,11 +19,3 @@
 .diagram-test-container input::placeholder{
     color: #999;
 }
-
-.diagram{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-}

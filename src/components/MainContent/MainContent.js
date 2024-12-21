@@ -7,6 +7,7 @@ import testApi from "../../api/testApi";
 import TestComponent from "../TestComponent/TestComponent.tsx";
 
 const itemsPerPage = 6;
+const itemsPerPage = 6;
 
 const MainContent = () => {
   const [activeTab, setActiveTab] = useState("all"); // State for current tab

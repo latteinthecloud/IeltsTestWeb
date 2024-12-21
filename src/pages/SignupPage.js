@@ -60,7 +60,7 @@ const Register = () => {
       await authenApi.code(email);
       localStorage.setItem("email", email);
       localStorage.setItem("password", password); // Store password for later use
-      navigate("/signup/verify"); // Navigate to verification page
+      navigate("/verify"); // Navigate to verification page
     } catch (err) {
       setError("An error occurred. Please try again.");
     } finally {

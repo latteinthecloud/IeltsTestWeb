@@ -1,44 +1,34 @@
 import React from "react";
-import "./MatchingTest.css"
-import AnswerComponent from "../AnswerComponent/AnswerComponent.tsx";
+import "./MatchingTest.css";
 
-interface MatchingTestProps{
-    questionOrder: number;
-    question: any;
-    explanation: any;
-    optionCount: number;
-    answers: Map<number, string>;
-    handleAnswerChange: (questionNumber: number, answer: string) => void;
-    status?: number;
+interface MatchingTestProps {
+  questionOrder: number;
+  content: string;
+  choiceList: string;
+  answer: string;
 }
 
-export default function MatchingTest({questionOrder, optionCount, question, explanation, answers, handleAnswerChange, status = 1}: MatchingTestProps){
-    const options = Array.from({ length: optionCount }, (_, i) => String.fromCharCode(65 + i));
-    const selectedAnswer = answers.get(questionOrder) || "";
-    const answerState = selectedAnswer === question.answer;
+export default function MatchingTest({
+  questionOrder,
+  choiceList,
+  content,
+  answer,
+}: MatchingTestProps) {
+  const options = choiceList.split("\\n");
 
-    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const answer = e.target.value;
-        handleAnswerChange(questionOrder, answer);
-    };
-
-    return(
-        <div className="matching-test-container">
-            <div className="matching-test-option">
-                <h1>{questionOrder}.</h1>
-                <select value={selectedAnswer} onChange={handleSelectChange} disabled={status === 0}>
-                    <option value=""></option>
-                    {options.map((option, index) => (
-                        <option key={index} value={option}>
-                        {option}
-                        </option>
-                    ))}
-                </select>
-                <h2>{question.content}</h2>
-            </div>
-            <div style={{width: "100%"}}>
-                {status === 0 && <AnswerComponent answer={question.answer} explain={explanation.content} state={answerState}/>}
-            </div>
-        </div>
-    );
+  return (
+    <div className="matching-test-container">
+      <div className="matching-test-option">
+        <h1>{questionOrder}.</h1>
+        <select>
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <h2>{content}</h2>
+      </div>
+    </div>
+  );
 }
