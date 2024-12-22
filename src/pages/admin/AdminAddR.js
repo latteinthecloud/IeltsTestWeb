@@ -105,26 +105,68 @@ const AdminAddR = ({ numberOfSections = 3 }) => {
       return;
     }
 
+    // Kiểm tra file hình ảnh
+    if (!section.imageFile) {
+      alert("Vui lòng chọn hình ảnh trước khi tạo phần!");
+      return;
+    }
+
     try {
+      // Gọi API tạo section
       const response = await sectionApi.createRead({
         testId,
         title: section.title,
         content: section.content,
       });
 
-      if (response.status === 200 || response.status === 201) {
+      // if (response.status === 200 || response.status === 201) {
+      if (response.id) {
         alert(`Tạo Section Reading thành công cho Section ${num}!`);
 
-        const updatedSections = sections.map((sec) =>
-          sec.num === num ? { ...sec, completed: true } : sec
-        );
-        setSections(updatedSections);
+        // Lấy ID từ response để upload hình ảnh
+        const sectionId = response.id; // Điều chỉnh theo đúng key của response trả về
+
+        try {
+          const uploadResponse = await sectionApi.uploadImage(
+            sectionId,
+            section.imageFile
+          );
+          console.log("-----------");
+          console.log(uploadResponse);
+
+          if (uploadResponse) {
+            alert(`Tải ảnh lên thành công cho Section ${num}!`);
+          } else {
+            console.error("Lỗi phản hồi từ API upload image:", uploadResponse);
+            alert("Đã xảy ra lỗi khi tải ảnh lên.");
+          }
+        } catch (uploadError) {
+          console.error(
+            "Lỗi khi gọi API upload image:",
+            uploadError.response || uploadError.message
+          );
+          alert("Đã xảy ra lỗi khi tải ảnh lên.");
+        }
       } else {
+        console.error("Lỗi phản hồi từ API createRead:", response);
         alert("Đã xảy ra lỗi khi tạo Section Reading.");
       }
     } catch (error) {
-      console.error("Lỗi khi gọi API:", error.response || error.message);
-      alert("Không thể tạo Section Reading. Vui lòng thử lại sau.");
+      console.error(
+        "Lỗi khi gọi API createRead:",
+        error.response || error.message
+      );
+
+      if (error.response) {
+        console.error("Chi tiết lỗi từ server:", error.response.data);
+        alert(
+          `Lỗi từ server: ${
+            error.response.data.message || "Không rõ nguyên nhân"
+          }`
+        );
+      } else {
+        alert("Không thể kết nối tới server. Vui lòng kiểm tra kết nối mạng.");
+      }
     }
   };
 

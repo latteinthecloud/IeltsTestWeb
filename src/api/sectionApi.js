@@ -98,6 +98,26 @@ const sectionApi = {
       },
     });
   },
+
+  uploadImage(id, file) {
+    const url = `/Section/Image/${id}`; // Đường dẫn API cho upload ảnh
+
+    // Kiểm tra xem file có tồn tại không
+    if (!file) {
+      throw new Error("Vui lòng chọn tệp hình ảnh!");
+    }
+
+    // Tạo FormData để gửi file
+    const formData = new FormData();
+    formData.append("file", file);
+
+    // Gửi yêu cầu POST với file
+    return axiosClient.post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Đảm bảo sử dụng định dạng multipart/form-data
+      },
+    });
+  },
 };
 
 export default sectionApi;
