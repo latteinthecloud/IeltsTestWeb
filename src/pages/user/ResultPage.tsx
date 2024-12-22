@@ -8,11 +8,10 @@ import SectionComponent from "../../components/SectionComponent/SectionComponent
 
 export default function ResultPage(){
     const location = useLocation();
-    const { timeSpent, totalQuestion, skill, testId, answers } = location.state || {};
+    const { timeSpent, totalQuestion, skill, testId, answers, score, band } = location.state || {};
     const [sections, setSections] = useState<any[]>([]);
     const [activeSection, setActiveSection] = useState(1);
     const [questionNums, setQuestionNums] = useState<number[]>([]);
-    const band = 3.5;
 
     useEffect(()=>{
         const fetchSections = async () => {
@@ -38,7 +37,7 @@ export default function ResultPage(){
                 <div className="panel">
                     <h1 style={{color: "#001f80"}}>Correct answers</h1>
                     <div className="correct-circle">
-                        <h2>1/{totalQuestion}</h2>
+                        <h2>{score}/{totalQuestion}</h2>
                     </div>
                 </div>
                 <div className="panel">

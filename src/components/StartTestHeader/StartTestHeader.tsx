@@ -10,9 +10,11 @@ interface StartTestHeaderProps{
   answers: Map<number,string>;
   skill: any;
   testId: any;
+  access: any;
+  questionIds: number[];
 }
 
-export default function StartTestHeader({time, totalQuestion, answers, skill, testId}: StartTestHeaderProps){
+export default function StartTestHeader({time, totalQuestion, answers, skill, testId, access, questionIds}: StartTestHeaderProps){
     const [remainingMinutes, setRemainingMinutes] = useState(time);
 
     useEffect(() => {
@@ -45,7 +47,9 @@ export default function StartTestHeader({time, totalQuestion, answers, skill, te
                     totalQuestion={totalQuestion}
                     skill={skill}
                     testId={testId}
-                    answers={answers}>
+                    answers={answers}
+                    access={access}
+                    questionIds={questionIds}>
                 </SubmitButton>
                 <ExitButton/>
             </div>

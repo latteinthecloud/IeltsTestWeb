@@ -20,8 +20,6 @@ export default function DiagramTest({questionOrder, question, explanation, answe
         handleAnswerChange(questionOrder, value);
     };
     
-    console.log(question.answer);
-    
     return (
         <div className="diagram">
             <div className="diagram-test-container">
