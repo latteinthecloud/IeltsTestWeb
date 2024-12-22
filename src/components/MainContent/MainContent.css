@@ -157,13 +157,18 @@
   pointer-events: none;
   /* Giúp không ảnh hưởng đến việc gõ trong input */
 }
-
 .test-group-list {
-
   display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
+  flex-wrap: wrap; /* Cho phép các phần tử tự động xuống dòng */
+  gap: 10px; /* Khoảng cách giữa các phần tử */
+  justify-content: space-between; /* (Tùy chọn) Căn chỉnh các phần tử nếu cần */
 }
+
+.test-group-list > * {
+  flex: 0 0 calc(50% - 15px); /* Mỗi phần tử chiếm 50% chiều rộng, trừ khoảng cách */
+  box-sizing: border-box; /* Đảm bảo padding và border không làm thay đổi kích thước */
+}
+
 
 .start-button {
   margin-top: 10px;
