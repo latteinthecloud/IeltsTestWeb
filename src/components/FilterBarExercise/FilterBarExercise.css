@@ -7,8 +7,28 @@
     background: linear-gradient(180deg, #FFD700 0%, #FFA500 50%);
     border-color: transparent;
   }
+  .form-group-s1 {
+    display: inline-flex; /* Hiển thị flex với hành vi inline */
+    flex-direction: row; /* Các phần tử xếp theo chiều dọc */
+    align-items: flex-start; /* Căn các phần tử bắt đầu từ trên cùng */
+    gap: 0px; /* Khoảng cách giữa các phần tử là 0 */
+    width: 302.6px; /* Độ rộng của nhóm */
+  }
   
 
+  .form-group-s2 {
+    display: inline-flex; /* Hiển thị theo hàng ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: flex-start; /* Căn bắt đầu từ trái */
+    gap: 0px; /* Khoảng cách giữa các phần tử */
+    width: 302.6px; /* Độ rộng của nhóm */
+  }
+  .s1-s2{
+    display: flex;
+    flex-direction: column;
+    gap:40px;
+    margin-bottom: 40px;
+  }  
 .filter-button.create-active {
     margin-left: auto; /* Đẩy nút Create về phía cuối */
   }
@@ -42,13 +62,19 @@
     font-weight: 700;
     line-height: normal;
   }
-  .modal-content label{
+  .modal-content label {
+    display: flex; /* Dùng flexbox để căn chỉnh */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: flex-start; /* (Tùy chọn) Căn giữa theo chiều ngang nếu cần */
     color: #1E1E1E;
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    width: 60%;
+    height: 35px; /* Đảm bảo chiều cao đầy đủ để căn giữa */
   }
+  
   
   .modal-close {
     position: absolute;
@@ -77,53 +103,57 @@
     background-color: #e0e0e0; /* Màu xám nhạt khi hover */
   }
 
-.form-group-hint{
+  .form-group-hint {
     display: flex;
-    width: 281px;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
+    width: 302.6px;
+  }
+  input[type="hint"], textarea {
+    width: 93%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
   }
 .form-group-skill{
-    display: flex;
+display: flex;
 width: 129px;
 flex-direction: column;
 align-items: flex-start;
-gap: 5px;
 }
 .name-skill{
     display: flex;
     flex-direction: row;
     gap:88px;
-
+    margin-bottom: 20px;
 }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  input,
+input,
   select {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    font-size: 16px;
   }
   
   .confirm-button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 5px 25px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #001A72 0%, #1E1E1E 100%);
+    width: 150px;
+    height: 44px;
+    color: #FFF;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 33.6px */
+    display: flex; /* Đảm bảo nội dung trong button được căn giữa */
+    margin: 0 auto; /* Căn giữa button theo chiều ngang */
   }
   
-  .confirm-button:hover {
-    background: #0056b3;
-  }
+  
 
   .custom-select-container {
     position: relative;
@@ -159,4 +189,15 @@ gap: 5px;
     pointer-events: none; /* Ngăn không cho click vào icon */
     color: #000; /* Màu của icon */
   }
-  
+  /* Css cho listening */
+  .listening{
+    display: flex;
+    flex-direction: column;
+  }
+  .lis-type{
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    gap:60px;
+    margin-bottom: 40px;
+  }

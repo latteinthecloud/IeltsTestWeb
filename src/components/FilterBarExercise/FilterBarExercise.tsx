@@ -8,6 +8,7 @@ interface FilterBarProps {
 const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // State để điều khiển modal
+  const [selectedSkill, setSelectedSkill] = useState<string>("reading"); // State lưu skill được chọn
 
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter);
@@ -21,6 +22,10 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
 
   const closeModal = () => {
     setIsModalOpen(false); // Đóng modal
+  };
+
+  const handleSkillChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSkill(event.target.value); // Cập nhật giá trị skill được chọn
   };
 
   return (
@@ -81,7 +86,12 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                 <div className="form-group-skill">
                   <label htmlFor="skill">Skill</label>
                   <div className="custom-select-container">
-                    <select id="skill" className="custom-select">
+                    <select
+                      id="skill"
+                      className="custom-select"
+                      value={selectedSkill} // Liên kết với state
+                      onChange={handleSkillChange} // Xử lý thay đổi skill
+                    >
                       <option value="reading">Reading</option>
                       <option value="listening">Listening</option>
                     </select>
@@ -90,24 +100,72 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="section1">Section 1</label>
-                <select id="section1">
-                  <option value="multiple-choice">Multiple Choice</option>
-                  <option value="sentence-completion">
-                    Sentence Completion
-                  </option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="section2">Section 2</label>
-                <select id="section2">
-                  <option value="multiple-choice">Multiple Choice</option>
-                  <option value="sentence-completion">
-                    Sentence Completion
-                  </option>
-                </select>
-              </div>
+              {/* Hiển thị nội dung dựa trên selectedSkill */}
+              {selectedSkill === "reading" && (
+                <div className="reading">
+                  <div className="name-skill">
+                    <div className="s1-s2">
+                      <div className="form-group-s1">
+                        <label htmlFor="section1">Section 1</label>
+                        <select id="section1">
+                          <option value="multiple-choice">
+                            Multiple Choice
+                          </option>
+                          <option value="matching">Matching</option>
+                          <option value="complete">Complete</option>
+                          <option value="true_false">True/False</option>
+                          <option value="diagram">Diagram</option>
+                        </select>
+                      </div>
+                      <div className="form-group-s2">
+                        <label htmlFor="section2">Section 2</label>
+                        <select id="section2">
+                          <option value="multiple-choice">
+                            Multiple Choice
+                          </option>
+                          <option value="matching">Matching</option>
+                          <option value="complete">Complete</option>
+                          <option value="true_false">True/False</option>
+                          <option value="diagram">Diagram</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="form-group-s1">
+                      <label htmlFor="section3">Section 3</label>
+                      <select id="section3">
+                        <option value="multiple-choice">Multiple Choice</option>
+                        <option value="matching">Matching</option>
+                        <option value="complete">Complete</option>
+                        <option value="true_false">True/False</option>
+                        <option value="diagram">Diagram</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {selectedSkill === "listening" && (
+                <div className="listening">
+                  <label>Selected types</label>
+                  <div className="lis-type">
+                    <select id="section1">
+                      <option value="multiple-choice">Multiple Choice</option>
+                      <option value="matching">Matching</option>
+                      <option value="complete">Complete</option>
+                      <option value="true_false">True/False</option>
+                      <option value="diagram">Diagram</option>
+                    </select>
+
+                    <select id="section1">
+                      <option value="multiple-choice">Multiple Choice</option>
+                      <option value="matching">Matching</option>
+                      <option value="complete">Complete</option>
+                      <option value="true_false">True/False</option>
+                      <option value="diagram">Diagram</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
               <button type="submit" className="confirm-button">
                 Confirm
               </button>
