@@ -8,7 +8,7 @@ import { useAuth, AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import MainContent from "./components/MainContent/MainContent";
 import ExercisePage from "./pages/user/ExercisePage.tsx";
-import StatisticPage from "./pages/user/StatisticPage";
+import Result from "./pages/user/Result.js";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import CreateListeningTestPage from "./pages/user/CreateListeningTestPage";
@@ -141,11 +141,11 @@ const RoutesWrapper = () => {
             }
           />
           <Route
-            path="/statistic"
+            path="/result-page"
             element={
               <ProtectedRoute>
                 <MainLayout>
-                  <StatisticPage />
+                  <Result />
                 </MainLayout>
               </ProtectedRoute>
             }
