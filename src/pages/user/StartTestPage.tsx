@@ -30,7 +30,8 @@ export default function StartTestPage() {
 
 
     const skill = searchParams.get("skill");
-    const id = searchParams.get("test")
+    const id = searchParams.get("test");
+    const access = searchParams.get("access");
 
     useEffect(()=>{
         const fetchSections = async () => {
@@ -60,7 +61,11 @@ export default function StartTestPage() {
             <StartTestHeader 
                 time={skill === "Reading" ? 60 : 32 }
                 totalQuestion={getLastIndex(questionNums.length,questionNums)}
-                answers={answers}/>
+                answers={answers}
+                skill={skill}
+                testId={id}
+                access={access}
+                questionIds={questionIds}/>   
             <div className="content-container">
                 <div className="left">
                     {

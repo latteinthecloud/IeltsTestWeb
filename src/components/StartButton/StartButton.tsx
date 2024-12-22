@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 interface StartButtonProps{
     id: number;
     skill: string;
+    testAccess: string;
 }
 
-export default function StartButton({id, skill}: StartButtonProps){
+export default function StartButton({id, skill, testAccess}: StartButtonProps){
     //show popup
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function StartButton({id, skill}: StartButtonProps){
     },[id]);
 
     const handleNavigation = () =>{
-        const params = new URLSearchParams({ skill: skill, test: id.toString() });
+        const params = new URLSearchParams({ skill: skill, test: id.toString(), access: testAccess });
         navigate("/start-test?"+ params.toString());
     }
 

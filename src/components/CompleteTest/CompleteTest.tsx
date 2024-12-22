@@ -5,9 +5,10 @@ interface CompleteTestProps{
     questionOrder: number;
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
+    status?: number;
 }
 
-export default function CompleteTest({questionOrder, answers, handleAnswerChange}: CompleteTestProps){
+export default function CompleteTest({questionOrder, answers, handleAnswerChange, status=1}: CompleteTestProps){
     const currentAnswer = answers.get(questionOrder) || "";
     
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +22,7 @@ export default function CompleteTest({questionOrder, answers, handleAnswerChange
             placeholder={questionOrder.toString()}
             value={currentAnswer}
             onChange={handleChange}
+            disabled={status === 0}
         />
     );
 }

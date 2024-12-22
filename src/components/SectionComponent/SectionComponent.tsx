@@ -6,9 +6,10 @@ interface SectionComponentProps{
     lastQuestionIndex: number;
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
+    status?: number;
 }
 
-export default function SectionComponent({questionLists, lastQuestionIndex, answers, handleAnswerChange}: SectionComponentProps){
+export default function SectionComponent({questionLists, lastQuestionIndex, answers, handleAnswerChange, status=1}: SectionComponentProps){
     return (
             <div style={{display: "flex", flexDirection: "column", gap: "20px", transition: "all 0.3s ease"}}>
                 {
@@ -26,7 +27,8 @@ export default function SectionComponent({questionLists, lastQuestionIndex, answ
                                 questionList={ql.questionList}
                                 questions={ql.questions}
                                 answers={answers}
-                                handleAnswerChange={handleAnswerChange}>
+                                handleAnswerChange={handleAnswerChange}
+                                status={status}>
                             </QuestionList>
                         );
                     })

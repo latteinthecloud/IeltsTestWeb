@@ -1,22 +1,25 @@
 import React from "react";
 import "./MultipleChoiceTest.css"
+import AnswerComponent from "../AnswerComponent/AnswerComponent.tsx";
 
 interface MultipleChoiceTestProps{
     questionOrder: number;
-    content: string;
-    choiceList: string;
+    question: any;
+    explanation: any;
     answers: Map<number, string>;
     handleAnswerChange: (questionNumber: number, answer: string) => void;
+    status?: number;
 }
 
-export default function MultipleChoiceTest({questionOrder, content, choiceList, answers, handleAnswerChange}: MultipleChoiceTestProps){
-    const options = choiceList.split("<br>");
+export default function MultipleChoiceTest({questionOrder, question, explanation, answers, handleAnswerChange, status = 1}: MultipleChoiceTestProps){
+    const options = question.choiceList.split("<br>");
     const selectedAnswer = answers.get(questionOrder);
+    const answerState = selectedAnswer === question.answer;
 
     return (
         <div className="test-panel__question-sm-group" data-num="27" data-q_type="6">
             <div className="test-panel__question-sm-title">
-                {questionOrder}. {content}
+                {questionOrder}. {question.content}
             </div>
             <div className="test-panel__answer" data-question-item="27">
                 {options.map((option, index) => {
@@ -31,6 +34,7 @@ export default function MultipleChoiceTest({questionOrder, content, choiceList, 
                                     name={`q-${questionOrder}`}
                                     value={optionValue}
                                     defaultChecked={selectedAnswer === optionValue}
+                                    disabled={status === 0}
                                     onChange={() => handleAnswerChange(questionOrder, optionValue)}
                                 />
                                 {option}
@@ -39,6 +43,7 @@ export default function MultipleChoiceTest({questionOrder, content, choiceList, 
                     );
                 })}
             </div>
+            {status === 0 && <AnswerComponent answer={question.answer} explain={explanation.content} state={answerState}/>}
         </div>
     );
 }
