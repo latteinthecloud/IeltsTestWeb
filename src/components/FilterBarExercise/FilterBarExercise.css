@@ -1,0 +1,162 @@
+.filter-buttons .create-active:hover {
+    background: linear-gradient(180deg, #FFD700 0%, #FFA500 50%); /* Gradient màu vàng-cam */
+    border-color: #FFB400; /* Màu viền cam */
+  }
+
+  .filter-buttons .filter-button.active.create-active {
+    background: linear-gradient(180deg, #FFD700 0%, #FFA500 50%);
+    border-color: transparent;
+  }
+  
+
+.filter-button.create-active {
+    margin-left: auto; /* Đẩy nút Create về phía cuối */
+  }
+
+  /* Modal CSS */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    position: relative;
+    padding: 20px;
+    border-radius: 5px;
+    background: #FFF;
+    width: 740px;
+    height: 418px;
+  }
+  .modal-content h2{
+    color: #000;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .modal-content label{
+    color: #1E1E1E;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    color: #101010;
+  }
+  .create-new {
+    text-align: center;
+    font-weight: bold;
+    margin: 40px 0 10px; /* Khoảng cách giữa nút Close và tiêu đề */
+    color: #000;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+  
+  .modal-close:hover i {
+
+    background-color: #e0e0e0; /* Màu xám nhạt khi hover */
+  }
+
+.form-group-hint{
+    display: flex;
+    width: 281px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+.form-group-skill{
+    display: flex;
+width: 129px;
+flex-direction: column;
+align-items: flex-start;
+gap: 5px;
+}
+.name-skill{
+    display: flex;
+    flex-direction: row;
+    gap:88px;
+
+}
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .confirm-button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .confirm-button:hover {
+    background: #0056b3;
+  }
+
+  .custom-select-container {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* Hoặc kích thước cụ thể */
+  }
+  
+  .custom-select {
+    appearance: none; /* Ẩn mũi tên mặc định */
+    -webkit-appearance: none; /* Ẩn mũi tên trên Safari */
+    -moz-appearance: none; /* Ẩn mũi tên trên Firefox */
+    background: transparent; /* Làm nền trong suốt */
+    width: 100%; /* Đảm bảo full-width */
+    padding: 8px 40px 8px 10px; /* Padding cho icon bên phải */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 22.4px */
+  }
+  
+  /* Thêm icon tùy chỉnh */
+  .custom-select-container i {
+    size:38px;
+    position: absolute;
+    right: 20px; /* Đặt icon về bên phải */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    transform: translateY(-50%);
+    pointer-events: none; /* Ngăn không cho click vào icon */
+    color: #000; /* Màu của icon */
+  }
+  
