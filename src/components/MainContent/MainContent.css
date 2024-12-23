@@ -241,7 +241,7 @@
   background: rgba(0, 0, 0, 0.5);
 .start-button:active {
   transform: scale(0.95); /* Hiệu ứng nhấn */
-}
+
 /* .popup-overlay {
   position: fixed;
   top: 0;
@@ -267,11 +267,6 @@
 .popup-content .start-button{
   background-color: #001f80;
 }
-
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-} */
 
 .popup-content {
   background: white;
