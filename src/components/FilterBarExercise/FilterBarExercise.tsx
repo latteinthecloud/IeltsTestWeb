@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./FilterBarExercise.css";
+import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 
 interface FilterBarProps {
   onFilterChange: (filter: string) => void; // Hàm nhận filter dưới dạng chuỗi
@@ -29,56 +30,48 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
   };
 
   return (
-    <div className="filter-bar">
-      <div className="filter-buttons">
-        <button
-          className={`filter-button ${
-            activeFilter === "all" ? "active all-active" : "all-active"
-          }`}
-          onClick={() => handleFilterClick("all")}
-        >
-          <i className="fas fa-border-all"></i> All Skills
-        </button>
-        <button
-          className={`filter-button ${
-            activeFilter === "listening"
-              ? "active listening-active"
-              : "listening-active"
-          }`}
-          onClick={() => handleFilterClick("listening")}
-        >
-          <i className="fas fa-headphones-alt"></i> Listening
-        </button>
-        <button
-          className={`filter-button ${
-            activeFilter === "reading"
-              ? "active reading-active"
-              : "reading-active"
-          }`}
-          onClick={() => handleFilterClick("reading")}
-        >
-          <i className="fas fa-book"></i> Reading
-        </button>
-        <button
-          className={`filter-button ${
-            activeFilter === "create" ? "active create-active" : "create-active"
-          }`}
-          onClick={handleCreateClick}
-        >
-          <i className="fa-solid fa-plus"></i> Create
-        </button>
-      </div>
-
+    <div className="filter-container">
+      <div className="filter-bar">
+        <div className="filter-buttons">
+          <button
+            className={`filter-button ${
+              activeFilter === "all" ? "active all-active" : "all-active"
+            }`}
+            onClick={() => handleFilterClick("all")}
+          >
+            <i className="fas fa-border-all"></i> All Skills
+          </button>
+          <button
+            className={`filter-button ${
+              activeFilter === "listening"
+                ? "active listening-active"
+                : "listening-active"
+            }`}
+            onClick={() => handleFilterClick("listening")}
+          >
+            <i className="fas fa-headphones-alt"></i> Listening
+          </button>
+          <button
+            className={`filter-button ${
+              activeFilter === "reading"
+                ? "active reading-active"
+                : "reading-active"
+            }`}
+            onClick={() => handleFilterClick("reading")}
+          >
+            <i className="fas fa-book"></i> Reading
+          </button>
+        </div>
       {/* Modal trực tiếp */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="modal-close" onClick={closeModal}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+            <div style={{ width: "100%", display: "flex", justifyContent: "flex-end"}}>
+               <img src={require("../../assets/close.png")} alt="close-button" onClick={closeModal}></img>
+            </div>
             <h2>Create new test</h2>
-            <form>
-              <div className="name-skill">
+            <form style={{ margin: "0px"}}>
+              <div className="first-row">
                 <div className="form-group-hint">
                   <label htmlFor="name">Name</label>
                   <input type="text" id="name" placeholder="Hint..." />
@@ -130,7 +123,7 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                         </select>
                       </div>
                     </div>
-                    <div className="form-group-s1">
+                    <div className="form-group-s2">
                       <label htmlFor="section3">Section 3</label>
                       <select id="section3">
                         <option value="multiple-choice">Multiple Choice</option>
@@ -165,14 +158,23 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                   </div>
                 </div>
               )}
-
-              <button type="submit" className="confirm-button">
-                Confirm
-              </button>
+              <div style={{width: "100%", display:"flex", justifyContent: "center"}}>
+                <RoundedButton
+                  title="Confirm"
+                  onClick={()=>{}}
+                  colors={["#001A72","#1E1E1E"]}>
+                </RoundedButton>
+              </div>
             </form>
           </div>
         </div>
       )}
+    </div>
+    <RoundedButton
+            title="Create"
+            onClick={handleCreateClick}
+            colors={["#FFD700","#FFA500"]}
+            icon={<i className="fa-solid fa-plus"></i>}/>
     </div>
   );
 };

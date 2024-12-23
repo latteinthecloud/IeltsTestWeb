@@ -1,4 +1,5 @@
 import React from "react";
+import RoundedButton from "../../components/RoundedButton/RoundedButton.tsx";
 
 const Result = () => {
   // Dữ liệu mẫu
@@ -22,7 +23,7 @@ const Result = () => {
   return (
     <div className="main-content">
       <h2
-        style={{ fontWeight: "bold", color: "#1E1E1E", marginBottom: "20px" }}
+        style={{ fontWeight: "bold", color: "rgb(41, 69, 99)", marginBottom: "20px" }}
       >
         Record
       </h2>
@@ -31,8 +32,8 @@ const Result = () => {
         style={{
           display: "flex",
           justifyContent: "center", // Căn giữa hàng
-          alignItems: "center", // Căn giữa theo chiều dọc
-          gap: "20px", // Khoảng cách giữa các phần tử
+          alignItems: "flex-end", // Căn giữa theo chiều dọc
+          gap: "40px", // Khoảng cách giữa các phần tử
           marginBottom: "20px", // Khoảng cách phía dưới hàng
         }}
       >
@@ -41,7 +42,7 @@ const Result = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "flex-start",
           }}
         >
           <label
@@ -72,7 +73,7 @@ const Result = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "flex-start",
           }}
         >
           <label
@@ -103,7 +104,7 @@ const Result = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "flex-start",
           }}
         >
           <label
@@ -130,30 +131,11 @@ const Result = () => {
         </div>
 
         {/* Nút Apply */}
-        <button
-          style={{
-            padding: "10px 20px",
-            background: "linear-gradient(180deg, #001A72 0%, #1E1E1E 100%)",
-            color: "white",
-            fontSize: "16px",
-            fontWeight: "bold",
-            border: "none",
-            borderRadius: "20px",
-            cursor: "pointer",
-            transition: "background 0.3s ease",
-            marginTop: "24px",
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background =
-              "linear-gradient(180deg, #0026a2 0%, #2E2E2E 100%)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.background =
-              "linear-gradient(180deg, #001A72 0%, #1E1E1E 100%)")
-          }
-        >
-          Apply
-        </button>
+        <RoundedButton
+          title="Apply"
+          colors={["#294563","#080D30"]}
+          onClick={()=>{}}>
+        </RoundedButton>
       </div>
 
       {/*  table */}
@@ -250,29 +232,10 @@ const Result = () => {
                     textAlign: "justify",
                   }}
                 >
-                  <button
-                    style={{
-                      padding: "8px 16px",
-                      background:
-                        "linear-gradient(180deg, #28a745 0%, #218838 100%)",
-                      color: "#fff",
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                      border: "none",
-                      borderRadius: "20px",
-                      cursor: "pointer",
-                      transition: "background 0.3s ease",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "#1c7430")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background =
-                        "linear-gradient(180deg, #28a745 0%, #218838 100%)")
-                    }
-                  >
-                    Review
-                  </button>
+                  <RoundedButton
+                    title="Review"
+                    onClick={()=>{}}>
+                  </RoundedButton>
                 </td>
               </tr>
             ))}

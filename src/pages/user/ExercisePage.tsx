@@ -4,45 +4,19 @@ import TestTabs from "../../components/TestTabs/TestTabs";
 import FilterBarExercise from "../../components/FilterBarExercise/FilterBarExercise.tsx";
 import UserTest from "../../components/UserTest/UserTest.tsx";
 import Pagination from "../../components/Pagination/Pagination.js";
+import userTestApi from "../../api/userTestApi.tsx";
+import { useAuth } from "../../context/AuthContext.js";
 const itemsPerPage = 6;
-// Dummy test data (giả sử bạn chưa có dữ liệu thật)
-const testData = [
-  {
-    testId: 1,
-    name: "Test 1",
-    testType: "academic",
-    testSkill: "listening",
-    yearEdition: 2022,
-    monthEdition: 5,
-    userCompletedNum: 10, // Thêm trường completed
-  },
-  {
-    testId: 2,
-    name: "Test 2",
-    testType: "general",
-    testSkill: "reading",
-    yearEdition: 2023,
-    monthEdition: 2,
-    userCompletedNum: 8, // Thêm trường completed
-  },
-  {
-    testId: 3,
-    name: "Test 3",
-    testType: "academic",
-    testSkill: "reading",
-    yearEdition: 2023,
-    monthEdition: 4,
-    userCompletedNum: 8, // Thêm trường completed
-  },
-];
 
 export default function ExercisePage() {
   const [activeTab, setActiveTab] = useState<string>("all"); // State cho TestTabs
   const [filter, setFilter] = useState<string>("all"); // State lưu giá trị filter
   const [searchTerm, setSearchTerm] = useState(""); // State lưu giá trị tìm kiếm
   const [sortOrder, setSortOrder] = useState("newest"); // State lưu giá trị sắp xếp
-  const [filteredData, setFilteredData] = useState(testData); // State lưu dữ liệu đã lọc
+  const [testData, setTestData] = useState<any[]>([]); // Store all test data
+  const [filteredData, setFilteredData] = useState<any[]>([]); // Store filtered data
   const [currentPage, setCurrentPage] = useState(1);
+  const {user} = useAuth();
   // Xử lý khi thay đổi filter
   const handleFilterChange = (selectedFilter: string) => {
     setFilter(selectedFilter);
@@ -57,6 +31,24 @@ export default function ExercisePage() {
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(e.target.value);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response: any = await userTestApi.getAll(user.id);
+        if (Array.isArray(response)) {
+          setTestData(response);
+          setFilteredData(response); // Initially, all data is shown
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching test data:", error);
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   // Lọc và sắp xếp dữ liệu
   useEffect(() => {
@@ -101,7 +93,7 @@ export default function ExercisePage() {
     });
 
     setFilteredData(sortedTests);
-  }, [activeTab, filter, searchTerm, sortOrder]);
+  }, [activeTab, filter, searchTerm, sortOrder, testData]);
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div className="main-content">
@@ -135,6 +127,7 @@ export default function ExercisePage() {
           value={sortOrder}
           onChange={handleSortChange}
           className="sort-select"
+          style={{width: "fit-content"}}
         >
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
@@ -150,8 +143,7 @@ export default function ExercisePage() {
               key={test.testId}
               id={test.testId}
               name={test.name}
-              month={test.monthEdition}
-              year={test.yearEdition}
+              createDate={formatDate(test.dateCreate)}
               type={
                 test.testType.charAt(0).toUpperCase() + test.testType.slice(1)
               }
@@ -172,3 +164,13 @@ export default function ExercisePage() {
     </div>
   );
 }
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};

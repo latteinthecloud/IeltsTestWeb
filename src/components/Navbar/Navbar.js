@@ -66,6 +66,9 @@ const Navbar = () => {
               <Link to="/exercise" className="nav-item">
                 Exercise
               </Link>
+              <Link to="/result-page" className="nav-item">
+                Record
+              </Link>
             </>
           )}
         </div>
@@ -113,6 +116,7 @@ const Navbar = () => {
                 <img
                   style={{ width: "20px", height: "20px" }}
                   src={require("../../assets/expand_arrow_20px.png")}
+                  alt="expand-icon"
                 />
               </div>
             </>
