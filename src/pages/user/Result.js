@@ -1,28 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import RoundedButton from "../../components/RoundedButton/RoundedButton.tsx";
+import { useAuth } from "../../context/AuthContext.js";
+import resultApi from "../../api/resultApi.tsx";
+import testApi from "../../api/testApi.js";
+import ResultReviewButton from "../../components/ResultReviewButton/ResultReviewButton.tsx";
+import userTestApi from "../../api/userTestApi.tsx";
 
 const Result = () => {
-  // Dữ liệu mẫu
-  const tableData = [
-    {
-      date: "12/02/2024",
-      access: "Public",
-      testName: "Mock test 1",
-      score: 12,
-      timeSpent: "00:30:00",
-    },
-    {
-      date: "13/02/2024",
-      access: "Private",
-      testName: "Mock test 2",
-      score: 15,
-      timeSpent: "00:45:00",
-    },
-    // Thêm dữ liệu khác nếu cần
-  ];
+  const {user} = useAuth();
+  const [data, setData] = useState([]);
+  const [testDetails, setTestDetails] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedValues, setSelectedValues] = useState({
+    access: 'all',
+    skill: 'all',
+    type: 'all',
+  });
+
+  const handleSelectChange = (event) => {
+    const { name, value } = event.target; // name là tên select, value là giá trị chọn
+    setSelectedValues((prevState) => ({
+      ...prevState, // Giữ nguyên các giá trị trước
+      [name]: value, // Cập nhật giá trị của select tương ứng
+    }));
+  };
+
+  const handleFilter = () => {
+    const filtered = data.filter((item) => {
+      const test = getTest(item.testId);
+      return (
+        (selectedValues.access === "all" || item.testAccess === selectedValues.access) &&
+        (selectedValues.skill === "all" || test.skill === selectedValues.skill) &&
+        (selectedValues.type === "all" || test.type === selectedValues.type)
+      );
+    });
+    setFilteredData(filtered);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Gọi cả hai API đồng thời
+        const [response, testDetailsResult] = await Promise.all([
+          resultApi.getAll(user.id).then((res) => {
+            if (!Array.isArray(res)) {
+              throw new Error("Invalid response format");
+            }
+            return res;
+          }),
+          resultApi.getAll(user.id).then(async (res) => {
+            if (Array.isArray(res)) {
+              return getAllTestDetails(res);
+            }
+            return [];
+          }),
+        ]);
+  
+        // Cập nhật state sau khi cả hai API hoàn thành
+        setData(response); // Kết quả từ resultApi.getAll
+        setFilteredData(response);
+        setTestDetails(testDetailsResult); // Kết quả từ getAllTestDetails
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, [user]);
+
+  const getTest = (testId) => {
+    const test = testDetails.find(test => test.id === testId);
+    return test
+  };
+
   return (
     <div className="main-content">
       <h2
-        style={{ fontWeight: "bold", color: "#1E1E1E", marginBottom: "20px" }}
+        style={{ fontWeight: "bold", color: "rgb(41, 69, 99)", marginBottom: "20px" }}
       >
         Record
       </h2>
@@ -31,8 +85,8 @@ const Result = () => {
         style={{
           display: "flex",
           justifyContent: "center", // Căn giữa hàng
-          alignItems: "center", // Căn giữa theo chiều dọc
-          gap: "20px", // Khoảng cách giữa các phần tử
+          alignItems: "flex-end", // Căn giữa theo chiều dọc
+          gap: "40px", // Khoảng cách giữa các phần tử
           marginBottom: "20px", // Khoảng cách phía dưới hàng
         }}
       >
@@ -41,7 +95,7 @@ const Result = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "flex-start",
           }}
         >
           <label
@@ -54,12 +108,14 @@ const Result = () => {
             Access
           </label>
           <select
+            name="access"
             style={{
               padding: "8px",
               border: "1px solid #ccc",
               borderRadius: "5px",
               fontSize: "14px",
             }}
+            onChange={handleSelectChange}
           >
             <option value="all">All</option>
             <option value="public">Public</option>
@@ -72,7 +128,7 @@ const Result = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "flex-start",
           }}
         >
           <label
@@ -81,16 +137,19 @@ const Result = () => {
               fontWeight: "bold",
               marginBottom: "5px",
             }}
+            onChange={handleSelectChange}
           >
             Skill
           </label>
           <select
+            name="skill"
             style={{
               padding: "8px",
               border: "1px solid #ccc",
               borderRadius: "5px",
               fontSize: "14px",
             }}
+            onChange={handleSelectChange}
           >
             <option value="all">All</option>
             <option value="reading">Reading</option>
@@ -103,7 +162,7 @@ const Result = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "flex-start",
           }}
         >
           <label
@@ -116,12 +175,14 @@ const Result = () => {
             Type
           </label>
           <select
+            name="type"
             style={{
               padding: "8px",
               border: "1px solid #ccc",
               borderRadius: "5px",
               fontSize: "14px",
             }}
+            onChange={handleSelectChange}
           >
             <option value="all">All</option>
             <option value="academic">Academic</option>
@@ -130,30 +191,11 @@ const Result = () => {
         </div>
 
         {/* Nút Apply */}
-        <button
-          style={{
-            padding: "10px 20px",
-            background: "linear-gradient(180deg, #001A72 0%, #1E1E1E 100%)",
-            color: "white",
-            fontSize: "16px",
-            fontWeight: "bold",
-            border: "none",
-            borderRadius: "20px",
-            cursor: "pointer",
-            transition: "background 0.3s ease",
-            marginTop: "24px",
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background =
-              "linear-gradient(180deg, #0026a2 0%, #2E2E2E 100%)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.background =
-              "linear-gradient(180deg, #001A72 0%, #1E1E1E 100%)")
-          }
-        >
-          Apply
-        </button>
+        <RoundedButton
+          title="Apply"
+          colors={["#294563","#080D30"]}
+          onClick={handleFilter}>
+        </RoundedButton>
       </div>
 
       {/*  table */}
@@ -194,6 +236,24 @@ const Result = () => {
                   borderBottom: "1px solid #ddd",
                 }}
               >
+                Type
+              </th>
+              <th
+                style={{
+                  padding: "10px",
+                  fontWeight: "bold",
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                Skill
+              </th>
+              <th
+                style={{
+                  padding: "10px",
+                  fontWeight: "bold",
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
                 Test name
               </th>
               <th
@@ -226,22 +286,30 @@ const Result = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData.map((row, index) => (
-              <tr key={index}>
+            {filteredData.map((row, index) =>{
+              const test = getTest(row.testId);
+              return(
+                <tr key={index}>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {row.date}
+                  {formatDate(row.dateMake)}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {row.access}
+                  {row.testAccess.charAt(0).toUpperCase() + row.testAccess.slice(1)}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {row.testName}
+                  {test ? test.type.charAt(0).toUpperCase() + test.type.slice(1) : 'No Type'}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                {test ? test.skill.charAt(0).toUpperCase() + test.skill.slice(1) : 'No Skill'}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                {test ? test.name.charAt(0).toUpperCase() + test.name.slice(1) : 'No Name'}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
                   {row.score}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {row.timeSpent}
+                  {row.completeTime}
                 </td>
                 <td
                   style={{
@@ -250,32 +318,17 @@ const Result = () => {
                     textAlign: "justify",
                   }}
                 >
-                  <button
-                    style={{
-                      padding: "8px 16px",
-                      background:
-                        "linear-gradient(180deg, #28a745 0%, #218838 100%)",
-                      color: "#fff",
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                      border: "none",
-                      borderRadius: "20px",
-                      cursor: "pointer",
-                      transition: "background 0.3s ease",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "#1c7430")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background =
-                        "linear-gradient(180deg, #28a745 0%, #218838 100%)")
-                    }
-                  >
-                    Review
-                  </button>
+                  <ResultReviewButton
+                    resultId={row.resultId}
+                    testId={row.testId}
+                    skill={test.skill}
+                    time={row.completeTime}
+                    score={row.score}>
+                  </ResultReviewButton>
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -284,3 +337,42 @@ const Result = () => {
 };
 
 export default Result;
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
+
+async function getAllTestDetails(results) {
+  try {
+    const responses = await Promise.all(
+      results.map(async (result) => {
+        const testId = result.testId;
+        const testAccess = result.testAccess;
+        try {
+          const response = testAccess === "public"? await testApi.getById(testId): await userTestApi.getById(testId);
+          // Tạo đối tượng với các thông tin cần thiết
+          return {
+            id: response.testId,
+            type: response.testType,
+            skill: response.testSkill,
+            name: response.name,
+          };
+        } catch (error) {
+          console.error("Error fetching test data:", error);
+          // Trả về đối tượng lỗi nếu có
+          return { testId, error: error.message };
+        }
+      })
+    );
+    return responses; // Trả về mảng các đối tượng
+  } catch (error) {
+    console.error("Error processing test details:", error);
+    return []; // Trả về mảng rỗng nếu có lỗi
+  }
+}

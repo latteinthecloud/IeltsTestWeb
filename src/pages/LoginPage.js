@@ -136,6 +136,7 @@ const Login = () => {
             type="checkbox" 
             checked={rememberMe}
             onChange={() => setRememberMe(!rememberMe)}
+            style={{width: "fit-content"}}
             /> Remember Password
           </label>
           <a style={{fontWeight: 600}} href="/forgot">Forgot Password?</a>

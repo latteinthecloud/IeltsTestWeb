@@ -8,20 +8,19 @@
     border-color: transparent;
   }
   .form-group-s1 {
-    display: inline-flex; /* Hiển thị flex với hành vi inline */
-    flex-direction: row; /* Các phần tử xếp theo chiều dọc */
-    align-items: flex-start; /* Căn các phần tử bắt đầu từ trên cùng */
-    gap: 0px; /* Khoảng cách giữa các phần tử là 0 */
-    width: 302.6px; /* Độ rộng của nhóm */
+    display: flex; /* Hiển thị flex với hành vi inline */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa các phần tử là 0 */
   }
   
 
   .form-group-s2 {
-    display: inline-flex; /* Hiển thị theo hàng ngang */
+    display: flex; /* Hiển thị theo hàng ngang */
     align-items: center; /* Căn giữa theo chiều dọc */
     justify-content: flex-start; /* Căn bắt đầu từ trái */
-    gap: 0px; /* Khoảng cách giữa các phần tử */
-    width: 302.6px; /* Độ rộng của nhóm */
+    gap: 15px;/* Khoảng cách giữa các phần tử */
+    height: fit-content;
   }
   .s1-s2{
     display: flex;
@@ -52,12 +51,11 @@
     padding: 20px;
     border-radius: 5px;
     background: #FFF;
-    width: 740px;
-    height: 418px;
+    width: 600px;
   }
   .modal-content h2{
     color: #000;
-    font-size: 32px;
+    font-size: 22px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -67,12 +65,12 @@
     align-items: center; /* Căn giữa theo chiều dọc */
     justify-content: flex-start; /* (Tùy chọn) Căn giữa theo chiều ngang nếu cần */
     color: #1E1E1E;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    width: 60%;
-    height: 35px; /* Đảm bảo chiều cao đầy đủ để căn giữa */
+    height: 25px;
+    margin: 0px;
   }
   
   
@@ -124,12 +122,10 @@ align-items: flex-start;
 .name-skill{
     display: flex;
     flex-direction: row;
-    gap:88px;
-    margin-bottom: 20px;
+    justify-content: space-between;
 }
 input,
   select {
-    width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -173,7 +169,7 @@ input,
     outline: none;
     cursor: pointer;
     color: #000;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 22.4px */
@@ -200,4 +196,18 @@ input,
     flex-direction: row;
     gap:60px;
     margin-bottom: 40px;
+  }
+
+  .filter-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .first-row{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 20px;
   }
