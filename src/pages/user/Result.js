@@ -8,6 +8,32 @@ const Result = () => {
   const {user} = useAuth();
   const [data, setData] = useState([]);
   const [testDetails, setTestDetails] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedValues, setSelectedValues] = useState({
+    access: '',
+    skill: '',
+    type: '',
+  });
+
+  const handleSelectChange = (event) => {
+    const { name, value } = event.target; // name là tên select, value là giá trị chọn
+    setSelectedValues((prevState) => ({
+      ...prevState, // Giữ nguyên các giá trị trước
+      [name]: value, // Cập nhật giá trị của select tương ứng
+    }));
+  };
+
+  const handleFilter = () => {
+    const filtered = data.filter((item) => {
+      const test = getTest(item.testId);
+      return (
+        (selectedValues.access === "" || item.testAccess === selectedValues.access) &&
+        (selectedValues.skill === "" || test.skill === selectedValues.skill) &&
+        (selectedValues.type === "" || test.type === selectedValues.type)
+      );
+    });
+    setFilteredData(filtered);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +56,7 @@ const Result = () => {
   
         // Cập nhật state sau khi cả hai API hoàn thành
         setData(response); // Kết quả từ resultApi.getAll
+        setFilteredData(response);
         setTestDetails(testDetailsResult); // Kết quả từ getAllTestDetails
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -38,6 +65,11 @@ const Result = () => {
   
     fetchData();
   }, [user]);
+
+  const getTest = (testId) => {
+    const test = testDetails.find(test => test.id === testId);
+    return test
+  };
 
   return (
     <div className="main-content">
@@ -74,12 +106,14 @@ const Result = () => {
             Access
           </label>
           <select
+            name="access"
             style={{
               padding: "8px",
               border: "1px solid #ccc",
               borderRadius: "5px",
               fontSize: "14px",
             }}
+            onChange={handleSelectChange}
           >
             <option value="all">All</option>
             <option value="public">Public</option>
@@ -101,16 +135,19 @@ const Result = () => {
               fontWeight: "bold",
               marginBottom: "5px",
             }}
+            onChange={handleSelectChange}
           >
             Skill
           </label>
           <select
+            name="skill"
             style={{
               padding: "8px",
               border: "1px solid #ccc",
               borderRadius: "5px",
               fontSize: "14px",
             }}
+            onChange={handleSelectChange}
           >
             <option value="all">All</option>
             <option value="reading">Reading</option>
@@ -136,12 +173,14 @@ const Result = () => {
             Type
           </label>
           <select
+            name="type"
             style={{
               padding: "8px",
               border: "1px solid #ccc",
               borderRadius: "5px",
               fontSize: "14px",
             }}
+            onChange={handleSelectChange}
           >
             <option value="all">All</option>
             <option value="academic">Academic</option>
@@ -153,7 +192,7 @@ const Result = () => {
         <RoundedButton
           title="Apply"
           colors={["#294563","#080D30"]}
-          onClick={()=>{}}>
+          onClick={handleFilter}>
         </RoundedButton>
       </div>
 
@@ -245,8 +284,10 @@ const Result = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((row, index) => (
-              <tr key={index}>
+            {filteredData.map((row, index) =>{
+              const test = getTest(row.testId);
+              return(
+                <tr key={index}>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
                   {formatDate(row.dateMake)}
                 </td>
@@ -254,13 +295,13 @@ const Result = () => {
                   {row.testAccess.charAt(0).toUpperCase() + row.testAccess.slice(1)}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {testDetails.at(index).type.charAt(0).toUpperCase() + testDetails.at(index).type.slice(1)}
+                  {test ? test.type.charAt(0).toUpperCase() + test.type.slice(1) : 'No Type'}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {testDetails.at(index).skill.charAt(0).toUpperCase() + testDetails.at(index).skill.slice(1)}
+                {test ? test.skill.charAt(0).toUpperCase() + test.skill.slice(1) : 'No Skill'}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                {testDetails.at(index).skill.charAt(0).toUpperCase() + testDetails.at(index).skill.slice(1)}
+                {test ? test.name.charAt(0).toUpperCase() + test.name.slice(1) : 'No Name'}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
                   {row.score}
@@ -281,7 +322,8 @@ const Result = () => {
                   </RoundedButton>
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>
