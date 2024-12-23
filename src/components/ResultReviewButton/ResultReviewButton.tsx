@@ -106,6 +106,6 @@ async function getAnswers(resultId: number) {
 }
 
 function getMinutes(timeString: string): number {
-    const [hours, minutes, seconds] = timeString.split(':');
-    return parseInt(minutes);
+    const times = timeString.split(':');
+    return parseInt(times[1] !== undefined ? times[1] : "0");
 }
