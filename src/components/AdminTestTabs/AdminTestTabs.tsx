@@ -15,10 +15,11 @@ interface Test {
 }
 
 function TestTab() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Từ khóa tìm kiếm
   const [sortOrder, setSortOrder] = useState<string>("ascending");
-  const [testData, setTestData] = useState<Test[]>([]);
+  const [testData, setTestData] = useState<Test[]>([]); // Dữ liệu bài kiểm tra
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false); // Trạng thái tải dữ liệu
   const itemsPerPage = 10;
   const navigate = useNavigate();
 
@@ -30,28 +31,52 @@ function TestTab() {
     setCurrentPage(page);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await testApi.getAll();
-        if (Array.isArray(response)) {
-          setTestData(response as Test[]);
-        } else {
-          console.error("Invalid response format:", response);
-        }
-      } catch (error) {
-        console.error("Error fetching test data:", error);
+  const fetchTests = async () => {
+    setLoading(true);
+    try {
+      const response = await testApi.getAll(); // Gọi API lấy tất cả bài kiểm tra
+      if (Array.isArray(response)) {
+        setTestData(response as Test[]);
+      } else {
+        console.error("Invalid response format:", response);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching test data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchData();
+  const searchTests = async (query: string) => {
+    setLoading(true);
+    try {
+      const response = await testApi.find(query); // Gọi API tìm kiếm
+      if (Array.isArray(response)) {
+        setTestData(response as Test[]);
+      } else {
+        console.error("Invalid response format:", response);
+      }
+    } catch (error) {
+      console.error("Error searching test data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Lấy dữ liệu khi khởi tạo component
+    fetchTests();
   }, []);
 
-  const filteredData = testData.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      fetchTests(); // Lấy tất cả dữ liệu nếu ô tìm kiếm trống
+    } else {
+      searchTests(searchTerm); // Gọi API tìm kiếm khi có từ khóa
+    }
+  }, [searchTerm]);
 
-  const sortedData = [...filteredData].sort((a, b) =>
+  const sortedData = [...testData].sort((a, b) =>
     sortOrder === "newest"
       ? b.yearEdition - a.yearEdition
       : a.yearEdition - b.yearEdition
@@ -70,7 +95,7 @@ function TestTab() {
         color: "#333",
       }}
     >
-      <h2 style={{ fontSize: "1.5rem", marginBottom: "20px" }}>Tests</h2>
+      <h2 style={{ fontSize: "1.5rem", marginBottom: "20px" }}>Test</h2>
       <div
         style={{
           display: "flex",
@@ -87,12 +112,6 @@ function TestTab() {
             width: "100%",
           }}
         >
-          <RoundedButton
-            title="Add Test File"
-            icon={<i className="fas fa-plus"></i>}
-            colors={["#2ecc71", "#27ae60"]}
-            onClick={handleAddTestClick}
-          />
           <input
             type="text"
             style={{
@@ -100,7 +119,7 @@ function TestTab() {
               border: "1px solid #ddd",
               borderRadius: "5px",
               fontSize: "14px",
-              width: "200px",
+              width: "300px",
             }}
             placeholder="Search"
             value={searchTerm}
@@ -112,7 +131,7 @@ function TestTab() {
               border: "1px solid #ddd",
               borderRadius: "5px",
               fontSize: "14px",
-              width: "200px",
+              width: "120px",
             }}
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
@@ -120,114 +139,167 @@ function TestTab() {
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
           </select>
+          <RoundedButton
+            title="Add Test File"
+            icon={<i className="fas fa-plus"></i>}
+            colors={["#2ecc71", "#27ae60"]}
+            onClick={handleAddTestClick}
+          />
         </div>
       </div>
 
-      <table
-        style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}
-      >
-        <thead>
-          <tr>
-            <th
-              style={{
-                borderBottom: "1px solid #ddd",
-                padding: "10px",
-                textAlign: "left",
-              }}
-            >
-              Test ID
-            </th>
-            <th
-              style={{
-                borderBottom: "1px solid #ddd",
-                padding: "10px",
-                textAlign: "left",
-              }}
-            >
-              Test Type
-            </th>
-            <th
-              style={{
-                borderBottom: "1px solid #ddd",
-                padding: "10px",
-                textAlign: "left",
-              }}
-            >
-              Test Skill
-            </th>
-            <th
-              style={{
-                borderBottom: "1px solid #ddd",
-                padding: "10px",
-                textAlign: "left",
-              }}
-            >
-              Name
-            </th>
-            <th
-              style={{
-                borderBottom: "1px solid #ddd",
-                padding: "10px",
-                textAlign: "left",
-              }}
-            >
-              Month Edition
-            </th>
-            <th
-              style={{
-                borderBottom: "1px solid #ddd",
-                padding: "10px",
-                textAlign: "left",
-              }}
-            >
-              Year Edition
-            </th>
-            <th
-              style={{
-                borderBottom: "1px solid #ddd",
-                padding: "10px",
-                textAlign: "left",
-              }}
-            >
-              User Completed
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedData.map((test) => (
-            <tr key={test.testId}>
-              <td style={{ borderBottom: "1px solid #ddd", padding: "20px" }}>
-                {test.testId}
-              </td>
-              <td style={{ borderBottom: "1px solid #ddd", padding: "10px" }}>
-                {test.testType}
-              </td>
-              <td style={{ borderBottom: "1px solid #ddd", padding: "10px" }}>
-                {test.testSkill}
-              </td>
-              <td style={{ borderBottom: "1px solid #ddd", padding: "10px" }}>
-                {test.name}
-              </td>
-              <td style={{ borderBottom: "1px solid #ddd", padding: "10px" }}>
-                {test.monthEdition}
-              </td>
-              <td style={{ borderBottom: "1px solid #ddd", padding: "10px" }}>
-                {test.yearEdition}
-              </td>
-              <td style={{ borderBottom: "1px solid #ddd", padding: "10px" }}>
-                {test.userCompletedNum}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              marginTop: "20px",
+            }}
+          >
+            <thead>
+              <tr>
+                <th
+                  style={{
+                    borderBottom: "1px solid #ddd",
+                    padding: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  ID
+                </th>
+                <th
+                  style={{
+                    borderBottom: "1px solid #ddd",
+                    padding: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  Type
+                </th>
+                <th
+                  style={{
+                    borderBottom: "1px solid #ddd",
+                    padding: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  Skill
+                </th>
+                <th
+                  style={{
+                    borderBottom: "1px solid #ddd",
+                    padding: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  Name
+                </th>
+                <th
+                  style={{
+                    borderBottom: "1px solid #ddd",
+                    padding: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  Month Edition
+                </th>
+                <th
+                  style={{
+                    borderBottom: "1px solid #ddd",
+                    padding: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  Year Edition
+                </th>
+                <th
+                  style={{
+                    borderBottom: "1px solid #ddd",
+                    padding: "10px",
+                    textAlign: "left",
+                  }}
+                >
+                  Tests taken
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedData.map((test) => (
+                <tr key={test.testId}>
+                  <td
+                    style={{
+                      borderBottom: "1px solid #ddd",
+                      padding: "20px",
+                    }}
+                  >
+                    {test.testId}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid #ddd",
+                      padding: "10px",
+                    }}
+                  >
+                    {test.testType.charAt(0).toUpperCase() +
+                      test.testType.slice(1)}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid #ddd",
+                      padding: "10px",
+                    }}
+                  >
+                    {test.testSkill.charAt(0).toUpperCase() +
+                      test.testSkill.slice(1)}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid #ddd",
+                      padding: "10px",
+                    }}
+                  >
+                    {test.name}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid #ddd",
+                      padding: "10px",
+                    }}
+                  >
+                    {test.monthEdition}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid #ddd",
+                      padding: "10px",
+                    }}
+                  >
+                    {test.yearEdition}
+                  </td>
+                  <td
+                    style={{
+                      borderBottom: "1px solid #ddd",
+                      padding: "10px",
+                    }}
+                  >
+                    {test.userCompletedNum}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-      <Pagination
-        currentPage={currentPage}
-        totalItems={filteredData.length}
-        itemsPerPage={itemsPerPage}
-        onPageChange={handlePageChange}
-      />
+          <Pagination
+            currentPage={currentPage}
+            totalItems={testData.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
     </div>
   );
 }
