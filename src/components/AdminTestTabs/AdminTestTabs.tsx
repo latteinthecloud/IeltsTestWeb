@@ -21,10 +21,13 @@ function TestTab() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false); // Trạng thái tải dữ liệu
   const itemsPerPage = 10;
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<"reading" | "listening" | null>(
+    null
+  );
 
   const handleAddTestClick = () => {
-    navigate("/admin-add-test");
+    setShowModal(true); // Hiển thị modal
   };
 
   const handlePageChange = (page: number) => {
@@ -68,6 +71,21 @@ function TestTab() {
     fetchTests();
   }, []);
 
+  const handleSave = () => {
+    alert(
+      `Saved data for ${
+        activeTab === "reading" ? "Reading" : "Listening"
+      } test.`
+    );
+    setShowModal(false); // Đóng modal
+  };
+
+  const handleClose = () => {
+    setActiveTab(null);
+    alert("Modal closed.");
+    setShowModal(false); // Đóng modal
+  };
+
   useEffect(() => {
     if (searchTerm.trim() === "") {
       fetchTests(); // Lấy tất cả dữ liệu nếu ô tìm kiếm trống
@@ -93,6 +111,7 @@ function TestTab() {
         padding: "20px",
         fontFamily: "Arial, sans-serif",
         color: "#333",
+        width: "793px",
       }}
     >
       <h2 style={{ fontSize: "1.5rem", marginBottom: "20px" }}>Test</h2>
@@ -298,6 +317,204 @@ function TestTab() {
             itemsPerPage={itemsPerPage}
             onPageChange={handlePageChange}
           />
+
+          {/* Modal */}
+
+          {showModal && (
+            <div
+              style={{
+                position: "fixed",
+                top: "0",
+                left: "0",
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0,0,0,0.5)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1000,
+              }}
+            >
+              <div
+                style={{
+                  background: "#fff",
+                  padding: "20px",
+                  borderRadius: "10px",
+                  boxShadow: "0 0 10px rgba(0,0,0,0.25)",
+                  width: "500px",
+                  textAlign: "center",
+                }}
+              >
+                <h3 style={{ marginBottom: "20px" }}>Upload Test File</h3>
+
+                {/* Nút Listening / Reading */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "10px",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <RoundedButton
+                    title="Listening"
+                    colors={
+                      activeTab === "listening"
+                        ? ["#33B2C7", "#268695"] // Gradient xanh nước khi active
+                        : ["#d3d3d3", "#a9a9a9"] // Gradient xám khi không active
+                    }
+                    onClick={() => setActiveTab("listening")}
+                    icon={<i className="fa-solid fa-headphones-simple"></i>}
+                  />
+                  <RoundedButton
+                    title="Reading"
+                    colors={
+                      activeTab === "reading"
+                        ? ["#337845", "#265A35"] // Gradient xanh lá khi active
+                        : ["#d3d3d3", "#a9a9a9"] // Gradient xám khi không active
+                    }
+                    onClick={() => setActiveTab("reading")}
+                    icon={<i className="fa-regular fa-file"></i>}
+                  />
+                </div>
+
+                {/* Nội dung của Reading */}
+                {activeTab === "reading" && (
+                  <div
+                    style={{
+                      border: "2px dashed #ddd",
+                      borderRadius: "10px",
+                      padding: "20px",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    <i
+                      className="fa-solid fa-upload"
+                      style={{ fontSize: "30px", color: "#007bff" }}
+                    ></i>
+                    <p style={{ margin: "10px 0" }}>Drag and Drop here or</p>
+                    <button
+                      style={{
+                        padding: "10px 20px",
+                        backgroundColor: "#007bff",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => alert("Reading file selected")}
+                    >
+                      Select file
+                    </button>
+                  </div>
+                )}
+
+                {/* Nội dung của Listening */}
+                {activeTab === "listening" && (
+                  <>
+                    {/* Upload file bài */}
+                    <div
+                      style={{
+                        border: "2px dashed #ddd",
+                        borderRadius: "10px",
+                        padding: "20px",
+                        marginBottom: "20px",
+                      }}
+                    >
+                      <i
+                        className="fa-solid fa-upload"
+                        style={{ fontSize: "30px", color: "#007bff" }}
+                      ></i>
+                      <p style={{ margin: "10px 0" }}>
+                        Drag and Drop Test File here or
+                      </p>
+                      <button
+                        style={{
+                          padding: "10px 20px",
+                          backgroundColor: "#007bff",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => alert("Listening test file selected")}
+                      >
+                        Select Test File
+                      </button>
+                    </div>
+
+                    {/* Upload file âm thanh */}
+                    <div
+                      style={{
+                        border: "2px dashed #ddd",
+                        borderRadius: "10px",
+                        padding: "20px",
+                        marginBottom: "20px",
+                      }}
+                    >
+                      <i
+                        className="fa-solid fa-upload"
+                        style={{ fontSize: "30px", color: "#007bff" }}
+                      ></i>
+                      <p style={{ margin: "10px 0" }}>
+                        Drag and Drop Audio File here or
+                      </p>
+                      <button
+                        style={{
+                          padding: "10px 20px",
+                          backgroundColor: "#007bff",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => alert("Listening audio file selected")}
+                      >
+                        Select Audio File
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {/* Nút Save và Close */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "40px", // Khoảng cách giữa hai nút
+                    marginTop: "20px",
+                  }}
+                >
+                  <button
+                    onClick={handleSave}
+                    style={{
+                      padding: "10px 20px",
+                      backgroundColor: "#2ecc71",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={handleClose}
+                    style={{
+                      padding: "10px 20px",
+                      backgroundColor: "#e74c3c",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>

@@ -93,6 +93,7 @@ function UserTab() {
         padding: "20px",
         fontFamily: "Arial, sans-serif",
         color: "#333",
+        width: "666px",
       }}
     >
       <h2 style={{ fontSize: "1.5rem", marginBottom: "20px" }}>User List</h2>
