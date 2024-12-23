@@ -17,6 +17,7 @@ function UserTab() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false); // Trạng thái tải dữ liệu
   const [searchTerm, setSearchTerm] = useState<string>(""); // Từ khóa tìm kiếm
+  const [filterRole, setFilterRole] = useState<string>(""); // Giá trị filter theo role
   const [showPopup, setShowPopup] = useState<boolean>(false); // Trạng thái hiển thị popup
   const [selectedUser, setSelectedUser] = useState<User | null>(null); // Người dùng được chọn
   const itemsPerPage = 10;
@@ -38,31 +39,24 @@ function UserTab() {
     }
   };
 
-  // Hàm tìm kiếm người dùng theo email
-  const searchUsers = async (query: string) => {
-    setLoading(true);
-    try {
-      const response = await accountApi.find(query); // Gọi API tìm kiếm
-      if (Array.isArray(response)) {
-        setUserData(response as User[]);
-      } else {
-        console.error("Invalid response format:", response);
-      }
-    } catch (error) {
-      console.error("Error searching user data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Gọi fetchUsers hoặc searchUsers khi `searchTerm` thay đổi
+  // Gọi fetchUsers khi component mount
   useEffect(() => {
-    if (searchTerm.trim() === "") {
-      fetchUsers(); // Nếu ô tìm kiếm trống, lấy tất cả người dùng
-    } else {
-      searchUsers(searchTerm); // Tìm kiếm theo từ khóa
-    }
-  }, [searchTerm]); // Theo dõi sự thay đổi của searchTerm
+    fetchUsers();
+  }, []);
+
+  // Lọc dữ liệu dựa trên `searchTerm` và `filterRole`
+  const filteredData = userData.filter((user) => {
+    const matchesSearch = user.email
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesRole =
+      filterRole === ""
+        ? true
+        : (filterRole === "Admin" && user.roleId === 1) ||
+          (filterRole === "Learner" && user.roleId === 2);
+
+    return matchesSearch && matchesRole;
+  });
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -88,7 +82,7 @@ function UserTab() {
     }
   };
 
-  const paginatedData = userData.slice(
+  const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -102,19 +96,46 @@ function UserTab() {
       }}
     >
       <h2 style={{ fontSize: "1.5rem", marginBottom: "20px" }}>User List</h2>
-      <input
-        type="text"
+      <div
         style={{
-          padding: "10px",
-          border: "1px solid #ddd",
-          borderRadius: "5px",
-          fontSize: "14px",
-          width: "300px",
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "20px",
         }}
-        placeholder="Search by email"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)} // Cập nhật searchTerm
-      />
+      >
+        {/* Thanh Search */}
+        <input
+          type="text"
+          style={{
+            padding: "10px",
+            border: "1px solid #ddd",
+            borderRadius: "5px",
+            fontSize: "14px",
+            width: "300px",
+          }}
+          placeholder="Search by email"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Cập nhật searchTerm
+        />
+
+        {/* Thanh Filter */}
+        <select
+          style={{
+            padding: "10px",
+            border: "1px solid #ddd",
+            borderRadius: "5px",
+            fontSize: "14px",
+            width: "100px",
+          }}
+          value={filterRole}
+          onChange={(e) => setFilterRole(e.target.value)} // Cập nhật filterRole
+        >
+          <option value="">All Roles</option>
+          <option value="Admin">Admin</option>
+          <option value="Learner">Learner</option>
+        </select>
+      </div>
+
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -171,7 +192,7 @@ function UserTab() {
                     textAlign: "left",
                   }}
                 >
-                  Actions
+                  Action
                 </th>
               </tr>
             </thead>
@@ -206,7 +227,6 @@ function UserTab() {
                       ? "Learner"
                       : "Unknown"}
                   </td>
-
                   <td
                     style={{
                       borderBottom: "1px solid #ddd",
@@ -236,7 +256,7 @@ function UserTab() {
 
           <Pagination
             currentPage={currentPage}
-            totalItems={userData.length}
+            totalItems={filteredData.length}
             itemsPerPage={itemsPerPage}
             onPageChange={handlePageChange}
           />
