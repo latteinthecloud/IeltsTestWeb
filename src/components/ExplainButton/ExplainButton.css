@@ -1,0 +1,18 @@
+.explain-button{
+    width: 100px;
+    background: transparent;
+    border: 1px solid #327846;
+    border-Radius: 20px;
+    color: #327846;
+    display: flex;
+    justify-Content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.explain-button:hover{
+    color: white;
+    background-color: #327846;
+}

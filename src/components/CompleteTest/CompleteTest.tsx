@@ -3,13 +3,26 @@ import "./CompleteTest.css"
 
 interface CompleteTestProps{
     questionOrder: number;
-    answer: string;
+    answers: Map<number, string>;
+    handleAnswerChange: (questionNumber: number, answer: string) => void;
+    status?: number;
 }
 
-export default function CompleteTest({questionOrder, answer}: CompleteTestProps){
+export default function CompleteTest({questionOrder, answers, handleAnswerChange, status=1}: CompleteTestProps){
+    const currentAnswer = answers.get(questionOrder) || "";
     
-    return(
-        <input className="complete-test-input" placeholder={questionOrder.toString()}>
-        </input>
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        handleAnswerChange(questionOrder, value);
+    };
+
+    return (
+        <input
+            className="complete-test-input"
+            placeholder={questionOrder.toString()}
+            value={currentAnswer}
+            onChange={handleChange}
+            disabled={status === 0}
+        />
     );
 }

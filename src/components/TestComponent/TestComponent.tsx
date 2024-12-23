@@ -40,7 +40,7 @@ export default function TestComponent({id, name, year, month, type, skill, compl
                     </div>
                 </div>
             </div>
-            <StartButton id={id} skill={skill}>
+            <StartButton id={id} skill={skill} testAccess="public">
             </StartButton>
 
         </div>

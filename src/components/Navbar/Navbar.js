@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"; 
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Navbar.css";
@@ -38,8 +38,10 @@ const Navbar = () => {
     const handleClickOutside = (event) => {
       // Close dropdown if clicked outside avatar container or dropdown menu
       if (
-        dropdownRef.current && !dropdownRef.current.contains(event.target) &&
-        avatarContainerRef.current && !avatarContainerRef.current.contains(event.target)
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        avatarContainerRef.current &&
+        !avatarContainerRef.current.contains(event.target)
       ) {
         setDropdownOpen(false); // Close dropdown if clicked outside
       }
@@ -64,48 +66,62 @@ const Navbar = () => {
               <Link to="/exercise" className="nav-item">
                 Exercise
               </Link>
+              <Link to="/result-page" className="nav-item">
+                Record
+              </Link>
             </>
           )}
         </div>
         <div className="auth-links">
           {isAuthenticated ? (
             <>
-              <div 
-                ref={avatarContainerRef} 
+              <div
+                ref={avatarContainerRef}
                 className="avatar-container"
                 onClick={toggleDropdown} // Toggle dropdown on click
                 onMouseEnter={showDropdown} // Show dropdown on hover
               >
-                <img 
-                  src="https://static.independent.co.uk/2024/10/18/15/shutterstock_editorial_13383768cn.jpg" 
-                  alt="User Avatar" 
-                  className="avatar-img" 
+                <img
+                  src="https://static.independent.co.uk/2024/10/18/15/shutterstock_editorial_13383768cn.jpg"
+                  alt="User Avatar"
+                  className="avatar-img"
                 />
-                <span className="username">{user?.email}</span> {/* Display user's email */}
+                <span className="username">{user?.email}</span>{" "}
+                {/* Display user's email */}
                 {/* Dropdown menu */}
                 {dropdownOpen && (
-                  <div 
-                    ref={dropdownRef} 
+                  <div
+                    ref={dropdownRef}
                     className="dropdown-menu"
                     onMouseLeave={hideDropdown} // Hide dropdown on mouse leave from menu
                   >
-                    <button onClick={()=> navigate("/profile") }className="dropdown-item">Profile</button>
-                    <button onClick={()=> navigate("/statistic") } className="dropdown-item">Statistic</button>
-                    <button onClick={handleLogout} className="dropdown-item"> Logout </button>
+                    <button
+                      onClick={() => navigate("/profile")}
+                      className="dropdown-item"
+                    >
+                      Profile
+                    </button>
+                    <button onClick={handleLogout} className="dropdown-item">
+                      Logout
+                    </button>
                   </div>
                 )}
-                  <img style={{width: "20px", height: "20px"}}src={require("../../assets/expand_arrow_20px.png")}/>
+                <img
+                  style={{ width: "20px", height: "20px" }}
+                  src={require("../../assets/expand_arrow_20px.png")}
+                  alt="expand-icon"
+                />
               </div>
             </>
           ) : (
             <>
-            <Link to="/signup" className="nav-item">
-              Sign up
-            </Link>
-            <Link to="/login" className="nav-item">
-              Login
-            </Link>
-          </>
+              <Link to="/signup" className="nav-item">
+                Sign up
+              </Link>
+              <Link to="/login" className="nav-item">
+                Login
+              </Link>
+            </>
           )}
         </div>
       </nav>

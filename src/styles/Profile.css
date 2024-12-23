@@ -1,4 +1,5 @@
 .profile-container {
+<<<<<<< HEAD
   width: 100%;
   max-width: 400px;
   margin: 20px auto;
@@ -84,3 +85,91 @@
   text-decoration: underline;
 }
 
+=======
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .avatar-section {
+    text-align: center;
+  }
+  
+  .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 2px solid #001f80;
+  }
+  
+  .upload-label {
+    display: inline-block;
+    padding: 10px 15px;
+    color: white;
+    background-color: #001f80;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .upload-label:hover {
+    background-color: #0056b3;
+  }
+  
+  .upload-input {
+    display: none;
+  }
+  
+  .info-section {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .goal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .goal-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none;
+  }
+  
+  /* Save Button */
+  .save-section {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .save-button {
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .save-button:hover {
+    background-color: #218838;
+  }
+  
+>>>>>>> 3442c63725f6e90a5f6da9bad0e3035797fcc0f1

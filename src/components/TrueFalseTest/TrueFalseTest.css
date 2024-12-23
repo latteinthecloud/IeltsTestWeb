@@ -16,3 +16,11 @@
     border-color: #ccc;
     font-size: 15px;
 }
+
+.vertical-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}

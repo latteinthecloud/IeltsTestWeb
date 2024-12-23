@@ -1,9 +1,14 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useAuth, AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import MainContent from "./components/MainContent/MainContent";
-import ExercisePage from "./pages/user/ExercisePage";
-import StatisticPage from "./pages/user/StatisticPage";
+import ExercisePage from "./pages/user/ExercisePage.tsx";
+import Result from "./pages/user/Result.js";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import CreateListeningTestPage from "./pages/user/CreateListeningTestPage";
@@ -14,8 +19,8 @@ import AdminTest from "./pages/admin/AdminTest";
 import AdminUser from "./pages/admin/AdminUser";
 import ForgotPassword from "./pages/ForgotPassword";
 import Verification from "./pages/Verification";
-import FEnterPassword from "./pages/FEnterPassword"
-import FVerification from "./pages/FVerification"
+import FEnterPassword from "./pages/FEnterPassword";
+import FVerification from "./pages/FVerification";
 import AddTestPage from "./pages/admin/AdminTest";
 import AdminAddTest from "./pages/admin/AdminAdd";
 import AdminAddS from "./pages/admin/AdminAddS";
@@ -23,14 +28,15 @@ import AdminAddR from "./pages/admin/AdminAddR";
 import Profile from "./pages/Profile";
 import StartTestPage from "./pages/user/StartTestPage.tsx";
 import MainLayout from "./layout/MainLayout.tsx";
+import ResultPage from "./pages/user/ResultPage.tsx";
 
-const App = () => {  
+const App = () => {
   return (
     <AuthProvider>
       <Router>
         <div className="app">
-            <RoutesWrapper />
-        </div>  
+          <RoutesWrapper />
+        </div>
       </Router>
     </AuthProvider>
   );
@@ -47,17 +53,61 @@ const RoutesWrapper = () => {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
-      <Route path="/signup" element={<MainLayout><SignupPage /></MainLayout>} />
-      <Route path="/forgot" element={<MainLayout><ForgotPassword /></MainLayout>} />
-      <Route path="/signup/verify" element={<MainLayout><Verification /></MainLayout>} />
-      <Route path="/verify" element={<MainLayout><FEnterPassword /></MainLayout>} />
-      <Route path="/enterPassword" element={<MainLayout><FVerification /></MainLayout>} />
-      <Route path="/admin-add-test" element={<AdminAddTest /> } />
-      <Route path="/admin-add-test/admin-add-section" element={<AdminAddS/> } />
-      <Route path="/admin-add-test/admin-add-sectionR" element={<AdminAddR/> } />
-      <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
-      
+      <Route
+        path="/login"
+        element={
+          <MainLayout>
+            <LoginPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <MainLayout>
+            <SignupPage />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/forgot"
+        element={
+          <MainLayout>
+            <ForgotPassword />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/signup/verify"
+        element={
+          <MainLayout>
+            <Verification />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/verify"
+        element={
+          <MainLayout>
+            <FVerification />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/enterPassword"
+        element={
+          <MainLayout>
+            <FEnterPassword />
+          </MainLayout>
+        }
+      />
+      <Route path="/admin-add-test" element={<AdminAddTest />} />
+      <Route path="/admin-add-test/admin-add-section" element={<AdminAddS />} />
+      <Route
+        path="/admin-add-test/admin-add-sectionR"
+        element={<AdminAddR />}
+      />
+
       {/* Protected Routes for user */}
       {user?.role === "learner" && (
         <>
@@ -65,16 +115,18 @@ const RoutesWrapper = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <MainLayout><MainContent /></MainLayout>
+                <MainLayout>
+                  <MainContent />
+                </MainLayout>
               </ProtectedRoute>
             }
           />
 
-            <Route
+          <Route
             path="/profile"
             element={
               <ProtectedRoute>
-                <MainLayout><Profile /></MainLayout>
+                <Profile />
               </ProtectedRoute>
             }
           />
@@ -82,15 +134,19 @@ const RoutesWrapper = () => {
             path="/exercise"
             element={
               <ProtectedRoute>
-                <MainLayout><ExercisePage /></MainLayout>
+                <MainLayout>
+                  <ExercisePage />
+                </MainLayout>
               </ProtectedRoute>
             }
           />
           <Route
-            path="/statistic"
+            path="/result-page"
             element={
               <ProtectedRoute>
-                <MainLayout><StatisticPage /></MainLayout>
+                <MainLayout>
+                  <Result />
+                </MainLayout>
               </ProtectedRoute>
             }
           />
@@ -110,14 +166,15 @@ const RoutesWrapper = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/start-test" element={<StartTestPage></StartTestPage>} />
           <Route
-            path="/start-test"
+            path="/result"
             element={
-              <StartTestPage>
-              </StartTestPage>
-            }>
-
-          </Route>
+              <MainLayout>
+                <ResultPage />
+              </MainLayout>
+            }
+          ></Route>
         </>
       )}
 
@@ -134,10 +191,15 @@ const RoutesWrapper = () => {
           <Route path="statistics" element={<AdminStatistics />} />
           <Route path="test" element={<AdminTest />} />
           <Route path="user" element={<AdminUser />} />
-          <Route path="/admin-add-test" element={<AddTestPage /> } />
-          <Route path="/admin-add-test/admin-add-section" element={<AdminAddS/> } />
-          <Route path="/admin-add-test/admin-add-sectionR" element={<AdminAddR/> } />
-
+          <Route path="/admin-add-test" element={<AddTestPage />} />
+          <Route
+            path="/admin-add-test/admin-add-section"
+            element={<AdminAddS />}
+          />
+          <Route
+            path="/admin-add-test/admin-add-sectionR"
+            element={<AdminAddR />}
+          />
         </Route>
       )}
 

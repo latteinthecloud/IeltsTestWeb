@@ -7,15 +7,18 @@ import { useNavigate } from "react-router-dom";
 interface StartButtonProps{
     id: number;
     skill: string;
+    testAccess: string;
 }
 
-export default function StartButton({id, skill}: StartButtonProps){
+export default function StartButton({id, skill, testAccess}: StartButtonProps){
     //show popup
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
 
     // fetch test sections
     const [sections, setSections] = useState<any[]>([]);
+    const [totalQuestions, setTotalQuestions] = useState(0);
+    
 
     useEffect(()=>{
         const fetchSections = async () => {
@@ -23,6 +26,12 @@ export default function StartButton({id, skill}: StartButtonProps){
                 const response = await sectionApi.getAll(id);
                 if(Array.isArray(response)){
                     setSections(response);
+                    
+                    const nums = response.map((section: any) => section.questionNum);
+                    let sum = 0;
+                    for(let i = 0; i< nums.length; i++)
+                        sum += nums[i];
+                    setTotalQuestions(sum);
                 }
             }
             
@@ -34,7 +43,7 @@ export default function StartButton({id, skill}: StartButtonProps){
     },[id]);
 
     const handleNavigation = () =>{
-        const params = new URLSearchParams({ skill: skill, test: id.toString() });
+        const params = new URLSearchParams({ skill: skill, test: id.toString(), access: testAccess });
         navigate("/start-test?"+ params.toString());
     }
 
@@ -55,10 +64,10 @@ export default function StartButton({id, skill}: StartButtonProps){
                             </div>
 
                             <div className="body">
-                                <h3><strong>1. Test stucture:</strong> {skill === "Reading"? "3 parts - 40 questions" : "4 parts - 40 questions"}</h3>
+                                <h3><strong>1. Test stucture:</strong> {sections.length} parts - {totalQuestions} questions</h3>
                                 <div className="section-container">
                                     {   sections.map((section, index)=> (
-                                            <div key={id} className="row">
+                                            <div key={index} className="row">
                                                 <img src={require("../../assets/dot.png")} alt="dot-icon"></img>
                                                 <h4>Part {index + 1}: {section.questionNum} questions</h4>
                                             </div>
