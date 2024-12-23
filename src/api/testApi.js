@@ -34,6 +34,11 @@ const testApi={
       monthEdition: testData.monthEdition,
       yearEdition: testData.yearEdition
     });
+  },
+
+  getById(id){
+    const url = "/Test/"+id;
+    return axiosClient.get(url);
   }
   
 };

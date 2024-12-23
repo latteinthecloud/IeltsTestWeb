@@ -1,25 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RoundedButton from "../../components/RoundedButton/RoundedButton.tsx";
+import { useAuth } from "../../context/AuthContext.js";
+import resultApi from "../../api/resultApi.tsx";
+import testApi from "../../api/testApi.js";
 
 const Result = () => {
-  // Dữ liệu mẫu
-  const tableData = [
-    {
-      date: "12/02/2024",
-      access: "Public",
-      testName: "Mock test 1",
-      score: 12,
-      timeSpent: "00:30:00",
-    },
-    {
-      date: "13/02/2024",
-      access: "Private",
-      testName: "Mock test 2",
-      score: 15,
-      timeSpent: "00:45:00",
-    },
-    // Thêm dữ liệu khác nếu cần
-  ];
+  const {user} = useAuth();
+  const [data, setData] = useState([]);
+  const [testDetails, setTestDetails] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Gọi cả hai API đồng thời
+        const [response, testDetailsResult] = await Promise.all([
+          resultApi.getAll(user.id).then((res) => {
+            if (!Array.isArray(res)) {
+              throw new Error("Invalid response format");
+            }
+            return res;
+          }),
+          resultApi.getAll(user.id).then(async (res) => {
+            if (Array.isArray(res)) {
+              return getAllTestDetails(res);
+            }
+            return [];
+          }),
+        ]);
+  
+        // Cập nhật state sau khi cả hai API hoàn thành
+        setData(response); // Kết quả từ resultApi.getAll
+        setTestDetails(testDetailsResult); // Kết quả từ getAllTestDetails
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, [user]);
+
   return (
     <div className="main-content">
       <h2
@@ -176,6 +195,24 @@ const Result = () => {
                   borderBottom: "1px solid #ddd",
                 }}
               >
+                Type
+              </th>
+              <th
+                style={{
+                  padding: "10px",
+                  fontWeight: "bold",
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                Skill
+              </th>
+              <th
+                style={{
+                  padding: "10px",
+                  fontWeight: "bold",
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
                 Test name
               </th>
               <th
@@ -208,22 +245,28 @@ const Result = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData.map((row, index) => (
+            {data.map((row, index) => (
               <tr key={index}>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {row.date}
+                  {formatDate(row.dateMake)}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {row.access}
+                  {row.testAccess.charAt(0).toUpperCase() + row.testAccess.slice(1)}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {row.testName}
+                  {testDetails.at(index).type.charAt(0).toUpperCase() + testDetails.at(index).type.slice(1)}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                  {testDetails.at(index).skill.charAt(0).toUpperCase() + testDetails.at(index).skill.slice(1)}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                {testDetails.at(index).skill.charAt(0).toUpperCase() + testDetails.at(index).skill.slice(1)}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
                   {row.score}
                 </td>
                 <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                  {row.timeSpent}
+                  {row.completeTime}
                 </td>
                 <td
                   style={{
@@ -247,3 +290,41 @@ const Result = () => {
 };
 
 export default Result;
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
+
+async function getAllTestDetails(results) {
+  try {
+    const responses = await Promise.all(
+      results.map(async (result) => {
+        const testId = result.testId;
+        try {
+          const response = await testApi.getById(testId);
+          // Tạo đối tượng với các thông tin cần thiết
+          return {
+            id: response.testId,
+            type: response.testType,
+            skill: response.testSkill,
+            name: response.name,
+          };
+        } catch (error) {
+          console.error("Error fetching test data:", error);
+          // Trả về đối tượng lỗi nếu có
+          return { testId, error: error.message };
+        }
+      })
+    );
+    return responses; // Trả về mảng các đối tượng
+  } catch (error) {
+    console.error("Error processing test details:", error);
+    return []; // Trả về mảng rỗng nếu có lỗi
+  }
+}
