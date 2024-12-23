@@ -184,7 +184,9 @@ const RoutesWrapper = () => {
           path="/"
           element={
             <ProtectedRoute>
-              <AdminPage />
+              <MainLayout>
+                <AdminPage />
+              </MainLayout>
             </ProtectedRoute>
           }
         >

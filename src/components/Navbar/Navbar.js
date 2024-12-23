@@ -71,7 +71,24 @@ const Navbar = () => {
               </Link>
             </>
           )}
+
+          {/* Hiển thị Nav dành riêng cho admin */}
+          {user?.role === "admin" && (
+            <>
+              <Link to="/statistics" className="nav-item">
+                Statistics
+              </Link>
+              <Link to="/test" className="nav-item">
+                Test
+              </Link>
+              <Link to="/user" className="nav-item">
+                User
+
+              </Link>
+            </>
+          )}
         </div>
+
         <div className="auth-links">
           {isAuthenticated ? (
             <>
@@ -101,8 +118,15 @@ const Navbar = () => {
                     >
                       Profile
                     </button>
+                    <button
+                      onClick={() => navigate("/statistic")}
+                      className="dropdown-item"
+                    >
+                      Statistic
+                    </button>
                     <button onClick={handleLogout} className="dropdown-item">
-                      Logout
+                      {" "}
+                      Logout{" "}
                     </button>
                   </div>
                 )}

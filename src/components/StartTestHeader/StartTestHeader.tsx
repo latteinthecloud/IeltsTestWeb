@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from "react";
-import "./StartTestHeader.css"
-import ReviewButton from "../TestButton/ReviewButton.tsx";
-import ExitButton from "../TestButton/ExitButton.tsx";
-import SubmitButton from "../TestButton/SubmitButton.tsx";
+import RoundedButton from "../RoundedButton/RoundedButton.tsx";
+import "./StartTestHeader.css";
 
-interface StartTestHeaderProps{
+interface StartTestHeaderProps {
   time: number;
-  totalQuestion: number;
-  answers: Map<number,string>;
-  skill: any;
-  testId: any;
-  access: any;
-  questionIds: number[];
 }
 
-export default function StartTestHeader({time, totalQuestion, answers, skill, testId, access, questionIds}: StartTestHeaderProps){
-    const [remainingMinutes, setRemainingMinutes] = useState(time);
+export default function StartTestHeader({ time }: StartTestHeaderProps) {
+  const [remainingMinutes, setRemainingMinutes] = useState(time); // Số phút ban đầu
 
-    useEffect(() => {
+  useEffect(() => {
     const intervalId = setInterval(() => {
-      setRemainingMinutes(prev => {
+      setRemainingMinutes((prev) => {
         if (prev <= 1) {
           clearInterval(intervalId);
           alert("Test is over!");
@@ -32,27 +24,44 @@ export default function StartTestHeader({time, totalQuestion, answers, skill, te
     return () => clearInterval(intervalId);
   }, []);
 
-    return (
-        <div className="start-header-container">
-            <img className="logo-start" src={require("../../assets/logo.png")} alt="logo">
-            </img>
-            <div className="timer-container">
-                <img src={require("../../assets/alarm.png")} alt="timer"></img>
-                <h1><span className="time-left">{remainingMinutes}</span> minutes remaining</h1>
-            </div>
-            <div className="start-header-button-container">
-                <ReviewButton answers={answers} totalQuestion={totalQuestion}/>
-                <SubmitButton 
-                    minute={time - remainingMinutes}
-                    totalQuestion={totalQuestion}
-                    skill={skill}
-                    testId={testId}
-                    answers={answers}
-                    access={access}
-                    questionIds={questionIds}>
-                </SubmitButton>
-                <ExitButton/>
-            </div>
-        </div>
-    );
+  return (
+    <div className="start-header-container">
+      <img className="logo-start" src={require("../../assets/logo.png")}></img>
+      <div className="timer-container">
+        <img src={require("../../assets/alarm.png")} alt="logo"></img>
+        <h1>
+          <span className="time-left">{remainingMinutes}</span> minutes
+          remaining
+        </h1>
+      </div>
+      <div className="start-header-button-container">
+        <RoundedButton
+          title="Review"
+          icon={
+            <img
+              src={require("../../assets/review.png")}
+              alt="review-icon"
+            ></img>
+          }
+          colors={["#33B2C7", "#268695"]}
+          onClick={() => {}}
+        ></RoundedButton>
+        <RoundedButton
+          title="Submit"
+          icon={
+            <img src={require("../../assets/send.png")} alt="send-icon"></img>
+          }
+          onClick={() => {}}
+        ></RoundedButton>
+        <RoundedButton
+          title="Exit"
+          icon={
+            <img src={require("../../assets/logout.png")} alt="exit-icon"></img>
+          }
+          colors={["#001f80", "#040160"]}
+          onClick={() => {}}
+        ></RoundedButton>
+      </div>
+    </div>
+  );
 }

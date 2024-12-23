@@ -1,5 +1,5 @@
 import React from "react";
-import AdminTestTab from "../../components/AdminTestTabs/AdminTestTabs"
+import AdminTestTab from "../../components/AdminTestTabs/AdminTestTabs.tsx";
 const AddTestPage = () => {
   return (
     <div>
