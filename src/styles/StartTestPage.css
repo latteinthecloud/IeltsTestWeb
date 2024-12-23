@@ -3,10 +3,7 @@
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
-<<<<<<< HEAD
-=======
     transition: all 0.3s ease;
->>>>>>> 3442c63725f6e90a5f6da9bad0e3035797fcc0f1
 }
 
 .content-container {
@@ -14,10 +11,7 @@
     flex: 1;
     height: 100vh;
     overflow: hidden;
-<<<<<<< HEAD
-=======
     transition: all 0.3s ease;
->>>>>>> 3442c63725f6e90a5f6da9bad0e3035797fcc0f1
 }
 
 .left {
@@ -25,10 +19,7 @@
     padding: 20px;
     overflow-y: auto;
     min-width: 150px;
-<<<<<<< HEAD
-=======
     transition: all 0.3s ease;
->>>>>>> 3442c63725f6e90a5f6da9bad0e3035797fcc0f1
 }
 
 .right{
@@ -39,8 +30,5 @@
     display: flex;
     flex-direction: column;
     gap:30px;
-<<<<<<< HEAD
-=======
     transition: all 0.3s ease;
->>>>>>> 3442c63725f6e90a5f6da9bad0e3035797fcc0f1
 }
