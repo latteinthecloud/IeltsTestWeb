@@ -18,10 +18,10 @@ const Result = () => {
   });
 
   const handleSelectChange = (event) => {
-    const { name, value } = event.target; // name là tên select, value là giá trị chọn
+    const { name, value } = event.target;
     setSelectedValues((prevState) => ({
-      ...prevState, // Giữ nguyên các giá trị trước
-      [name]: value, // Cập nhật giá trị của select tương ứng
+      ...prevState,
+      [name]: value,
     }));
   };
 
@@ -42,7 +42,6 @@ const Result = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Gọi cả hai API đồng thời
         const [response, testDetailsResult] = await Promise.all([
           resultApi.getAll(user.id).then((res) => {
             if (!Array.isArray(res)) {
@@ -58,10 +57,9 @@ const Result = () => {
           }),
         ]);
 
-        // Cập nhật state sau khi cả hai API hoàn thành
-        setData(response); // Kết quả từ resultApi.getAll
+        setData(response);
         setFilteredData(response);
-        setTestDetails(testDetailsResult); // Kết quả từ getAllTestDetails
+        setTestDetails(testDetailsResult);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -386,7 +384,6 @@ async function getAllTestDetails(results) {
             testAccess === "public"
               ? await testApi.getById(testId)
               : await userTestApi.getById(testId);
-          // Tạo đối tượng với các thông tin cần thiết
           return {
             id: response.testId,
             type: response.testType,
@@ -395,14 +392,13 @@ async function getAllTestDetails(results) {
           };
         } catch (error) {
           console.error("Error fetching test data:", error);
-          // Trả về đối tượng lỗi nếu có
           return { testId, error: error.message };
         }
       })
     );
-    return responses; // Trả về mảng các đối tượng
+    return responses;
   } catch (error) {
     console.error("Error processing test details:", error);
-    return []; // Trả về mảng rỗng nếu có lỗi
+    return [];
   }
 }
