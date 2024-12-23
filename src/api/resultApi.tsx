@@ -29,6 +29,11 @@ const resultApi={
     getAll(accountId: number){
         const url = "/Result/Account/" + accountId;
         return axiosClient.get(url);
+    },
+
+    getDetails(resultId){
+        const url = "/Result/Detail/"+resultId;
+        return axiosClient.get(url);
     }
 }
 

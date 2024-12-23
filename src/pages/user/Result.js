@@ -3,6 +3,8 @@ import RoundedButton from "../../components/RoundedButton/RoundedButton.tsx";
 import { useAuth } from "../../context/AuthContext.js";
 import resultApi from "../../api/resultApi.tsx";
 import testApi from "../../api/testApi.js";
+import ResultReviewButton from "../../components/ResultReviewButton/ResultReviewButton.tsx";
+import userTestApi from "../../api/userTestApi.tsx";
 
 const Result = () => {
   const {user} = useAuth();
@@ -10,9 +12,9 @@ const Result = () => {
   const [testDetails, setTestDetails] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedValues, setSelectedValues] = useState({
-    access: '',
-    skill: '',
-    type: '',
+    access: 'all',
+    skill: 'all',
+    type: 'all',
   });
 
   const handleSelectChange = (event) => {
@@ -27,9 +29,9 @@ const Result = () => {
     const filtered = data.filter((item) => {
       const test = getTest(item.testId);
       return (
-        (selectedValues.access === "" || item.testAccess === selectedValues.access) &&
-        (selectedValues.skill === "" || test.skill === selectedValues.skill) &&
-        (selectedValues.type === "" || test.type === selectedValues.type)
+        (selectedValues.access === "all" || item.testAccess === selectedValues.access) &&
+        (selectedValues.skill === "all" || test.skill === selectedValues.skill) &&
+        (selectedValues.type === "all" || test.type === selectedValues.type)
       );
     });
     setFilteredData(filtered);
@@ -316,10 +318,13 @@ const Result = () => {
                     textAlign: "justify",
                   }}
                 >
-                  <RoundedButton
-                    title="Review"
-                    onClick={()=>{}}>
-                  </RoundedButton>
+                  <ResultReviewButton
+                    resultId={row.resultId}
+                    testId={row.testId}
+                    skill={test.skill}
+                    time={row.completeTime}
+                    score={row.score}>
+                  </ResultReviewButton>
                 </td>
               </tr>
               );
@@ -348,8 +353,9 @@ async function getAllTestDetails(results) {
     const responses = await Promise.all(
       results.map(async (result) => {
         const testId = result.testId;
+        const testAccess = result.testAccess;
         try {
-          const response = await testApi.getById(testId);
+          const response = testAccess === "public"? await testApi.getById(testId): await userTestApi.getById(testId);
           // Tạo đối tượng với các thông tin cần thiết
           return {
             id: response.testId,

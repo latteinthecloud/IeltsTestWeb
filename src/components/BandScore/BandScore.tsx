@@ -85,6 +85,7 @@ export default function BandScore({userBand}: BandScoreProps){
                     }
                 </div>
                 {
+                    activeBand !== -1 &&
                     <table style={{ display: "flex", flexDirection: "column"}}>
                         <tr style={underlineStyle}>
                             <td style={headerStyle}>Correct Answers:</td>
