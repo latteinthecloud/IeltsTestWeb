@@ -6,7 +6,7 @@ import savechangeButton from "../assets/OvanButton.png";
 import "../styles/Profile.css";
 
 const Profile = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const [avatar, setAvatar] = useState(defaultAvatar);
   const [goal, setGoal] = useState("5.0");
   const email = "anna123@gmail.com";
@@ -36,13 +36,13 @@ const Profile = () => {
         {/* Avatar Section */}
         <div className="avatar-section">
           <img src={avatar} alt="Avatar" className="avatar" />
-
+          
           <img
-            src={uploadButton}
+            src={uploadButton}  
             alt="Upload Avatar"
             className="upload-button"
-            style={{ cursor: "pointer" }}
-            onClick={() => document.getElementById("upload-avatar").click()}
+            style={{ cursor: "pointer" }}  
+            onClick={() => document.getElementById('upload-avatar').click()}  
           />
 
           <input
@@ -57,7 +57,12 @@ const Profile = () => {
         {/* Email Section */}
         <div className="info-section">
           <label>Email</label>
-          <input type="email" value={email} className="input-field" readOnly />
+          <input
+            type="email"
+            value={email}
+            className="input-field"
+            readOnly
+          />
         </div>
 
         {/* Goal Section */}
@@ -78,13 +83,15 @@ const Profile = () => {
 
         {/* Save Button */}
         <div className="save-section">
+    
           <img
-            src={savechangeButton}
+            src={savechangeButton}  
             alt="Save Changes"
             className="save-button"
-            style={{ cursor: "pointer" }}
-            onClick={handleSave}
+            style={{ cursor: "pointer" }}  
+            onClick={handleSave}  
           />
+          
         </div>
       </div>
     </div>

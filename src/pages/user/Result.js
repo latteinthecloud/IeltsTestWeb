@@ -7,20 +7,20 @@ import ResultReviewButton from "../../components/ResultReviewButton/ResultReview
 import userTestApi from "../../api/userTestApi.tsx";
 
 const Result = () => {
-  const { user } = useAuth();
+  const {user} = useAuth();
   const [data, setData] = useState([]);
   const [testDetails, setTestDetails] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedValues, setSelectedValues] = useState({
-    access: "all",
-    skill: "all",
-    type: "all",
+    access: 'all',
+    skill: 'all',
+    type: 'all',
   });
 
   const handleSelectChange = (event) => {
     const { name, value } = event.target;
     setSelectedValues((prevState) => ({
-      ...prevState,
+      ...prevState, 
       [name]: value,
     }));
   };
@@ -29,10 +29,8 @@ const Result = () => {
     const filtered = data.filter((item) => {
       const test = getTest(item.testId);
       return (
-        (selectedValues.access === "all" ||
-          item.testAccess === selectedValues.access) &&
-        (selectedValues.skill === "all" ||
-          test.skill === selectedValues.skill) &&
+        (selectedValues.access === "all" || item.testAccess === selectedValues.access) &&
+        (selectedValues.skill === "all" || test.skill === selectedValues.skill) &&
         (selectedValues.type === "all" || test.type === selectedValues.type)
       );
     });
@@ -56,7 +54,7 @@ const Result = () => {
             return [];
           }),
         ]);
-
+  
         setData(response);
         setFilteredData(response);
         setTestDetails(testDetailsResult);
@@ -64,23 +62,19 @@ const Result = () => {
         console.error("Error fetching data:", error);
       }
     };
-
+  
     fetchData();
   }, [user]);
 
   const getTest = (testId) => {
-    const test = testDetails.find((test) => test.id === testId);
-    return test;
+    const test = testDetails.find(test => test.id === testId);
+    return test
   };
 
   return (
     <div className="main-content">
       <h2
-        style={{
-          fontWeight: "bold",
-          color: "rgb(41, 69, 99)",
-          marginBottom: "20px",
-        }}
+        style={{ fontWeight: "bold", color: "rgb(41, 69, 99)", marginBottom: "20px" }}
       >
         Record
       </h2>
@@ -197,9 +191,9 @@ const Result = () => {
         {/* Nút Apply */}
         <RoundedButton
           title="Apply"
-          colors={["#294563", "#080D30"]}
-          onClick={handleFilter}
-        ></RoundedButton>
+          colors={["#294563","#080D30"]}
+          onClick={handleFilter}>
+        </RoundedButton>
       </div>
 
       {/*  table */}
@@ -290,68 +284,47 @@ const Result = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((row, index) => {
+            {filteredData.map((row, index) =>{
               const test = getTest(row.testId);
-              return (
+              return(
                 <tr key={index}>
-                  <td
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
-                  >
-                    {formatDate(row.dateMake)}
-                  </td>
-                  <td
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
-                  >
-                    {row.testAccess.charAt(0).toUpperCase() +
-                      row.testAccess.slice(1)}
-                  </td>
-                  <td
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
-                  >
-                    {test
-                      ? test.type.charAt(0).toUpperCase() + test.type.slice(1)
-                      : "No Type"}
-                  </td>
-                  <td
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
-                  >
-                    {test
-                      ? test.skill.charAt(0).toUpperCase() + test.skill.slice(1)
-                      : "No Skill"}
-                  </td>
-                  <td
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
-                  >
-                    {test
-                      ? test.name.charAt(0).toUpperCase() + test.name.slice(1)
-                      : "No Name"}
-                  </td>
-                  <td
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
-                  >
-                    {row.score}
-                  </td>
-                  <td
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
-                  >
-                    {row.completeTime}
-                  </td>
-                  <td
-                    style={{
-                      padding: "10px",
-                      borderBottom: "1px solid #ddd",
-                      textAlign: "justify",
-                    }}
-                  >
-                    <ResultReviewButton
-                      resultId={row.resultId}
-                      testId={row.testId}
-                      skill={test.skill}
-                      time={row.completeTime}
-                      score={row.score}
-                    ></ResultReviewButton>
-                  </td>
-                </tr>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                  {formatDate(row.dateMake)}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                  {row.testAccess.charAt(0).toUpperCase() + row.testAccess.slice(1)}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                  {test ? test.type.charAt(0).toUpperCase() + test.type.slice(1) : 'No Type'}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                {test ? test.skill.charAt(0).toUpperCase() + test.skill.slice(1) : 'No Skill'}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                {test ? test.name.charAt(0).toUpperCase() + test.name.slice(1) : 'No Name'}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                  {row.score}
+                </td>
+                <td style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                  {row.completeTime}
+                </td>
+                <td
+                  style={{
+                    padding: "10px",
+                    borderBottom: "1px solid #ddd",
+                    textAlign: "justify",
+                  }}
+                >
+                  <ResultReviewButton
+                    resultId={row.resultId}
+                    testId={row.testId}
+                    skill={test.skill}
+                    time={row.completeTime}
+                    score={row.score}>
+                  </ResultReviewButton>
+                </td>
+              </tr>
               );
             })}
           </tbody>
@@ -366,8 +339,8 @@ export default Result;
 const formatDate = (dateString) => {
   const date = new Date(dateString);
 
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
 
   return `${day}/${month}/${year}`;
@@ -380,10 +353,7 @@ async function getAllTestDetails(results) {
         const testId = result.testId;
         const testAccess = result.testAccess;
         try {
-          const response =
-            testAccess === "public"
-              ? await testApi.getById(testId)
-              : await userTestApi.getById(testId);
+          const response = testAccess === "public"? await testApi.getById(testId): await userTestApi.getById(testId);
           return {
             id: response.testId,
             type: response.testType,

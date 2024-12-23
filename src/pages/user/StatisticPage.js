@@ -12,6 +12,7 @@ const StatisticPage = () => {
       <OverviewCards />
       <h2 className="section-title">Score distributed</h2>
       <Charts chartDataKey="listening" color="#4a90e2" />
+      
     </div>
   );
 };
