@@ -127,7 +127,7 @@ align-items: flex-start;
 input,
   select {
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
   }
@@ -164,7 +164,7 @@ input,
     background: transparent; /* Làm nền trong suốt */
     width: 100%; /* Đảm bảo full-width */
     padding: 8px 40px 8px 10px; /* Padding cho icon bên phải */
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
     cursor: pointer;
