@@ -57,8 +57,8 @@ const Navbar = () => {
     <div className="nav-container">
       <nav className="navbar">
         <div className="nav-links">
-          {/* Conditionally render links only if the user is not an admin */}
-          {user?.role !== "admin" && (
+          {/* Hiển thị Nav cho user hoặc chưa xác định role */}
+          {(!user?.role || user?.role === "user") && (
             <>
               <Link to="/" className="nav-item">
                 IELTS Exam Library
@@ -66,12 +66,28 @@ const Navbar = () => {
               <Link to="/exercise" className="nav-item">
                 Exercise
               </Link>
-              <Link to="/result-page" className="nav-item">
-                Results
+              <Link to="/statistic" className="nav-item">
+                Statistic
+              </Link>
+            </>
+          )}
+
+          {/* Hiển thị Nav dành riêng cho admin */}
+          {user?.role === "admin" && (
+            <>
+              <Link to="/statistics" className="nav-item">
+                Statistics
+              </Link>
+              <Link to="/test" className="nav-item">
+                Test
+              </Link>
+              <Link to="/user" className="nav-item">
+                User
               </Link>
             </>
           )}
         </div>
+
         <div className="auth-links">
           {isAuthenticated ? (
             <>

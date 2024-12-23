@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import TestTabs from '../TestTabs/TestTabs';
-import FilterBar from '../FilterBar/FilterBar';
-import './MainContent.css';
+import React, { useState, useEffect } from "react";
+import TestTabs from "../TestTabs/TestTabs";
+import FilterBar from "../FilterBar/FilterBar";
+import "./MainContent.css";
 import Pagination from "../Pagination/Pagination";
 import testApi from "../../api/testApi";
-import TestComponent from '../TestComponent/TestComponent.tsx';
+import TestComponent from "../TestComponent/TestComponent.tsx";
 
 const itemsPerPage = 6;
 
@@ -13,7 +13,7 @@ const MainContent = () => {
   const [activeFilter, setActiveFilter] = useState("all"); // Filter state
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState(""); // Store search term
-  const [sortOrder, setSortOrder] = useState("newest"); // Store sort order
+  const [sortOrder, setSortOrder] = useState("newtest"); // Store sort order
   const [testData, setTestData] = useState([]); // Store all test data
   const [filteredData, setFilteredData] = useState([]); // Store filtered data
 
@@ -40,21 +40,29 @@ const MainContent = () => {
 
     // Apply tab filter
     if (activeTab === "academic") {
-      filteredTests = filteredTests.filter(test => test.testType === "academic");
+      filteredTests = filteredTests.filter(
+        (test) => test.testType === "academic"
+      );
     } else if (activeTab === "general") {
-      filteredTests = filteredTests.filter(test => test.testType === "general");
+      filteredTests = filteredTests.filter(
+        (test) => test.testType === "general"
+      );
     }
 
     // Apply skill filter
     if (activeFilter === "listening") {
-      filteredTests = filteredTests.filter(test => test.testSkill === "listening");
+      filteredTests = filteredTests.filter(
+        (test) => test.testSkill === "listening"
+      );
     } else if (activeFilter === "reading") {
-      filteredTests = filteredTests.filter(test => test.testSkill === "reading");
+      filteredTests = filteredTests.filter(
+        (test) => test.testSkill === "reading"
+      );
     }
 
     // Apply search filter
     if (searchTerm.trim()) {
-      filteredTests = filteredTests.filter(test =>
+      filteredTests = filteredTests.filter((test) =>
         test.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
@@ -82,18 +90,18 @@ const MainContent = () => {
           return a.yearEdition - b.yearEdition;
         }
       }
-    
+
       // If yearEdition is the same, compare by monthEdition
       if (b.monthEdition !== a.monthEdition) {
         return b.monthEdition - a.monthEdition;
       }
-    
+
       return 0; // If both yearEdition and monthEdition are the same, return 0 (no change)
     });
 
     setFilteredData(sortedData);
   };
-  
+
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   const onFilterChange = (filter) => {
@@ -103,17 +111,17 @@ const MainContent = () => {
   // popup
   const [openPopup, setOpenPopup] = useState({}); // Khởi tạo state với object rỗng
   const handlePopupToggle = (testId) => {
-    setOpenPopup(prevState => ({
+    setOpenPopup((prevState) => ({
       ...prevState,
-      [testId]: !prevState[testId] // Chuyển đổi trạng thái popup cho testId
+      [testId]: !prevState[testId], // Chuyển đổi trạng thái popup cho testId
     }));
   };
-  
 
   return (
     <div className="main-content">
       <h2>IELTS Exam Library</h2>
-      <TestTabs activeTab={activeTab} setActiveTab={setActiveTab} /> {/* Pass props */}
+      <TestTabs activeTab={activeTab} setActiveTab={setActiveTab} />{" "}
+      {/* Pass props */}
       <FilterBar onFilterChange={onFilterChange} />
       <div className="test-groups">
         <div className="control">
@@ -137,18 +145,28 @@ const MainContent = () => {
         </div>
 
         <div className="test-group-list">
-          {filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((test) => (
-            <TestComponent 
-              key={test.testId}
-              id={test.testId}
-              name={test.name}
-              month={test.monthEdition}
-              year={test.yearEdition}
-              type={test.testType.charAt(0).toUpperCase() + test.testType.slice(1)}
-              skill={test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1)}
-              completed={test.userCompletedNum}> {/* Use test.id as key */}
-            </TestComponent>
-          ))}
+          {filteredData
+            .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+            .map((test) => (
+              <TestComponent
+                key={test.testId}
+                id={test.testId}
+                name={test.name}
+                month={test.monthEdition}
+                year={test.yearEdition}
+                type={
+                  test.testType.charAt(0).toUpperCase() + test.testType.slice(1)
+                }
+                skill={
+                  test.testSkill.charAt(0).toUpperCase() +
+                  test.testSkill.slice(1)
+                }
+                completed={test.userCompletedNum}
+              >
+                {" "}
+                {/* Use test.id as key */}
+              </TestComponent>
+            ))}
         </div>
 
         <Pagination
