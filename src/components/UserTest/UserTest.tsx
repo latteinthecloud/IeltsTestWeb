@@ -3,21 +3,19 @@ import StartButton from "../StartButton/StartButton.tsx";
 interface UserTestProps {
   id: number;
   name: string;
-  year: number;
-  month: number;
   type: string;
   skill: string;
   completed: number;
+  createDate: string;
 }
 
 export default function UserTest({
   id,
   name,
-  year,
-  month,
   type,
   skill,
   completed,
+  createDate
 }: UserTestProps) {
   return (
     <div className="test-container">
@@ -29,22 +27,13 @@ export default function UserTest({
         />
 
         <div className="info-container">
-          <h2>
-            {name}
-            <i
-              className="fa-regular fa-pen-to-square"
-              style={{
-                color: "#001A72",
-                fontSize: "24px",
-                marginLeft: "10px",
-              }}
-            ></i>
-          </h2>
+          <div style={{ display: "flex", justifyContent:"flex-start", alignItems: "center", gap: "10px"}}>
+            <h2>{name}</h2>
+            <img src={require("../../assets/edit.png")} alt="edit-icon"></img>
+          </div>
           <div className="type-container">
             <h4>{type}</h4>
-            <h4>
-              {month}/{year}
-            </h4>
+            <h4>{createDate}</h4>
           </div>
           <div className="text-icon">
             {(skill === "Listening" && (
@@ -61,7 +50,10 @@ export default function UserTest({
             <h3>{skill}</h3>
           </div>
           <div className="text-icon">
-            <i className="fa-regular fa-flag" style={{ color: "#001A72" }}></i>
+            <img
+              src={require("../../assets/flag.png")}
+              alt="flag-icon">
+            </img>
             <h3>{completed} completed</h3>
           </div>
         </div>
