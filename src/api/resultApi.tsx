@@ -24,8 +24,12 @@ const resultApi={
         };
     
         return axiosClient.post(url, body);
+    },
+
+    getAll(accountId: number){
+        const url = "/Result/Account/" + accountId;
+        return axiosClient.get(url);
     }
-    
 }
 
 export default resultApi;
