@@ -82,8 +82,18 @@ const sectionApi={
     return axiosClient.get(url);
   },
 
-  getFull(id){
-    const url = "/Section/Details/"+id;
+  getReadingFull(id){
+    const url = "/Section/Details/Reading/"+id;
+    return axiosClient.get(url);
+  },
+
+  getListeningFull(soundId){
+    const url = "/Section/Details/Listening/"+soundId;
+    return axiosClient.get(url);
+  },
+
+  getSound(id){
+    const url = "/Sound/"+id;
     return axiosClient.get(url);
   }
 };
