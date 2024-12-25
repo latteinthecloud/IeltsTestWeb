@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Navbar.css";
+import accountApi from "../../api/accountApi";
 
 const Navbar = () => {
   const { isAuthenticated, logout, user } = useAuth(); // Access auth state and functions
@@ -9,6 +10,20 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false); // Track dropdown state
   const dropdownRef = useRef(null); // Ref for dropdown menu
   const avatarContainerRef = useRef(null); // Ref for avatar container
+  const [avatar, setAvatar] = useState("");
+
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      try {
+        const response = await accountApi.getAvatar(user.id);
+        setAvatar(response);
+      } catch (error) {
+        console.error("Error fetching test data:", error);
+      }
+    };
+
+    fetchAvatar();
+  }, [user]);
 
   // Logout function
   const handleLogout = () => {
@@ -82,7 +97,7 @@ const Navbar = () => {
                 onMouseEnter={showDropdown} // Show dropdown on hover
               >
                 <img
-                  src="https://static.independent.co.uk/2024/10/18/15/shutterstock_editorial_13383768cn.jpg"
+                  src= {avatar !== ""? "http://localhost:8080"+ avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREcz4lE7FQCPF544vc-fFQSPJNyRtqwNdRzg&s"}
                   alt="User Avatar"
                   className="avatar-img"
                 />

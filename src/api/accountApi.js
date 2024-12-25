@@ -41,6 +41,10 @@ const accountApi ={
         });
 
     },
+    getAvatar(id){
+        const url = "/Account/image/"+id;
+        return axiosClient.get(url);
+    }
 
 };
 

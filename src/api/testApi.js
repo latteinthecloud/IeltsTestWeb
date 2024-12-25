@@ -6,15 +6,14 @@ const testApi={
   },
 
   find(name) {
-    const url = '/Test/Match';  // Keep the URL as it is
+    const url = '/Test/Match'; 
     return axiosClient.get(url, {
-      params: { name }  // Pass the name as a query parameter
+      params: { name }
     });
   },
   create(testData) {
-    const url = '/Test';  // URL cho việc tạo bài kiểm tra mới
+    const url = '/Test'; 
     
-    // Kiểm tra xem testData có đầy đủ các trường bắt buộc chưa
     if (!testData.testType || !testData.testSkill || !testData.name || !testData.monthEdition || !testData.yearEdition) {
       const missingFields = [];
       if (!testData.testType) missingFields.push('testType');
@@ -26,7 +25,6 @@ const testApi={
       throw new Error(`Thiếu thông tin bắt buộc: ${missingFields.join(', ')}`);
     }
   
-    // Gửi POST request để tạo bài kiểm tra mới
     return axiosClient.post(url, {
       testType: testData.testType,
       testSkill: testData.testSkill,

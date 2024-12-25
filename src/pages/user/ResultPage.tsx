@@ -5,30 +5,50 @@ import ReadingPassage from "../../components/ReadingPassage/ReadingPassage.tsx";
 import { useLocation } from "react-router-dom";
 import sectionApi from "../../api/sectionApi.js";
 import SectionComponent from "../../components/SectionComponent/SectionComponent.tsx";
+import ListeningController from "../../components/ListeningController/ListeningController.tsx";
+import userTestApi from "../../api/userTestApi.tsx";
 
 export default function ResultPage(){
     const location = useLocation();
-    const { timeSpent, totalQuestion, skill, testId, answers, score, band } = location.state || {};
+    const { timeSpent, totalQuestion, skill, testId, answers, score, band, access } = location.state || {};
     const [sections, setSections] = useState<any[]>([]);
     const [activeSection, setActiveSection] = useState(1);
     const [questionNums, setQuestionNums] = useState<number[]>([]);
+    const [sound, setSound] = useState<any>();
 
-    useEffect(()=>{
+    useEffect(() => {
+            const fetchSoundUrl = async () => {
+                if (skill === "Listening") {
+                    try {
+                        const response = await getSound(testId);
+                        if (response!== null) setSound(response);
+                    } catch (error) {
+                        console.error("Error fetching sound URL:", error);
+                    }
+                }
+            };
+            fetchSoundUrl();
+        }, [testId, skill]);
+
+   useEffect(() => {
         const fetchSections = async () => {
-            try{
-                const response = await sectionApi.getFull(testId);
-                if(Array.isArray(response)){
+            try {
+                let response;
+                if(access === "public")
+                    response = skill === "Reading"? await sectionApi.getReadingFull(testId): await sectionApi.getListeningFull(sound.id);
+                else
+                    response = skill === "Reading"? await userTestApi.getFullReading(testId) : await userTestApi.getFullListening(testId);
+                if (Array.isArray(response)) {
                     setSections(response);
                     const nums = response.map((section: any) => section.section.questionNum);
                     setQuestionNums(nums);
                 }
-            }
-            catch (error: any) {
+            } catch (error: any) {
                 console.error("Error occurs: " + error.message);
             }
         };
         fetchSections();
-    },[testId]);
+    }, [skill, testId, sound, access]);
 
     return (
         <div className="main-content">
@@ -55,8 +75,11 @@ export default function ResultPage(){
             </div>
             <BandScore userBand={band}/>
             <h2>Review & Explanations</h2>
+            {skill === "Listening" && sound && (
+                    <ListeningController testId={testId} audioSource={`http://localhost:8080${sound.url}`} />
+            )}
             <div className="review-container">
-                <div className="left" style={{ height: "500px"}}>
+                <div className="left" style={{ height: "500px"}} hidden={skill === "Listening"}>
                 {
                     skill === "Reading" &&
                     sections.map((section, index)=>{
@@ -72,7 +95,7 @@ export default function ResultPage(){
                     })
                 }
                 </div>
-                <div className="right" style={{ height: "500px"}}>
+                <div className="right" style={{ height: "500px", width: skill === "Listening" ? "100%" : "50%"}}>
                 {
                     sections.map((section, index)=>{
                         return(
@@ -109,4 +132,14 @@ function getLastIndex(sectionIndex: number, totalQuestion: number[]){
     for(let i=0; i< sectionIndex; i++)
         lastIndex+= totalQuestion[i];
     return lastIndex;
+}
+
+async function getSound(id: string | null) {
+    if (!id) return "";
+    try {
+        const response = await sectionApi.getSound(id);
+        return response;
+    } catch (error) {
+        console.error("Error fetching sound URL:", error);
+    }
 }

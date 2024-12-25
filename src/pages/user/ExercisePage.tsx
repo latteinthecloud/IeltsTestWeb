@@ -17,6 +17,7 @@ export default function ExercisePage() {
   const [filteredData, setFilteredData] = useState<any[]>([]); // Store filtered data
   const [currentPage, setCurrentPage] = useState(1);
   const {user} = useAuth();
+  const [modify,setModify] = useState(true);
   // Xử lý khi thay đổi filter
   const handleFilterChange = (selectedFilter: string) => {
     setFilter(selectedFilter);
@@ -35,20 +36,24 @@ export default function ExercisePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if(modify){
         const response: any = await userTestApi.getAll(user.id);
         if (Array.isArray(response)) {
           setTestData(response);
           setFilteredData(response); // Initially, all data is shown
+          setModify(false);
+          
         } else {
           console.error("Invalid response format:", response);
         }
+      }
       } catch (error) {
         console.error("Error fetching test data:", error);
       }
     };
 
     fetchData();
-  }, [user]);
+  }, [user, modify]);
 
   // Lọc và sắp xếp dữ liệu
   useEffect(() => {
@@ -103,7 +108,7 @@ export default function ExercisePage() {
       <TestTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* FilterBarExercise */}
-      <FilterBarExercise onFilterChange={handleFilterChange} />
+      <FilterBarExercise onFilterChange={handleFilterChange} setModify={setModify} />
 
       {/* Nội dung */}
       <div className="content">
@@ -140,8 +145,8 @@ export default function ExercisePage() {
           .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
           .map((test) => (
             <UserTest
-              key={test.testId}
-              id={test.testId}
+              key={test.id}
+              id={test.id}
               name={test.name}
               createDate={formatDate(test.dateCreate)}
               type={
@@ -150,7 +155,7 @@ export default function ExercisePage() {
               skill={
                 test.testSkill.charAt(0).toUpperCase() + test.testSkill.slice(1)
               }
-              completed={test.userCompletedNum || 0} // Đảm bảo giá trị không undefined
+              setModify={setModify}
             />
           ))}
       </div>

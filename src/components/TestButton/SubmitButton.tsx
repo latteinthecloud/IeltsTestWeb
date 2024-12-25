@@ -34,7 +34,7 @@ export default function SubmitButton({minute, totalQuestion, skill, testId, answ
             console.log(response2);
 
             navigate("/result", {
-                state: { resultId, testId, skill, timeSpent: minute, totalQuestion, answers, score, band },
+                state: { resultId, testId, skill, timeSpent: minute, totalQuestion, answers, score, band, access },
             });
         } catch (error) {
             console.error("Error during API processing:", error.message);

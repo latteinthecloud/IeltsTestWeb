@@ -3,6 +3,7 @@ import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import { useNavigate } from "react-router-dom";
 import sectionApi from "../../api/sectionApi.js";
 import resultApi from "../../api/resultApi.tsx";
+import userTestApi from "../../api/userTestApi.tsx";
 
 interface ResultReviewButtonProps {
     resultId: number;
@@ -10,9 +11,10 @@ interface ResultReviewButtonProps {
     skill: string;
     time: string;
     score: number;
+    access: string;
 }
 
-export default function ResultReviewButton({ resultId, testId, skill, time, score }: ResultReviewButtonProps) {
+export default function ResultReviewButton({ resultId, testId, skill, time, score, access }: ResultReviewButtonProps) {
     const navigate = useNavigate();
 
     const [totalQuestion, setTotalQuestion] = useState<number>(0);
@@ -25,7 +27,7 @@ export default function ResultReviewButton({ resultId, testId, skill, time, scor
 
     useEffect(() => {
         const fetchData = async () => {
-            const totalQuestionResult = await getTotalQuestion(testId);
+            const totalQuestionResult = await getTotalQuestion(testId, access);
             setTotalQuestion(totalQuestionResult);
 
             const answersResult = await getAnswers(resultId);
@@ -38,7 +40,7 @@ export default function ResultReviewButton({ resultId, testId, skill, time, scor
         };
 
         fetchData();
-    }, [resultId, testId, score, formattedTime]);
+    }, [resultId, testId, score, formattedTime, access]);
 
     const handleClick = () => {
         navigate("/result", {
@@ -78,9 +80,9 @@ function scoreToBand(score: number) {
     else return 9.0;
 }
 
-async function getTotalQuestion(testId: number) {
+async function getTotalQuestion(testId: number, access: string) {
     try {
-        const response = await sectionApi.getAll(testId);
+        const response = access === "public"? await sectionApi.getAll(testId): await userTestApi.getSections(testId);
         if (Array.isArray(response)) {
             let totalQuestion = 0;
             response.forEach(res => totalQuestion += res.questionNum);
