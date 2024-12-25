@@ -116,6 +116,12 @@ const Navbar = () => {
                     >
                       Profile
                     </button>
+                    <button
+                      onClick={() => navigate("/statistics")}
+                      className="dropdown-item"
+                    >
+                      Statistics
+                    </button>
                     <button onClick={handleLogout} className="dropdown-item">
                       Logout
                     </button>

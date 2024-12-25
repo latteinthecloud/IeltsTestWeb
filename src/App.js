@@ -29,6 +29,7 @@ import Profile from "./pages/Profile";
 import StartTestPage from "./pages/user/StartTestPage.tsx";
 import MainLayout from "./layout/MainLayout.tsx";
 import ResultPage from "./pages/user/ResultPage.tsx";
+import StasticPage from "./pages/user/StatisticPage.js";
 
 const App = () => {
   return (
@@ -175,6 +176,18 @@ const RoutesWrapper = () => {
               </MainLayout>
             }
           ></Route>
+
+          <Route
+            path="/statistics"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <StasticPage/>
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />  
+
         </>
       )}
 

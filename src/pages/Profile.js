@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import defaultAvatar from "../assets/images.png";
-import uploadButton from "../assets/UploadButton.png";
-import savechangeButton from "../assets/OvanButton.png";
+import upload_Button from "../assets/UploadButton.png";
 import "../styles/Profile.css";
+import RoundedButton from "../components/RoundedButton/RoundedButton.tsx";
+import UploadButton from "../components/UploadButton/UploadButton.tsx";
 
 const Profile = () => {
   const navigate = useNavigate(); 
@@ -37,12 +38,11 @@ const Profile = () => {
         <div className="avatar-section">
           <img src={avatar} alt="Avatar" className="avatar" />
           
-          <img
-            src={uploadButton}  
-            alt="Upload Avatar"
-            className="upload-button"
-            style={{ cursor: "pointer" }}  
-            onClick={() => document.getElementById('upload-avatar').click()}  
+          <UploadButton
+            title="Upload Avatar"
+            onClick={() => document.getElementById("upload-avatar")?.click()} 
+            icon={<img src={upload_Button} alt="Upload Button" className="upload-icon" />} 
+            onFileChange={handleImageUpload} 
           />
 
           <input
@@ -84,13 +84,11 @@ const Profile = () => {
         {/* Save Button */}
         <div className="save-section">
     
-          <img
-            src={savechangeButton}  
-            alt="Save Changes"
-            className="save-button"
-            style={{ cursor: "pointer" }}  
-            onClick={handleSave}  
-          />
+        <RoundedButton 
+          title="Save Changes"
+          onClick={handleSave}
+          colors={["#308d9f","#308d9f"]}
+        />
           
         </div>
       </div>
