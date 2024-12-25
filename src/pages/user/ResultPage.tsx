@@ -6,10 +6,11 @@ import { useLocation } from "react-router-dom";
 import sectionApi from "../../api/sectionApi.js";
 import SectionComponent from "../../components/SectionComponent/SectionComponent.tsx";
 import ListeningController from "../../components/ListeningController/ListeningController.tsx";
+import userTestApi from "../../api/userTestApi.tsx";
 
 export default function ResultPage(){
     const location = useLocation();
-    const { timeSpent, totalQuestion, skill, testId, answers, score, band } = location.state || {};
+    const { timeSpent, totalQuestion, skill, testId, answers, score, band, access } = location.state || {};
     const [sections, setSections] = useState<any[]>([]);
     const [activeSection, setActiveSection] = useState(1);
     const [questionNums, setQuestionNums] = useState<number[]>([]);
@@ -29,10 +30,14 @@ export default function ResultPage(){
             fetchSoundUrl();
         }, [testId, skill]);
 
-    useEffect(() => {
+   useEffect(() => {
         const fetchSections = async () => {
             try {
-                const response = skill === "Reading"? await sectionApi.getReadingFull(testId): await sectionApi.getListeningFull(sound.id);
+                let response;
+                if(access === "public")
+                    response = skill === "Reading"? await sectionApi.getReadingFull(testId): await sectionApi.getListeningFull(sound.id);
+                else
+                    response = skill === "Reading"? await userTestApi.getFullReading(testId) : await userTestApi.getFullListening(testId);
                 if (Array.isArray(response)) {
                     setSections(response);
                     const nums = response.map((section: any) => section.section.questionNum);
@@ -43,7 +48,7 @@ export default function ResultPage(){
             }
         };
         fetchSections();
-    }, [skill, testId, sound]);
+    }, [skill, testId, sound, access]);
 
     return (
         <div className="main-content">

@@ -321,7 +321,8 @@ const Result = () => {
                     testId={row.testId}
                     skill={test.skill}
                     time={row.completeTime}
-                    score={row.score}>
+                    score={row.score}
+                    access={row.testAccess}>
                   </ResultReviewButton>
                 </td>
               </tr>
@@ -355,7 +356,7 @@ async function getAllTestDetails(results) {
         try {
           const response = testAccess === "public"? await testApi.getById(testId): await userTestApi.getById(testId);
           return {
-            id: response.testId,
+            id: testAccess === "public"? response.testId: response.id,
             type: response.testType,
             skill: response.testSkill,
             name: response.name,

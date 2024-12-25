@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import sectionApi from "../../api/sectionApi.js";
 import SectionComponent from "../../components/SectionComponent/SectionComponent.tsx";
 import ListeningController from "../../components/ListeningController/ListeningController.tsx";
+import userTestApi from "../../api/userTestApi.tsx";
 
 export default function StartTestPage() {
     const [searchParams] = useSearchParams();
@@ -47,7 +48,11 @@ export default function StartTestPage() {
     useEffect(() => {
         const fetchSections = async () => {
             try {
-                const response = skill === "Reading"? await sectionApi.getReadingFull(id): await sectionApi.getListeningFull(sound.id);
+                let response;
+                if(access === "public")
+                    response = skill === "Reading"? await sectionApi.getReadingFull(id): await sectionApi.getListeningFull(sound.id);
+                else
+                    response = skill === "Reading"? await userTestApi.getFullReading(id) : await userTestApi.getFullListening(id);
                 if (Array.isArray(response)) {
                     setSections(response);
                     const nums = response.map((section: any) => section.section.questionNum);
@@ -64,7 +69,7 @@ export default function StartTestPage() {
             }
         };
         fetchSections();
-    }, [skill, id, sound]);
+    }, [skill, id, sound, access]);
 
     return (
         <div className="start-page-container">

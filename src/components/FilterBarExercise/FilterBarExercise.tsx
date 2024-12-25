@@ -1,33 +1,90 @@
 import React, { useState } from "react";
 import "./FilterBarExercise.css";
 import RoundedButton from "../RoundedButton/RoundedButton.tsx";
+import userTestApi from "../../api/userTestApi.tsx";
+import { useAuth } from "../../context/AuthContext.js";
 
 interface FilterBarProps {
-  onFilterChange: (filter: string) => void; // Hàm nhận filter dưới dạng chuỗi
+  onFilterChange: (filter: string) => void; 
+  setModify: any;
 }
 
-const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
+const FilterBarExercise = ({ onFilterChange, setModify }: FilterBarProps) => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // State để điều khiển modal
-  const [selectedSkill, setSelectedSkill] = useState<string>("reading"); // State lưu skill được chọn
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedSkill, setSelectedSkill] = useState<string>("reading");
+  const [testName, setTestName] = useState("");
+  const [testType, setTestType] = useState("general");
+  const [sections, setSections] = useState<string[]>(["multiple_choice", "multiple_choice", "multiple_choice"]);
+  const {user} = useAuth();
+  const [error, setError] = useState("");
 
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter);
-    onFilterChange(filter); // Gửi filter đã chọn lên component cha
+    onFilterChange(filter);
   };
 
   const handleCreateClick = () => {
-    setActiveFilter("create"); // Đặt trạng thái active cho nút Create
-    setIsModalOpen(true); // Hiển thị modal
+    setActiveFilter("create");
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Đóng modal
+    setError("");
+    setIsModalOpen(false);
   };
 
   const handleSkillChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedSkill(event.target.value); // Cập nhật giá trị skill được chọn
+    setSelectedSkill(event.target.value);
   };
+  const handleNameChange = (event) => setTestName(event.target.value);
+  const handleTypeChange = (event) => setTestType(event.target.value);
+  const handleSectionChange = (index: number, value: string) => {
+    setSections((prev) => {
+      const updatedSections = [...prev];
+      updatedSections[index] = value;
+      return updatedSections;
+    });
+  };
+
+  const handleConfirm = async () => {
+    const request1 = {
+      accountId: Number(user.id),
+      name: testName,
+      testType: testType,
+      testSkill: selectedSkill,
+    };
+  
+    let response: any = null;
+  
+    try {
+      response = await userTestApi.create(request1);
+  
+      const request2 = {
+        testId: Number(response.id),
+        types: sections,
+      };
+  
+      if (selectedSkill === "reading") {
+        await userTestApi.createReading(request2);
+      } else {
+        await userTestApi.createListening(request2);
+      }
+      setModify(true);
+      closeModal();
+    } catch (error) {
+      setError("Can't find a test that matches all the types described.");
+
+      if (response?.id) {
+        try {
+          await userTestApi.delete(response.id);
+        } catch (deleteError) {
+          console.error("Failed to delete test:", deleteError);
+        }
+      }
+    }
+  };
+
 
   return (
     <div className="filter-container">
@@ -62,7 +119,6 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
             <i className="fas fa-book"></i> Reading
           </button>
         </div>
-      {/* Modal trực tiếp */}
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -70,26 +126,30 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                <img src={require("../../assets/close.png")} alt="close-button" onClick={closeModal}></img>
             </div>
             <h2>Create new test</h2>
-            <form style={{ margin: "0px"}}>
+            {error && <p className="error-message" style={{color: "red"}}>{error}</p>}
+            <div style={{ margin: "0px"}}>
               <div className="first-row">
                 <div className="form-group-hint">
                   <label htmlFor="name">Name</label>
-                  <input type="text" id="name" placeholder="Hint..." />
+                  <input style={{width: "210px"}} type="text" id="name" placeholder="Enter test name" onChange={handleNameChange} />
                 </div>
-                <div className="form-group-skill">
+                <div>
+                <label htmlFor="skill">Type</label>
+                  <select id="type" value={testType} onChange={handleTypeChange}>
+                    <option value="general">General</option>
+                    <option value="academic">Academic</option>
+                  </select>
+                </div>
+                  <div>
                   <label htmlFor="skill">Skill</label>
-                  <div className="custom-select-container">
                     <select
                       id="skill"
-                      className="custom-select"
-                      value={selectedSkill} // Liên kết với state
-                      onChange={handleSkillChange} // Xử lý thay đổi skill
+                      value={selectedSkill}
+                      onChange={handleSkillChange}
                     >
                       <option value="reading">Reading</option>
                       <option value="listening">Listening</option>
                     </select>
-                    <i className="fa-solid fa-chevron-down"></i>
-                  </div>
                 </div>
               </div>
 
@@ -100,8 +160,8 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                     <div className="s1-s2">
                       <div className="form-group-s1">
                         <label htmlFor="section1">Section 1</label>
-                        <select id="section1">
-                          <option value="multiple-choice">
+                        <select id="section1" onChange={(e) => handleSectionChange(0, e.target.value)}>
+                          <option value="multiple_choice">
                             Multiple Choice
                           </option>
                           <option value="matching">Matching</option>
@@ -112,8 +172,8 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                       </div>
                       <div className="form-group-s2">
                         <label htmlFor="section2">Section 2</label>
-                        <select id="section2">
-                          <option value="multiple-choice">
+                        <select id="section2" onChange={(e) => handleSectionChange(1, e.target.value)}>
+                          <option value="multiple_choice">
                             Multiple Choice
                           </option>
                           <option value="matching">Matching</option>
@@ -125,8 +185,8 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                     </div>
                     <div className="form-group-s2">
                       <label htmlFor="section3">Section 3</label>
-                      <select id="section3">
-                        <option value="multiple-choice">Multiple Choice</option>
+                      <select id="section3" onChange={(e) => handleSectionChange(2, e.target.value)}>
+                        <option value="multiple_choice">Multiple Choice</option>
                         <option value="matching">Matching</option>
                         <option value="complete">Complete</option>
                         <option value="true_false">True/False</option>
@@ -140,16 +200,24 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
                 <div className="listening">
                   <label>Selected types</label>
                   <div className="lis-type">
-                    <select id="section1">
-                      <option value="multiple-choice">Multiple Choice</option>
+                    <select id="section1" onChange={(e) => handleSectionChange(0, e.target.value)}>
+                      <option value="multiple_choice">Multiple Choice</option>
                       <option value="matching">Matching</option>
                       <option value="complete">Complete</option>
                       <option value="true_false">True/False</option>
                       <option value="diagram">Diagram</option>
                     </select>
 
-                    <select id="section1">
-                      <option value="multiple-choice">Multiple Choice</option>
+                    <select id="section2" onChange={(e) => handleSectionChange(1, e.target.value)}>
+                      <option value="multiple_choice">Multiple Choice</option>
+                      <option value="matching">Matching</option>
+                      <option value="complete">Complete</option>
+                      <option value="true_false">True/False</option>
+                      <option value="diagram">Diagram</option>
+                    </select>
+
+                    <select id="section3" onChange={(e) => handleSectionChange(2, e.target.value)}>
+                      <option value="multiple_choice">Multiple Choice</option>
                       <option value="matching">Matching</option>
                       <option value="complete">Complete</option>
                       <option value="true_false">True/False</option>
@@ -161,11 +229,11 @@ const FilterBarExercise = ({ onFilterChange }: FilterBarProps) => {
               <div style={{width: "100%", display:"flex", justifyContent: "center"}}>
                 <RoundedButton
                   title="Confirm"
-                  onClick={()=>{}}
+                  onClick={handleConfirm}
                   colors={["#001A72","#1E1E1E"]}>
                 </RoundedButton>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       )}

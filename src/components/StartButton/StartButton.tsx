@@ -3,6 +3,7 @@ import RoundedButton from "../RoundedButton/RoundedButton.tsx";
 import "./StartButton.css"
 import sectionApi from "../../api/sectionApi.js";
 import { useNavigate } from "react-router-dom";
+import userTestApi from "../../api/userTestApi.tsx";
 
 interface StartButtonProps{
     id: number;
@@ -19,11 +20,10 @@ export default function StartButton({id, skill, testAccess}: StartButtonProps){
     const [sections, setSections] = useState<any[]>([]);
     const [totalQuestions, setTotalQuestions] = useState(0);
     
-
     useEffect(()=>{
         const fetchSections = async () => {
             try{
-                const response = await sectionApi.getAll(id);
+                const response = testAccess === "public"? await sectionApi.getAll(id) : await userTestApi.getSections(id); 
                 if(Array.isArray(response)){
                     setSections(response);
                     
@@ -40,7 +40,7 @@ export default function StartButton({id, skill, testAccess}: StartButtonProps){
             }
         };
         fetchSections();
-    },[id]);
+    },[id, testAccess]);
 
     const handleNavigation = () =>{
         const params = new URLSearchParams({ skill: skill, test: id.toString(), access: testAccess });
