@@ -30,15 +30,18 @@ import StartTestPage from "./pages/user/StartTestPage.tsx";
 import MainLayout from "./layout/MainLayout.tsx";
 import ResultPage from "./pages/user/ResultPage.tsx";
 import StasticPage from "./pages/user/StatisticPage.js";
+import { AvatarProvider } from "./context/AvatarContext.js";
 
 const App = () => {
   return (
     <AuthProvider>
-      <Router>
-        <div className="app">
-          <RoutesWrapper />
-        </div>
-      </Router>
+      <AvatarProvider>
+        <Router>
+          <div className="app">
+            <RoutesWrapper />
+          </div>
+        </Router>
+      </AvatarProvider>
     </AuthProvider>
   );
 };
@@ -127,7 +130,9 @@ const RoutesWrapper = () => {
             path="/profile"
             element={
               <ProtectedRoute>
-                <Profile />
+                <MainLayout>
+                  <Profile />
+                </MainLayout>
               </ProtectedRoute>
             }
           />

@@ -100,16 +100,6 @@ const MainContent = () => {
     setActiveFilter(filter); // Update filter state
   };
 
-  // popup
-  const [openPopup, setOpenPopup] = useState({}); // Khởi tạo state với object rỗng
-  const handlePopupToggle = (testId) => {
-    setOpenPopup(prevState => ({
-      ...prevState,
-      [testId]: !prevState[testId] // Chuyển đổi trạng thái popup cho testId
-    }));
-  };
-  
-
   return (
     <div className="main-content">
       <h2>IELTS Exam Library</h2>

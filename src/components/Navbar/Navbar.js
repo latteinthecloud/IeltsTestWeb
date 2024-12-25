@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Navbar.css";
-import accountApi from "../../api/accountApi";
+import { useAvatar } from "../../context/AvatarContext";
 
 const Navbar = () => {
   const { isAuthenticated, logout, user } = useAuth(); // Access auth state and functions
@@ -10,20 +10,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false); // Track dropdown state
   const dropdownRef = useRef(null); // Ref for dropdown menu
   const avatarContainerRef = useRef(null); // Ref for avatar container
-  const [avatar, setAvatar] = useState("");
-
-  useEffect(() => {
-    const fetchAvatar = async () => {
-      try {
-        const response = await accountApi.getAvatar(user.id);
-        setAvatar(response);
-      } catch (error) {
-        console.error("Error fetching test data:", error);
-      }
-    };
-
-    fetchAvatar();
-  }, [user]);
+  const { loading, avatar } = useAvatar();
 
   // Logout function
   const handleLogout = () => {
@@ -96,11 +83,20 @@ const Navbar = () => {
                 onClick={toggleDropdown} // Toggle dropdown on click
                 onMouseEnter={showDropdown} // Show dropdown on hover
               >
-                <img
-                  src= {avatar !== ""? "http://localhost:8080"+ avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREcz4lE7FQCPF544vc-fFQSPJNyRtqwNdRzg&s"}
-                  alt="User Avatar"
-                  className="avatar-img"
-                />
+                {/* Show placeholder while loading */}
+                {loading ? (
+                  <div className="avatar-placeholder">Loading...</div>
+                ) : (
+                  <img
+                    src={
+                      avatar
+                        ? "http://localhost:8080" + avatar
+                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREcz4lE7FQCPF544vc-fFQSPJNyRtqwNdRzg&s"
+                    }
+                    alt="User Avatar"
+                    className="avatar-img"
+                  />
+                )}
                 <span className="username">{user?.email}</span>{" "}
                 {/* Display user's email */}
                 {/* Dropdown menu */}

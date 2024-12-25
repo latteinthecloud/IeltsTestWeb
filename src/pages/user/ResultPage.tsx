@@ -61,7 +61,7 @@ export default function ResultPage(){
                     </div>
                 </div>
                 <div className="panel">
-                    <h1 style={{color: "#327846"}}>Score</h1>
+                    <h1 style={{color: "#327846"}}>Band score</h1>
                     <div className="score-circle">
                         <h2>{band}</h2>
                     </div>

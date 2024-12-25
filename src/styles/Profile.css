@@ -1,6 +1,6 @@
 .profile-container {
   width: 100%;
-  max-width: 400px;
+  width: 400px;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -30,7 +30,7 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 10px;
-  border: 2px solid #0056b3;
+  border: 2px solid #001f80;
 }
 
 .upload-label {
@@ -68,8 +68,9 @@
   width: 100%;
   padding: 10px;
   font-size: 14px;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(140, 140, 140, 0.5);
   border-radius: 5px;
+  background: rgba(140, 140, 140, 0.5);
 }
 
 .link {
@@ -84,3 +85,14 @@
   text-decoration: underline;
 }
 
+.outer h2{
+  font-size: 22px;
+  color: rgb(41, 69, 99);
+  padding: 20px;
+}
+
+.reset-link{
+  font-size: 16px;
+  color:#001f80;
+  cursor: pointer;
+}

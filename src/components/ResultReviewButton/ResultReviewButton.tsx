@@ -53,6 +53,7 @@ export default function ResultReviewButton({ resultId, testId, skill, time, scor
                 answers,
                 score,
                 band,
+                access,
             },
         });
     };

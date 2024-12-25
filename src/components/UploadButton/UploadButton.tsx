@@ -16,7 +16,6 @@ export default function UploadButton({ title, colors = ["#1FCD33", "#0F671A"], o
         if (fileInputRef.current) {
             fileInputRef.current.click(); // Trigger the file input click
         }
-        onClick(); // Call onClick prop (if you need additional logic on button click)
     };
 
     return (
