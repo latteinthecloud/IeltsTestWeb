@@ -22,17 +22,15 @@
   padding: 10px 20px;
   border: 1px solid #ddd;
   border-radius: 20px;
-  background: #001f80;
+  background: linear-gradient(#294563,#1D3146);
   cursor: pointer;
   transition: all 0.3s;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .filter-group button.active {
-  background: #16c786;
+  background: linear-gradient(#1FCD33,#0F671A);
   color: white;
   border-color: #e5e5e8;
-}
-
-.filter-group button:hover {
-  background-color: #16c786;
 }

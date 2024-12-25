@@ -15,37 +15,21 @@
 }
 
 .card img {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 15px;
+  width: 80px;
+  height: 80px;
 }
 
 .card h3 {
-  font-size: 16px;
+  font-size: 18px;
   color: #333;
-  margin-bottom: 10px;
+  margin: 0;
+  font-weight: 400;
 }
 
 .card .value {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
   color: #001f80;
-}
-
-.card .trend {
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-.card .trend.positive {
-  color: green; /* Màu sắc xu hướng tăng */
-}
-
-.card .trend.negative {
-  color: red; /* Màu sắc xu hướng giảm */
-}
-
-.card .description {
-  font-size: 12px;
-  color: #777;
+  margin: 0;
+  padding-top: 10px;
 }

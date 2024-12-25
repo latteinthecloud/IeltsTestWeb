@@ -14,34 +14,21 @@ import "./Charts.css";
 // Register components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const chartData = {
-  listening: [2, 4, 1, 5, 6, 8, 9, 3, 4],
-  reading: [3, 5, 2, 6, 7, 8, 4, 3, 5],
-};
-
 const chartLabels = [
-  "Under 4.0",
-  "4.0",
-  "4.5",
-  "5.0",
-  "5.5",
-  "6.0",
-  "6.5",
-  "7.0",
-  "7.5",
-  "8.0",
-  "8.5",
-  "9.0",
+  "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9",
 ];
 
-const Charts = ({ chartDataKey, color }) => {
+const Charts = ({ chartData, color }) => {
+  // Nếu không có dữ liệu, sử dụng mảng giá trị mặc định là 0
+  const dataValues = chartLabels.map((label) => (chartData ? chartData[label] || 0 : 0));
+
   const data = {
     labels: chartLabels,
     datasets: [
       {
         label: "Scores",
-        data: chartData[chartDataKey],
-        backgroundColor: color,
+        data: dataValues,
+        backgroundColor: color || "#4CAF50", // Màu mặc định nếu không có
       },
     ],
   };
@@ -51,6 +38,11 @@ const Charts = ({ chartDataKey, color }) => {
     scales: {
       y: {
         beginAtZero: true,
+        min: 0, // Bắt đầu từ 0
+        max: 10, // Kết thúc ở 10
+        ticks: {
+          stepSize: 1, // Khoảng cách giữa các giá trị
+        },
       },
     },
   };

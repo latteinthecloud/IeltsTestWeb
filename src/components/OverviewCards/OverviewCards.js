@@ -1,27 +1,24 @@
-  import React from "react";
-  import "./OverviewCards.css";
+import React from "react";
+import "./OverviewCards.css"
 
+const OverviewCards = ({ test = 0, score = 0, time = "00:00" }) => {
   const cardData = [
-    { title: "Total tests completed", value: "24 Tests", trend: "+12%", description: "on this week", image: require('../../assets/test_icon.png') },
-    { title: "Average Score", value: "6.5", trend: "+18%", description: "on this week", image: require('../../assets/score_icon.png') },
-    { title: "Hours spend", value: "20 Hours", trend: "-2%", description: "on this week", image: require('../../assets/alarm_icon.png') },
+    { title: "Total tests taken", value: test, image: require('../../assets/test_icon.png') },
+    { title: "Average Score", value: score, image: require('../../assets/score_icon.png') },
+    { title: "Time spent", value: time, image: require('../../assets/alarm_icon.png') },
   ];
-  
 
-  const OverviewCards = () => {
-    return (
-      <div className="overview-cards">
-        {cardData.map((card, index) => (
-          <div className="card" key={index}>
-            <img src={card.image} alt={card.title} className="card-icon" />
-            <h3>{card.title}</h3>
-            <p className="value">{card.value}</p>
-            <p className="trend">{card.trend}</p>
-            <p className="description">{card.description}</p>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  return (
+    <div className="overview-cards">
+      {cardData.map((card, index) => (
+        <div className="card" key={index}>
+          <img src={card.image} alt={card.title} className="card-icon" />
+          <h3>{card.title}</h3>
+          <p className="value">{card.value}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-  export default OverviewCards;
+export default OverviewCards;
