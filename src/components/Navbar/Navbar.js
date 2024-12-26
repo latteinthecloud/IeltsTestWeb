@@ -10,7 +10,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false); // Track dropdown state
   const dropdownRef = useRef(null); // Ref for dropdown menu
   const avatarContainerRef = useRef(null); // Ref for avatar container
-  const { loading, avatar } = useAvatar();
+  const { avatar } = useAvatar();
 
   // Logout function
   const handleLogout = () => {
@@ -73,7 +73,24 @@ const Navbar = () => {
               </Link>
             </>
           )}
+
+          {/* Hiển thị Nav dành riêng cho admin */}
+          {user?.role === "admin" && (
+            <>
+              <Link to="/statistics" className="nav-item">
+                Statistics
+              </Link>
+              <Link to="/test" className="nav-item">
+                Test
+              </Link>
+              <Link to="/user" className="nav-item">
+                User
+
+              </Link>
+            </>
+          )}
         </div>
+
         <div className="auth-links">
           {isAuthenticated ? (
             <>
@@ -83,20 +100,11 @@ const Navbar = () => {
                 onClick={toggleDropdown} // Toggle dropdown on click
                 onMouseEnter={showDropdown} // Show dropdown on hover
               >
-                {/* Show placeholder while loading */}
-                {loading ? (
-                  <div className="avatar-placeholder">Loading...</div>
-                ) : (
-                  <img
-                    src={
-                      avatar
-                        ? "http://localhost:8080" + avatar
-                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREcz4lE7FQCPF544vc-fFQSPJNyRtqwNdRzg&s"
-                    }
-                    alt="User Avatar"
-                    className="avatar-img"
-                  />
-                )}
+                <img
+                  src={avatar}
+                  alt="User Avatar"
+                  className="avatar-img"
+                />
                 <span className="username">{user?.email}</span>{" "}
                 {/* Display user's email */}
                 {/* Dropdown menu */}
@@ -112,14 +120,20 @@ const Navbar = () => {
                     >
                       Profile
                     </button>
-                    <button
-                      onClick={() => navigate("/statistics")}
+                    { user?.role !== "admin" &&
+                      <button
+                      onClick={() => 
+                        {
+                          navigate("/statistics")
+                        }}
                       className="dropdown-item"
                     >
-                      Statistics
+                      Statistic
                     </button>
+                    }
                     <button onClick={handleLogout} className="dropdown-item">
-                      Logout
+                      {" "}
+                      Logout{" "}
                     </button>
                   </div>
                 )}

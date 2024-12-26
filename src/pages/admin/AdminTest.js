@@ -1,9 +1,9 @@
 import React from "react";
-import AdminTestTab from "../../components/AdminTestTabs/AdminTestTabs"
+import TestTab from "../../components/AdminTestTabs/AdminTestTab.tsx";
 const AddTestPage = () => {
   return (
     <div>
-      <AdminTestTab />
+      <TestTab></TestTab>
     </div>
   );
 };

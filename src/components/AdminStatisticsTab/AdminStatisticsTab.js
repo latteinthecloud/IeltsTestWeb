@@ -25,13 +25,13 @@ ChartJS.register(
     PointElement
 );
 
-const cardData = [
-    { title: "Total users", value: "24 ", image: require('../../assets/user_icon.png') },
-    { title: "Total tests upload", value: "25", image: require('../../assets/score_icon.png') },
-    { title: "Total tests taken", value: "20", image: require('../../assets/total_test.png') },
-  ];
+const StatisticsTab = ({ user = 0, test = 0, taken = 0 }) => {
+    const cardData = [
+        { title: "Total users", value: user, image: require('../../assets/user_icon.png') },
+        { title: "Total tests upload", value: test, image: require('../../assets/score_icon.png') },
+        { title: "Total tests taken", value: taken, image: require('../../assets/total_test.png') },
+      ];
 
-const StatisticsTab = () => {
     return (
         <div className="statistics-tab">
             <div className="overview-cards"></div>

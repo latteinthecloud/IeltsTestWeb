@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  Navigate
 } from "react-router-dom";
 import { useAuth, AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -13,7 +13,6 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import CreateListeningTestPage from "./pages/user/CreateListeningTestPage";
 import CreateReadingTestPage from "./pages/user/CreateReadingTestPage";
-import AdminPage from "./pages/admin/AdminPage";
 import AdminStatistics from "./pages/admin/AdminStatistics";
 import AdminTest from "./pages/admin/AdminTest";
 import AdminUser from "./pages/admin/AdminUser";
@@ -21,7 +20,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Verification from "./pages/Verification";
 import FEnterPassword from "./pages/FEnterPassword";
 import FVerification from "./pages/FVerification";
-import AddTestPage from "./pages/admin/AdminTest";
 import AdminAddTest from "./pages/admin/AdminAdd";
 import AdminAddS from "./pages/admin/AdminAddS";
 import AdminAddR from "./pages/admin/AdminAddR";
@@ -198,30 +196,50 @@ const RoutesWrapper = () => {
 
       {/* Protected Routes for admin */}
       {user?.role === "admin" && (
+        <>
         <Route
           path="/"
           element={
             <ProtectedRoute>
-              <AdminPage />
+              <MainLayout>
+                <AdminStatistics />
+              </MainLayout>
             </ProtectedRoute>
           }
         >
-          <Route path="statistics" element={<AdminStatistics />} />
-          <Route path="test" element={<AdminTest />} />
-          <Route path="user" element={<AdminUser />} />
-          <Route path="/admin-add-test" element={<AddTestPage />} />
-          <Route
-            path="/admin-add-test/admin-add-section"
-            element={<AdminAddS />}
-          />
-          <Route
-            path="/admin-add-test/admin-add-sectionR"
-            element={<AdminAddR />}
-          />
         </Route>
+        <Route path="/statistics" element={
+          <ProtectedRoute>
+              <MainLayout>
+                <AdminStatistics />
+              </MainLayout>
+            </ProtectedRoute>} />
+
+        <Route path="test" element={
+          <ProtectedRoute>
+              <MainLayout>
+                <AdminTest />
+              </MainLayout>
+            </ProtectedRoute>} />
+        <Route path="user" element={<ProtectedRoute>
+              <MainLayout>
+                <AdminUser />
+              </MainLayout>
+            </ProtectedRoute>} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Profile />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+        </>
       )}
 
-      {/* Fallback for unmatched routes */}
+      Fallback for unmatched routes
       <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} />
     </Routes>
   );

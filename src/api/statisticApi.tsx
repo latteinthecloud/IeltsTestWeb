@@ -16,6 +16,18 @@ const statisticApi={
     getBandMap(id,timeFrame){
         const url = "/Statistic/Band/"+ id +"?time=" +timeFrame ;
         return axiosClient.get(url);
+    },
+    getUser(){
+        const url = "/Statistic/User";
+        return axiosClient.get(url);
+    },
+    getTest(){
+        const url = "/Statistic/Test";
+        return axiosClient.get(url);
+    },
+    getTaken(timeFrame){
+        const url = "/Statistic/Attend/" + timeFrame ;
+        return axiosClient.get(url);
     }
 };
 

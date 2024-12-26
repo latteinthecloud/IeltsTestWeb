@@ -15,7 +15,7 @@ const Profile = () => {
   const {user} = useAuth();
   const email = user.email;
   const [file, setFile] = useState(null);
-  const [img, setImg] = useState("http://localhost:8080" + avatar);
+  const [img, setImg] = useState(avatar);
 
   useEffect(() => {
     const fetchUser = async () => {

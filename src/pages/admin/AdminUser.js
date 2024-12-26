@@ -1,5 +1,5 @@
 import React from "react";
-import AdminUserTab from "../../components/AdminUserTab/AdminUserTab";
+import AdminUserTab from "../../components/AdminUserTab/AdminUserTab.tsx";
 
 const AdminUser = () => {
   return (
