@@ -1,18 +1,18 @@
 import axiosClient from "./axiosClient";
 const testApi={
   getAll() {
-    const url='/Test';
+    const url='/test';
     return axiosClient.get(url)
   },
 
   find(name) {
-    const url = '/Test/Match'; 
+    const url = '/test/match'; 
     return axiosClient.get(url, {
       params: { name }
     });
   },
   create(testData) {
-    const url = '/Test'; 
+    const url = '/test'; 
     
     if (!testData.testType || !testData.testSkill || !testData.name || !testData.monthEdition || !testData.yearEdition) {
       const missingFields = [];
@@ -35,7 +35,7 @@ const testApi={
   },
 
   getById(id){
-    const url = "/Test/"+id;
+    const url = "/test/"+id;
     return axiosClient.get(url);
   }
   

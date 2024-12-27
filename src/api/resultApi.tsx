@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 
 const resultApi={
     create(accountId, testId, testAccess, completeTime){
-        const url="/Result";
+        const url="/result";
         const body={
             accountId: parseInt(accountId, 10), 
             testId: parseInt(testId, 10),
@@ -13,7 +13,7 @@ const resultApi={
     },
 
     createDetails(resultId: number, answers: Map<number, string>, questionIds: number[]) {
-        const url = "/Result/Full";
+        const url = "/result/full";
     
         const userAnswers = Object.fromEntries(answers);
     
@@ -27,12 +27,12 @@ const resultApi={
     },
 
     getAll(accountId: number){
-        const url = "/Result/Account/" + accountId;
+        const url = "/result/account/" + accountId;
         return axiosClient.get(url);
     },
 
     getDetails(resultId){
-        const url = "/Result/Detail/"+resultId;
+        const url = "/result/detail/"+resultId;
         return axiosClient.get(url);
     }
 }

@@ -2,17 +2,17 @@ import axiosClient from "./axiosClient";
 
 const authenApi={
     login(email, password){
-        const url='/Authentication/Login';
+        const url='/auth/login';
         const body={email, password}
         return axiosClient.post(url, body)
     },
     code(email){
-        const url='/Authentication/Code';
+        const url='/auth/code';
         return axiosClient.post(url, email)
     },
 
     password(email, newPassword) {
-        const url = '/Authentication/Password'; // Reset password endpoint
+        const url = '/auth/password'; // Reset password endpoint
         const body = {
             email,           // User's email
             password: newPassword // New password to set
@@ -21,10 +21,9 @@ const authenApi={
     },
 
     verificationApi(email, verificationCode){
-        const url='/Authentication/Verify';
+        const url='/auth/verify';
         const body={email, verificationCode}
         return axiosClient.post(url, body)
     }
-
 };
 export default authenApi;

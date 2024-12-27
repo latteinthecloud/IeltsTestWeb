@@ -2,35 +2,35 @@ import axiosClient from "./axiosClient";
 
 const accountApi ={
     getAll(){
-        const url='/Account';
+        const url='/account';
         return axiosClient.get(url)
     },
     get(id){
-        const url= `/Account/${id}`;
+        const url= `/account/${id}`;
         return axiosClient.get(url)
 
     },
 
     create(email, password, roleID=2){
-        const url= '/Account';
+        const url= '/account';
         const body={email, password, roleID};
         return axiosClient.post(url,body);
 
     },
     update(id,data){
-        const url= `/Account/${id}`;
+        const url= `/account/${id}`;
         return axiosClient.patch(url, data)
 
     },
 
     deactive(id){
-        const url= `/Account/Deactivate/${id}`;
+        const url= `/account/deactivate/${id}`;
         return axiosClient.patch(url)
 
     },
     
     updateImage(id, file){
-        const url = `/Account/Image/${id}`;
+        const url = `/account/image/${id}`;
         const formData= new FormData();
         formData.append("file", file) // gan file vào form data,
 
@@ -42,7 +42,7 @@ const accountApi ={
 
     },
     getAvatar(id){
-        const url = "/Account/image/"+id;
+        const url = "/account/image/"+id;
         return axiosClient.get(url);
     }
 

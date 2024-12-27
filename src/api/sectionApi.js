@@ -3,7 +3,7 @@ import axiosClient from "./axiosClient";
 const sectionApi={
      // Tạo một bài kiểm tra mới
      createRead(testData) {
-        const url = '/Section/Reading';  // URL cho việc tạo bài kiểm tra mới
+        const url = '/section/reading';  // URL cho việc tạo bài kiểm tra mới
         
         // Kiểm tra xem testData có đầy đủ các trường bắt buộc chưa
         if (!testData.testId || !testData.title || !testData.content ) {
@@ -21,7 +21,7 @@ const sectionApi={
 
       
     createLis(testData) {
-      const url = '/Section/Listening';  // URL cho việc tạo bài kiểm tra nghe mới
+      const url = '/section/listening';  // URL cho việc tạo bài kiểm tra nghe mới
       
       // Kiểm tra xem testData có đầy đủ các trường bắt buộc chưa
       if (
@@ -44,7 +44,7 @@ const sectionApi={
 
    // API để thêm âm thanh (add sound)
   addSound(fileData) {
-    const url = '/Sound';  // URL cho việc thêm âm thanh
+    const url = '/sound';  // URL cho việc thêm âm thanh
 
     // Kiểm tra xem tệp có được chọn không
     if (!fileData || !fileData.file) {
@@ -68,32 +68,32 @@ const sectionApi={
   },
 
   getAll(id){
-    const url = "/Section/" + id;
+    const url = "/section/" + id;
     return axiosClient.get(url);
   },
 
   getChoiceList(id){
-    const url = "/QuestionList/Choice/" + id;
+    const url = "/questionlist/choice/" + id;
     return axiosClient.get(url);
   },
 
   getImg(id){
-    const url = "/QuestionList/Image/" + id;
+    const url = "/questionlist/image/" + id;
     return axiosClient.get(url);
   },
 
   getReadingFull(id){
-    const url = "/Section/Details/Reading/"+id;
+    const url = "/section/details/reading/"+id;
     return axiosClient.get(url);
   },
 
   getListeningFull(soundId){
-    const url = "/Section/Details/Listening/"+soundId;
+    const url = "/section/details/listening/"+soundId;
     return axiosClient.get(url);
   },
 
   getSound(id){
-    const url = "/Sound/"+id;
+    const url = "/sound/"+id;
     return axiosClient.get(url);
   }
 };

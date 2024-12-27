@@ -2,7 +2,7 @@ import axiosClient from "./axiosClient";
 
 const questionApi={
   create(data) {
-    const url = '/Question';  // URL cho việc tạo bài kiểm tra mới
+    const url = '/question';  // URL cho việc tạo bài kiểm tra mới
     
     // Kiểm tra xem data có đầy đủ các trường bắt buộc chưa
     if (!data.qlistId || !data.content || !data.answer) {
